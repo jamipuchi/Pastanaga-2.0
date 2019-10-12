@@ -17,9 +17,76 @@ export default class Disparar extends Component {
 
   componentWillMount() {
 
-      this._getLocationAsync();
+      this.handleDisparar();
 
   }
+   handleDisparar = async()=>{
+    m = await this._getLocationAsync();
+    l = await this.updateCoords();
+    f = await this.disparar();
+  }
+
+     updateCoords= async()=>{
+      uid = await this.getIdUsuari();
+      uid2 = uid.substr(1);
+      uid3 = uid2.substring(0, uid2.length - 1);
+      let latitude = this.state.latitude;
+      let longitude = this.state.longitude;
+
+      return fetch('http://abuch.ddns.net:3080/api/update-last-known', {
+          method: 'POST',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              latitude: latitude,
+              longitude: longitude,
+              id: uid3
+          }),
+      }).then((response) => response.json())
+          .then(async(responseJson) => {
+              console.log("response json: " + responseJson);
+              return responseJson;
+
+          }).catch((error) => {
+              console.error(error);
+              return error;
+          });
+
+    }
+
+    static getIdUsuari = async () =>{
+      const currentUser = await AsyncStorage.getItem('id_user')
+      console.log("USUARI CORENT  "+ currentUser)
+      if(currentUser != null){
+        return (currentUser);
+      }else{
+        return '';
+      }
+    }
+
+     disparar= async()=> {
+      uid = await this.getIdUsuari();
+      uid2 = uid.substr(1);
+      uid3 = uid2.substring(0, uid2.length - 1);
+      return fetch('http://abuch.ddns.net:3080/api/matar', {
+              method: 'POST',
+              headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  id: uid3
+              }),
+          }).then((response) => response.json())
+              .then(async(responseJson) => {
+                  console.log("response json: " + responseJson);
+
+              }).catch((error) => {
+                  console.error(error);
+              });
+      }
 
   _getLocationAsync = async () => {
     console.log("getting location");
@@ -31,9 +98,10 @@ export default class Disparar extends Component {
       });
     }
     let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
-    this.setState({ longitude: location.coords.longitude});
-    this.setState({latitude: location.coords.latitude});
+    await this.setState({ location });
+    await this.setState({ longitude: location.coords.longitude});
+    await this.setState({ latitude: location.coords.latitude});
+    return location;
   };
 
   render() {
