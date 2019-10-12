@@ -23,7 +23,16 @@ const teClasse = async (parent, args, context) => {
     const classesDia = classes.filter((value) => value.dia_setmana == args.dia_setmana)
     for (let i = 0; i < classesDia.length; i++) {
         console.log(classesDia[i])
-        if ((args.hora >= (classesDia[i].inici)) && (args.hora <= (classesDia[i].inici + classesDia[i].durada)) && args.aula == classesDia[i].aules) return true
+        if ((args.hora >= (classesDia[i].inici)) && (args.hora <= (classesDia[i].inici + classesDia[i].durada)) && args.aula == classesDia[i].aules) {
+            const m = await context.prisma.user({ id: args.id }).monedes();
+            await context.prisma.updateUser({
+                data: {
+                    monedes: m + 20,
+                },
+                where: { id: args.id }
+            })
+            return true
+        }
     }
     return false
 }
