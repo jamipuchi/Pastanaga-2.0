@@ -9,10 +9,11 @@ type Query {
     locationInRange(id: ID!): Boolean!
     objectiu(id: ID!): User
     angle(id: ID!): Float
+    teClasse(id: ID! hora: Int! dia_setmana: Int! aula: String!): Boolean 
 }
 
 type Mutation {
-    createUser(name: String!, email: String!): User!
+    createUser(name: String!, email: String!, horari: [InputClasse!]): User!
     deleteUser(id: ID!): User
     updateLastKnown(id: ID!, latitude: String!, longitude: String!): User
     createGame: Boolean!
@@ -29,4 +30,19 @@ type User {
     alive: Boolean
     monedes: Int
     winner: Boolean!
+    horari: [Classe!]
+}
+
+type Classe {
+    aules: String!
+    durada: Int!
+    inici: Int!
+    dia_setmana: Int!
+}
+
+input InputClasse {
+    aules: String!
+    durada: Int!
+    inici: Int!
+    dia_setmana: Int!
 }

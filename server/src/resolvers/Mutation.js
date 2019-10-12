@@ -1,12 +1,17 @@
 const { distance } = require('../utils/distance')
 const { estaFIB } = require('../utils/estaFIB')
 
-const createUser = (parent, args, context) => {
-    console.log(args)
+const createUser = async (parent, args, context) => {
+    console.log(await context.prisma.user({ email: args.email }))
+    const exists = await context.prisma.user({ email: args.email })
+    if (exists != null) return exists;
     return context.prisma.createUser({
         name: args.name,
         email: args.email,
-        winner: false
+        winner: false,
+        horari: {
+            create: args.horari,
+        }
     })
 }
 
@@ -62,7 +67,8 @@ const createGame = async (parent, args, context) => {
                 objectiu: {
                     connect: { email: users[pos].email }
                 },
-                alive: true
+                alive: true,
+                winner: false
             },
             where: { id: users[i].id },
         })

@@ -9,4 +9,13 @@ type User {
     alive: Boolean
     monedes: Int
     winner: Boolean!
+    horari: [Classe!] @relation(link: INLINE)
+}
+
+type Classe {
+    id: ID! @id
+    aules: String!
+    durada: Int!
+    inici: Int!
+    dia_setmana: Int!
 }
