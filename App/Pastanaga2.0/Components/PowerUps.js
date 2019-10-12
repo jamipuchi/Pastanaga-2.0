@@ -85,7 +85,30 @@ export default class PowerUps extends Component {
         }
 
     }
-    
+
+    async gasta(diners) {
+        fetch('http://abuch.ddns.net:3080/api/spend', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: uid3,
+                amount: diners
+            }),
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.props.navigation.navigate(item.pantalla)
+                },
+                (error) => {
+                    console.log(error)
+                }
+            )
+    }
+
     _head(item) {
         return (
             <View style={[{
@@ -155,13 +178,13 @@ export default class PowerUps extends Component {
                             'Compra',
                             'Et vols gastar ' + item.price + ' dels ' + 10 + ' que tens?',
                             [
-                              {text: 'No'},
-                              {text: 'Si', onPress: () => this.props.navigation.navigate(item.pantalla)},
+                                { text: 'No' },
+                                { text: 'Si', onPress: () => this.gasta(item.price) },
                             ],
-                            {cancelable: false},
-                          )
-                          
-                            }
+                            { cancelable: false },
+                        )
+
+                        }
                         activeOpacity={0.5}
                         style={{ height: 100, width: '100%' }}>
                         <Image
