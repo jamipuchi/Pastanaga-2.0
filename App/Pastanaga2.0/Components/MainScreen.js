@@ -9,7 +9,8 @@ export default class MainScreen extends Component {
         super(props);
         this.state = {
           objectiu:'',
-          id:''
+          id:'',
+          monedes:'0'
         };
         this.getInfoUsuari()
 
@@ -40,9 +41,12 @@ export default class MainScreen extends Component {
           }).then((response) => response.json())
             .then(async (responseJson) => {
               const nameobjectiu = JSON.stringify(responseJson.objectiu.name);
+              const diners = JSON.stringify(responseJson.monedes);
+
               console.log("OBJECTIU:" + nameobjectiu);
               //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
               await this.setState({objectiu: nameobjectiu})
+              await this.setState({monedes: diners})
             }).catch(async (error) => {
               await this.setState({objectiu: ""})
             });
@@ -62,7 +66,8 @@ export default class MainScreen extends Component {
                 <View style={{height:'7.5%'}}></View>
                 <TouchableOpacity
                     style={{ width: '100%', height: '25%', marginBottom: '5%' }}
-                    onPress={() => this.props.navigation.navigate("Guanyat")}
+                    onPress={() => this.getInfoUsuari()
+}
                 >
                     <Image
                         style={{ width: '100%', height:'100%' }}
@@ -196,7 +201,7 @@ export default class MainScreen extends Component {
                                 color: 'white',
                                 fontSize: 20
                             }}>
-                                300{' '}
+                                {this.state.monedes}{' '}
                             </Text>
                             <Image
                                 style={{ height: 20, width: 20 }}
