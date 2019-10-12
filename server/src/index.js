@@ -64,10 +64,6 @@ server.express.use(
                 prisma,
             }
         },
-        errorHandler(res, errors) {
-            res.code(500);
-            res.json(formatError(errors[0]));
-        },
     })
 );
 
