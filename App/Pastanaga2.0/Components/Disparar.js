@@ -85,17 +85,17 @@ export default class Disparar extends Component {
     }).then((response) => response.json())
       .then(async (responseJson) => {
         const jsonresp = JSON.stringify(responseJson);
-        console.log("RESPOSTA JSONA+0"+responseJson);
-        if(responseJson === true){
-          await this.setState({resultat: "encerta"})
-        }else{
-          await this.setState({resultat: "falla"})
+        console.log("RESPOSTA JSONA+0" + responseJson);
+        if (responseJson === true) {
+          await this.setState({ resultat: "encerta" })
+        } else {
+          await this.setState({ resultat: "falla" })
 
         }
         //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
       }).catch((error) => {
         console.error(error);
-        this.setState({resultat: "falla"})
+        this.setState({ resultat: "falla" })
       });
   }
 
@@ -120,42 +120,42 @@ export default class Disparar extends Component {
     var resultat;
 
     if (this.state.resultat === "waiting") {
-      resultat=(
-      <Text style={styles.paragraph}>Calculant la trajectòria...</Text>);
-    }
-    else if (this.state.resultat === "falla"){
       resultat = (
-        <View>
-      <Text style={styles.paragraph}> </Text>
-      <LottieView source={require('../assets/fallat.json')} autoPlay loop={false} />
-      <TouchableOpacity
-        onPress={() => this.props.navigation.navigate("MainScreen")}
-        activeOpacity={0.5}
-        style={{ position:'absolute', bottom:40, height: '12%', width: '100%' }}>
-        <Image
-          style={{ width: '90%', height: '100%', marginLeft: '5%' }}
-          resizeMode="contain"
-          source={require('../assets/Dacord.png')}
-        />
-      </TouchableOpacity></View>);
+        <Text style={styles.paragraph}>Calculant la trajectòria...</Text>);
+    }
+    else if (this.state.resultat === "falla") {
+      resultat = (
+        <View style={{width:"100%", height:'100%'}}>
+          <Text style={styles.paragraph}> Oooh! Has fallat! </Text>
+          <LottieView source={require('../assets/fallat.json')} autoPlay loop={false} />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("MainScreen")}
+            activeOpacity={0.5}
+            style={{ position: 'absolute', bottom: 40, height: '12%', width: '100%' }}>
+            <Image
+              style={{ width: '90%', height: '100%', marginLeft: '5%' }}
+              resizeMode="contain"
+              source={require('../assets/Dacord.png')}
+            />
+          </TouchableOpacity></View>);
     }
     else {
       resultat = (
-      <View>
-      <Text style={styles.paragraph}> Felicitats! Has encertat de ple! </Text>
-      <LottieView source={require('../assets/tocat.json')} autoPlay loop={false} />
-      <TouchableOpacity
-        onPress={() => this.props.navigation.navigate("MainScreen")}
-        activeOpacity={0.5}
-        style={{ position:'absolute', bottom:40, height: '12%', width: '100%' }}>
-        <Image
-          style={{ width: '90%', height: '100%', marginLeft: '5%' }}
-          resizeMode="contain"
-          source={require('../assets/Dacord.png')}
-        />
-      </TouchableOpacity>
-      </View>
-    );
+        <View style={{width:"100%", height:'100%'}}>
+          <Text style={styles.paragraph}> Felicitats! Has encertat de ple! </Text>
+          <LottieView source={require('../assets/tocat.json')} autoPlay loop={false} />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("MainScreen")}
+            activeOpacity={0.5}
+            style={{ position: 'absolute', bottom: 40, height: '12%', width: '100%' }}>
+            <Image
+              style={{ width: '90%', height: '100%', marginLeft: '5%' }}
+              resizeMode="contain"
+              source={require('../assets/Dacord.png')}
+            />
+          </TouchableOpacity>
+        </View>
+      );
     }
 
     return (
