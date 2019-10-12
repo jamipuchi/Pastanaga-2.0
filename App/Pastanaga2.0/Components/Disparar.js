@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet, AsyncStorage } from 'react-native';
+import { Alert, Image, Button, Text, TouchableOpacity, TextInput, View, StyleSheet, AsyncStorage } from 'react-native';
 import { AuthSession } from 'expo';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-
+import LottieView from 'lottie-react-native';
 
 
 export default class Disparar extends Component {
@@ -17,81 +17,81 @@ export default class Disparar extends Component {
 
   componentWillMount() {
 
-      this.handleDisparar();
+    this.handleDisparar();
 
   }
-   handleDisparar = async()=>{
+  handleDisparar = async () => {
     m = await this._getLocationAsync();
     l = await this.updateCoords();
     f = await this.disparar();
   }
 
-     updateCoords= async()=>{
-      uid = await this.getIdUsuari();
-      uid2 = uid.substr(1);
-      uid3 = uid2.substring(0, uid2.length - 1);
-      let latitude = this.state.latitude;
-      let longitude = this.state.longitude;
+  updateCoords = async () => {
+    uid = await this.getIdUsuari();
+    uid2 = uid.substr(1);
+    uid3 = uid2.substring(0, uid2.length - 1);
+    let latitude = this.state.latitude;
+    let longitude = this.state.longitude;
 
-      return fetch('http://abuch.ddns.net:3080/api/update-last-known', {
-          method: 'POST',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              latitude: latitude,
-              longitude: longitude,
-              id: uid3
-          }),
-      }).then((response) => response.json())
-          .then(async(responseJson) => {
-              console.log("response json: " + responseJson);
-              return responseJson;
+    return fetch('http://abuch.ddns.net:3080/api/update-last-known', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        latitude: latitude,
+        longitude: longitude,
+        id: uid3
+      }),
+    }).then((response) => response.json())
+      .then(async (responseJson) => {
+        console.log("response json: " + responseJson);
+        return responseJson;
 
-          }).catch((error) => {
-              console.error(error);
-              return error;
-          });
+      }).catch((error) => {
+        console.error(error);
+        return error;
+      });
 
+  }
+
+  getIdUsuari = async () => {
+    const currentUser = await AsyncStorage.getItem('id_user')
+    console.log("USUARI CORENT  " + currentUser)
+    if (currentUser != null) {
+      return (currentUser);
+    } else {
+      return '';
     }
+  }
 
-     getIdUsuari = async () =>{
-      const currentUser = await AsyncStorage.getItem('id_user')
-      console.log("USUARI CORENT  "+ currentUser)
-      if(currentUser != null){
-        return (currentUser);
-      }else{
-        return '';
-      }
-    }
+  disparar = async () => {
+    uid = await this.getIdUsuari();
+    uid2 = uid.substr(1);
+    uid3 = uid2.substring(0, uid2.length - 1);
+    return fetch('http://abuch.ddns.net:3080/api/matar', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: uid3
+      }),
+    }).then((response) => response.json())
+      .then(async (responseJson) => {
+        console.log("response json: " + responseJson);
 
-     disparar= async()=> {
-      uid = await this.getIdUsuari();
-      uid2 = uid.substr(1);
-      uid3 = uid2.substring(0, uid2.length - 1);
-      return fetch('http://abuch.ddns.net:3080/api/matar', {
-              method: 'POST',
-              headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  id: uid3
-              }),
-          }).then((response) => response.json())
-              .then(async(responseJson) => {
-                  console.log("response json: " + responseJson);
-
-              }).catch((error) => {
-                  console.error(error);
-              });
-      }
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
 
   _getLocationAsync = async () => {
     console.log("getting location");
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    console.log("status: "+status);
+    console.log("status: " + status);
     if (status !== 'granted') {
       this.setState({
         errorMessage: 'Permission to access location was denied',
@@ -99,23 +99,34 @@ export default class Disparar extends Component {
     }
     let location = await Location.getCurrentPositionAsync({});
     await this.setState({ location });
-    await this.setState({ longitude: location.coords.longitude});
-    await this.setState({ latitude: location.coords.latitude});
+    await this.setState({ longitude: location.coords.longitude });
+    await this.setState({ latitude: location.coords.latitude });
     return location;
   };
 
   render() {
-    let text = 'Waiting..';
+    let text = 'Disparant';
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.location) {
-      text = "longitude: " + JSON.stringify(this.state.longitude) +"/ latitude "+JSON.stringify(this.state.latitude);
-
+      text = "longitude: " + JSON.stringify(this.state.longitude) + "/ latitude " + JSON.stringify(this.state.latitude);
     }
 
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>{text}</Text>
+        <LottieView source={require('../assets/fallat.json')} autoPlay loop={false} />
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("MainScreen")}
+          activeOpacity={0.5}
+          style={{ position:'absolute', bottom:40, height: '12%', width: '100%' }}>
+          <Image
+            style={{ width: '90%', height: '100%', marginLeft: '5%' }}
+            resizeMode="contain"
+            source={require('../assets/Dacord.png')}
+          />
+        </TouchableOpacity>
+
       </View>
     );
   }
@@ -124,14 +135,14 @@ export default class Disparar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#262626',
+    color: 'white'
   },
   paragraph: {
     margin: 24,
     fontSize: 18,
     textAlign: 'center',
+    color: 'white'
   },
 });
