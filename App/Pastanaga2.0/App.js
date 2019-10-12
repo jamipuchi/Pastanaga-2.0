@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import Login from './Login';
+import Login from './Components/Login';
 import MainScreen from './Components/MainScreen';
-import Escanejar from './Escanejar';
+import Escanejar from './Components/Escanejar';
+import ObtenirPunts from './Components/ObtenirPunts'
 
 
 class AuthLoadingScreen extends React.Component {
@@ -15,12 +16,13 @@ class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
+    const access_token = await AsyncStorage.getItem('access_token');
+    console.log(access_token)
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.props.navigation.navigate(access_token ? 'Auth' : 'App');
   };
 
   render() {
@@ -48,9 +50,10 @@ const AppStack = createStackNavigator(
   {
   MainScreen: {screen: MainScreen},
   Escanejar: {screen: Escanejar},
+  ObtenirPunts:{screen: ObtenirPunts},
   },
   {
-    initialRouteName: 'MainScreen',
+    initialRouteName: 'ObtenirPunts',
     headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
