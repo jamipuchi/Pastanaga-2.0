@@ -24,7 +24,7 @@ export default class Brujola extends Component {
                 </TouchableOpacity>
 
 
-                <Text style={{ color: 'white', fontSize: 20 }}> Direcció: NORD </Text>
+                <Text style={{ color: 'white', fontSize: 20, padding:'5%', textAlign:'center' }}> Direcció: NORD </Text>
             </View>
         );
     }

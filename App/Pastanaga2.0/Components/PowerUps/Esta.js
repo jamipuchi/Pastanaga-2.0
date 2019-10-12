@@ -22,7 +22,7 @@ export default class Esta extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-                <Text style={{ color: 'white', fontSize: 20 }}>{(this.state.esta)?"El teu objectiu està dins el recinte del joc":"El teu objectiu no està dintre el recinte del joc"}  </Text>
+                <Text style={{ color: 'white', fontSize: 20, padding:'5%', textAlign:'center' }}>{(this.state.esta)?"El teu objectiu està dins el recinte del joc":"El teu objectiu no està dintre el recinte del joc"}  </Text>
             </View>
         );
     }

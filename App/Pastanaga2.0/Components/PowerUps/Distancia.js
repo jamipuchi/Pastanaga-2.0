@@ -22,7 +22,7 @@ export default class Distancia extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-                <Text style={{ color: 'white', fontSize: 20 }}> Distància: {this.state.distance}m </Text>
+                <Text style={{ color: 'white', fontSize: 20, padding:'5%', textAlign:'center' }}> Distància: {this.state.distance}m </Text>
             </View>
         );
     }
