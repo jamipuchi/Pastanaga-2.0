@@ -8,33 +8,69 @@ export default class MainScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          objectiu:'',
+          id:''
         };
+        this.getInfoUsuari()
+
     }
 
     getIdUsuari = async () => {
-        const currentUser = await AsyncStorage.getItem('id_user')
-        if (currentUser != null) {
-            return (currentUser);
-        } else {
-            return '';
-        }
+      const currentUser = await AsyncStorage.getItem('id_user')
+      console.log("USUARI CORENT  " + currentUser)
+      if (currentUser != null) {
+        return (currentUser);
+      } else {
+        return '';
+      }
     }
 
+        getInfoUsuari = async () => {
+          uid = await this.getIdUsuari();
+          uid2 = uid.substr(1);
+          uid3 = uid2.substring(0, uid2.length - 1);
+
+          console.log("ENTRANT");
+            console.log("IDIDIDIDIDIDII   "+uid3)
+          fetch(`http://abuch.ddns.net:3080/api/user/${encodeURIComponent(uid3)}`, {
+            method: "GET",
+            headers: {
+              Accept: 'application/json',
+            },
+          }).then((response) => response.json())
+            .then(async (responseJson) => {
+              const nameobjectiu = JSON.stringify(responseJson.objectiu.name);
+              console.log("OBJECTIU:" + nameobjectiu);
+              //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
+              await this.setState({objectiu: nameobjectiu})
+            }).catch(async (error) => {
+              await this.setState({objectiu: ""})
+            });
+
+        }
+
     render() {
+        let text = ''
+        if(this.state.objectiu == ""){
+          text = "Ho sentim, no tens cap objectiu a hores d'ara"
+        } else{
+          text = `El teu objectiu és en/na ${this.state.objectiu}`
+        }
+
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
-                <View style={{ height: '7.5%' }}></View>
+                <View style={{height:'7.5%'}}></View>
                 <TouchableOpacity
                     style={{ width: '100%', height: '25%', marginBottom: '5%' }}
                     onPress={() => this.props.navigation.navigate("Guanyat")}
                 >
                     <Image
-                        style={{ width: '100%', height: '100%' }}
+                        style={{ width: '100%', height:'100%' }}
                         resizeMode="contain"
                         source={require('../assets/Logo.png')}
                     />
                 </TouchableOpacity>
-                <Text style={{ width: '100%', color: 'white', textAlign: 'center', fontSize: 20 }}>Objectiu:</Text>
+                <Text style={{ width: '100%', color: 'white', textAlign: 'center', fontSize:20 }}>{text}</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Tutorial")}
                     style={{ height: '12%', width: '100%' }}
