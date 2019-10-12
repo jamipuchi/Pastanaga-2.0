@@ -24,6 +24,11 @@ export default class Login extends Component {
         const {nom, mail, horari}=this.state;
         console.log("nom: "+nom)
         console.log("mail: "+mail)
+        console.log(JSON.stringify({
+                name: nom,
+                email: mail,
+                horari: horari
+            }));
 
         return fetch('http://abuch.ddns.net:3080/api/create-user', {
             method: 'POST',
