@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import Expo from 'expo';
 
-export default class Brujola extends Component {
+export default class Distancia extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            distance: 0
         };
     }
-
 
     render() {
         return (
@@ -23,8 +22,7 @@ export default class Brujola extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-
-                <Text style={{ color: 'white', fontSize: 20 }}> Direcció: NORD </Text>
+                <Text style={{ color: 'white', fontSize: 20 }}> Distància: {this.state.distance}m </Text>
             </View>
         );
     }

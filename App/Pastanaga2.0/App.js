@@ -11,6 +11,10 @@ import Tutorial from './Components/Tutorial';
 import Perdut from './Components/Perdut';
 import Guanyat from './Components/Guanyat';
 import Brujola from './Components/PowerUps/Brujola';
+import Distancia from './Components/PowerUps/Distancia';
+import Esta from './Components/PowerUps/Esta';
+import Nom from './Components/PowerUps/Nom';
+import Foto from './Components/PowerUps/Foto';
 
 class AuthLoadingScreen extends React.Component {
 
@@ -54,7 +58,11 @@ const styles = StyleSheet.create({
 const PowerUpStack = createStackNavigator(
   {
     PowerUps: {screen: PowerUps},
-    Brujola: {screen: Brujola}
+    Brujola: {screen: Brujola},
+    Distancia: {screen: Distancia},
+    Esta: {screen: Esta},
+    Nom: {screen: Nom},
+    Foto: {screen: Foto}
     },
     {
       initialRouteName: 'PowerUps',

@@ -42,7 +42,7 @@ export default class Login extends Component {
   render() {
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,{backgroundColor:'#262626'}]}>
 
         <Button title="Login amb FIB" onPress={() => {
           this.boto()

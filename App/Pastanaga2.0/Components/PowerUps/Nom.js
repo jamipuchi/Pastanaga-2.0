@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import Expo from 'expo';
 
-export default class Brujola extends Component {
+export default class Nom extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: "Pau Mateu"
         };
     }
-
 
     render() {
         return (
@@ -23,8 +22,7 @@ export default class Brujola extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-
-                <Text style={{ color: 'white', fontSize: 20 }}> Direcció: NORD </Text>
+                <Text style={{ color: 'white', fontSize: 20 }}> Nom del que has d'eliminar: {this.state.name} </Text>
             </View>
         );
     }

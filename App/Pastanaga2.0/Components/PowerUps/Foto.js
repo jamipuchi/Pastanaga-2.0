@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import Expo from 'expo';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 
-export default class Brujola extends Component {
+export default class Foto extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
     }
-
 
     render() {
         return (
@@ -23,8 +21,11 @@ export default class Brujola extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-
-                <Text style={{ color: 'white', fontSize: 20 }}> Direcció: NORD </Text>
+                <Image
+                    style={{ width: '100%', height: '50%', marginBottom: '5%', marginTop: '20%', borderRadius: 10 }}
+                    resizeMode="contain"
+                    source={require('../../assets/persona.jpg')}
+                />
             </View>
         );
     }

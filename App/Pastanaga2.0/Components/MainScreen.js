@@ -14,7 +14,7 @@ export default class MainScreen extends Component {
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Perdut")}
+                    onPress={() => this.props.navigation.navigate("Guanyat")}
                 >
                     <Image
                         style={{ width: '100%', height: '25%', marginBottom: '5%', marginTop: '20%' }}

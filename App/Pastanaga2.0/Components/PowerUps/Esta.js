@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import Expo from 'expo';
 
-export default class Brujola extends Component {
+export default class Esta extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            esta: false
         };
     }
-
 
     render() {
         return (
@@ -23,8 +22,7 @@ export default class Brujola extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-
-                <Text style={{ color: 'white', fontSize: 20 }}> Direcció: NORD </Text>
+                <Text style={{ color: 'white', fontSize: 20 }}>{(this.state.esta)?"El teu objectiu està dins el recinte del joc":"El teu objectiu no està dintre el recinte del joc"}  </Text>
             </View>
         );
     }

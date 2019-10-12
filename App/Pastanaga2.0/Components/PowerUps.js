@@ -15,14 +15,16 @@ export default class PowerUps extends Component {
                     name: 'Brújola',
                     price: 100,
                     description: 'T`indica cap a quina direcció està el teu objectiu en el cas que estigui dintre el recinte de joc durant una hora.',
-                    link: require("../assets/powerUps/1.png")
+                    link: require("../assets/powerUps/1.png"),
+                    pantalla: "Brujola"
                 },
                 {
                     id: 2,
                     name: 'Distància',
                     price: 100,
                     description: 'T`indica La distància que hi ha entre tu i el teu objectiu durant 1 hora.',
-                    link: require("../assets/powerUps/2.png")
+                    link: require("../assets/powerUps/2.png"),
+                    pantalla:"Distancia"
                 },
                 {
                     id: 3,
@@ -57,21 +59,26 @@ export default class PowerUps extends Component {
                     name: 'Està?',
                     price: 100,
                     description: 'Getting Started',
-                    link: require("../assets/powerUps/7.png")
+                    link: require("../assets/powerUps/7.png"),
+                    pantalla: "Esta"
+
                 },
                 {
                     id: 8,
                     name: 'Nom',
                     price: 10,
                     description: 'T`indica si el teu objectiu està dintre el recinte del joc.',
-                    link: require("../assets/powerUps/8.png")
+                    link: require("../assets/powerUps/8.png"),
+                    pantalla: "Nom"
                 },
                 {
                     id: 9,
                     name: 'Foto',
                     price: 100,
                     description: 'T`ensenya la foto del teu objectiu perquè sàpigues qui has de disparar',
-                    link: require("../assets/powerUps/9.png")
+                    link: require("../assets/powerUps/9.png"),
+                    pantalla: "Foto"
+
                 }
             ],
         }
@@ -141,7 +148,7 @@ export default class PowerUps extends Component {
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Brujola")}
+                    onPress={() => this.props.navigation.navigate(item.pantalla)}
                     activeOpacity={0.5}
                     style={{ height: 100, width: '100%' }}>
 
