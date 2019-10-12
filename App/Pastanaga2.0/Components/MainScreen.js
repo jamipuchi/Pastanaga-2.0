@@ -13,12 +13,15 @@ export default class MainScreen extends Component {
     render() {
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
-                <Image
-                    style={{ width: '100%', height: '25%', marginBottom: '5%', marginTop: '20%' }}
-                    resizeMode="contain"
-                    source={require('../assets/Logo.png')}
-
-                />
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Perdut")}
+                >
+                    <Image
+                        style={{ width: '100%', height: '25%', marginBottom: '5%', marginTop: '20%' }}
+                        resizeMode="contain"
+                        source={require('../assets/Logo.png')}
+                    />
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Tutorial")}
@@ -172,11 +175,11 @@ export default class MainScreen extends Component {
     }
 
     logout = () => {
-      AsyncStorage.removeItem('access_token');
-      const resetAction = StackActions.reset({
-                                  index: 0,
-                                  actions: [NavigationActions.navigate({ routeName: 'Login' })],
-                              });
-                              this.props.navigation.dispatch(resetAction);
+        AsyncStorage.removeItem('access_token');
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'Login' })],
+        });
+        this.props.navigation.dispatch(resetAction);
     }
 }

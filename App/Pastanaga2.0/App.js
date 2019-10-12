@@ -8,7 +8,8 @@ import PowerUps from './Components/PowerUps';
 import Escanejar from './Components/Escanejar';
 import Disparar from './Components/Disparar'
 import Tutorial from './Components/Tutorial';
-
+import Perdut from './Components/Perdut';
+import Guanyat from './Components/Guanyat';
 
 class AuthLoadingScreen extends React.Component {
 
@@ -55,7 +56,9 @@ const AppStack = createStackNavigator(
   Escanejar: {screen: Escanejar},
   PowerUps: {screen: PowerUps},
   Disparar:{screen: Disparar},
-  Tutorial:{screen: Tutorial}
+  Tutorial:{screen: Tutorial},
+  Perdut:{screen:Perdut},
+  Guanyat:{screen:Guanyat}
   },
   {
     initialRouteName: 'MainScreen',
