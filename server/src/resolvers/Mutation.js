@@ -11,7 +11,8 @@ const createUser = async (parent, args, context) => {
         winner: false,
         horari: {
             create: args.horari,
-        }
+        },
+        monedes: 0
     })
 }
 

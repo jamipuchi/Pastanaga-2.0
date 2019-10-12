@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -27,6 +28,50 @@ export default class Escanejar extends React.Component {
   async componentDidMount() {
     this.getPermissionsAsync();
   }
+
+       getIdUsuari = async () =>{
+        const currentUser = await AsyncStorage.getItem('id_user')
+        console.log("USUARI CORENT  "+ currentUser)
+        if(currentUser != null){
+          return (currentUser);
+        }else{
+          return '';
+        }
+      }
+
+  sendAulaApi= async()=>{
+   uid = await this.getIdUsuari();
+   uid2 = await uid.substr(1);
+   uid3 = uid2.substring(0, uid2.length - 1);
+   aula = await this.state.classe;
+   hora = new Date().getHours();
+   console.log(hora);
+   dia = new Date().getDay();
+   console.log(dia);
+   console.log(uid3);
+   console.log(aula);
+   url =
+    `http://abuch.ddns.net:3080/api/te-classe?` +
+    `id=${encodeURIComponent(uid3)}`+
+    `&aula=${encodeURIComponent(aula)}`+
+    `&hora=${encodeURIComponent(hora)}`+
+    `&dia_setmana=${encodeURIComponent(dia)}`
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+      }).then(async(responseJson) => {
+          console.log("response json: " + responseJson);
+          const jsonresp = JSON.stringify(responseJson);
+          console.log(jsonresp)
+      }).catch((error) => {
+          console.error(error);
+      });
+
+
+ }
 
   getPermissionsAsync = async () => {
     const {
@@ -110,7 +155,7 @@ export default class Escanejar extends React.Component {
           }} >
 
           <View>
-            <Text>Ara mateix estàs a{this.state.classe}</Text>
+            <Text>Ara mateix estàs a {this.state.classe}</Text>
           </View>
         </ConfirmDialog>
         {
@@ -130,25 +175,26 @@ export default class Escanejar extends React.Component {
     );
   }
 
-  comprovaResultat = () => {
-
-  }
 
 
-  handleBarCodeScanned = ({
+
+  handleBarCodeScanned = async ({
     type,
     data
   }) => {
-    this.setState({
-      scanned: true
-    });
+
     if (type != "256") {
       alert("codi QR no reconegut")
     } else {
-      this.comprovaAula
       this.setState({ classe: data })
-      this.setState({ dialogVisible: true })
+      await this.sendAulaApi();
+      this.setState({ dialogVisible: true });
+
     }
+    this.setState({
+
+      scanned: true
+    });
 
   };
 }
