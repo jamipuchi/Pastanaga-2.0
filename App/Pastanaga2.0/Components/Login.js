@@ -10,7 +10,8 @@ export default class Login extends Component {
 
     state = {
       nom: '',
-      mail:''
+      mail:'',
+      horari: [],
     };
 
 
@@ -20,7 +21,7 @@ export default class Login extends Component {
   }
 
   async registerToApiAsync() {
-        const {nom, mail}=this.state;
+        const {nom, mail, horari}=this.state;
         console.log("nom: "+nom)
         console.log("mail: "+mail)
 
@@ -33,6 +34,7 @@ export default class Login extends Component {
             body: JSON.stringify({
                 name: nom,
                 email: mail,
+                horari: horari
             }),
         }).then((response) => response.json())
             .then(async(responseJson) => {
@@ -129,6 +131,18 @@ export default class Login extends Component {
          .then((responseJson) => {
            console.log(responseJson)
            let results = responseJson.results
+
+           const ar1 = results.map(({codi_assig, ...rest}) => rest)
+           const ar2 = ar1.map(({grup, ...rest}) => rest)
+           const ar3 = ar2.map(({tipus, ...rest}) => rest)
+           for(i = 0; i < ar3.length; i++){
+             string = ar3[i].inici.split(':')[0].trim();
+             ar3[i].inici = parseInt(string)
+           }
+
+           this.setState({"horari":ar3 })
+           console.log(ar3)
+
          })
     }
 }
