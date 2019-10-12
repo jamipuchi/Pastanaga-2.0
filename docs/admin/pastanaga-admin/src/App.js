@@ -56,6 +56,24 @@ export default class App extends Component {
 
   }
 
+  comencarPartida() {
+    fetch("http://abuch.ddns.net:3080/api/create-game", {
+      crossDomain: true,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+
+  }
+
   render() {
     return (
       <div className="container">

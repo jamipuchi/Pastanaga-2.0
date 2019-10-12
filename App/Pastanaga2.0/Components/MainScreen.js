@@ -11,21 +11,30 @@ export default class MainScreen extends Component {
         };
     }
 
+    getIdUsuari = async () => {
+        const currentUser = await AsyncStorage.getItem('id_user')
+        if (currentUser != null) {
+            return (currentUser);
+        } else {
+            return '';
+        }
+    }
+
     render() {
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
-                <View style={{height:'7.5%'}}></View>
+                <View style={{ height: '7.5%' }}></View>
                 <TouchableOpacity
                     style={{ width: '100%', height: '25%', marginBottom: '5%' }}
                     onPress={() => this.props.navigation.navigate("Guanyat")}
                 >
                     <Image
-                        style={{ width: '100%', height:'100%' }}
+                        style={{ width: '100%', height: '100%' }}
                         resizeMode="contain"
                         source={require('../assets/Logo.png')}
                     />
                 </TouchableOpacity>
-                <Text style={{ width: '100%', color: 'white', textAlign: 'center', fontSize:20 }}>Objectiu:</Text>
+                <Text style={{ width: '100%', color: 'white', textAlign: 'center', fontSize: 20 }}>Objectiu:</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Tutorial")}
                     style={{ height: '12%', width: '100%' }}
