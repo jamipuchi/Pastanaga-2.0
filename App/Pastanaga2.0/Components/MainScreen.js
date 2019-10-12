@@ -35,6 +35,7 @@ export default class MainScreen extends Component {
                 >
 
                     <Image
+
                         style={{ width: '90%', height: '100%', marginLeft: '5%' }}
                         resizeMode="contain"
                         source={require('../assets/obtenirMonedesButton.png')}
