@@ -135,6 +135,24 @@
         }
       }
     },
+    "/api/is-there-match": {
+      "get": {
+        "operationId": "isThereMatchQuery",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/create-user": {
       "post": {
         "operationId": "createUserMutation",
@@ -372,7 +390,8 @@
         "type": "object",
         "required": [
           "users",
-          "locationInRange"
+          "locationInRange",
+          "isThereMatch"
         ],
         "properties": {
           "users": {
@@ -393,6 +412,9 @@
           "angle": {
             "type": "number",
             "format": "float"
+          },
+          "isThereMatch": {
+            "type": "boolean"
           }
         }
       },

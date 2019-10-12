@@ -18,9 +18,21 @@ const angle = async (parent, args, context) => {
     return angle;
 }
 
+const isThereMatch = async (parent, args, context) => {
+    const users = await context.prisma.users()
+    let count = 0;
+    for (let i = 0; i < users.length; ++i) {
+        if (users[i].winner) return true;
+        if (users[i].alive != null && users[i].alive == true) count += 1;
+        if (count > 1) return true;
+    }
+    return false;
+}
+
 module.exports = {
     users,
     user,
     locationInRange,
     angle,
+    isThereMatch
 }
