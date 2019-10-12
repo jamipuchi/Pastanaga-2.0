@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-nati
 import { AccordionList } from "accordion-collapse-react-native";
 import { Separator, Icon } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import { hasStartedLocationUpdatesAsync } from 'expo-location';
 
 
 export default class PowerUps extends Component {
@@ -16,7 +17,7 @@ export default class PowerUps extends Component {
                     price: 100,
                     description: 'T`indica cap a quina direcció està el teu objectiu en el cas que estigui dintre el recinte de joc durant una hora.',
                     link: require("../assets/powerUps/1.png"),
-                    pantalla: "Brujola"
+                    pantalla: "Brujola",
                 },
                 {
                     id: 2,
@@ -24,14 +25,14 @@ export default class PowerUps extends Component {
                     price: 100,
                     description: 'T`indica La distància que hi ha entre tu i el teu objectiu durant 1 hora.',
                     link: require("../assets/powerUps/2.png"),
-                    pantalla:"Distancia"
+                    pantalla: "Distancia",
                 },
                 {
                     id: 3,
                     name: 'Rang Matar',
                     price: 100,
                     description: 'Augmenta el teu rang d`ús del botó disparar durant 24 hores.',
-                    link: require("../assets/powerUps/3.png")
+                    link: require("../assets/powerUps/3.png"),
                 },
                 {
                     id: 4,
@@ -83,6 +84,10 @@ export default class PowerUps extends Component {
             ],
         }
 
+    }
+
+    async restarMonedes(i){
+        
     }
 
     _head(item) {
@@ -147,17 +152,29 @@ export default class PowerUps extends Component {
             ]
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate(item.pantalla)}
-                    activeOpacity={0.5}
-                    style={{ height: 100, width: '100%' }}>
 
-                    {(false) ? //condició que diu si ja el tens comprat o no 
+                {(false) ? //condició que diu si ja el tens comprat o no 
+                    <TouchableOpacity
+                        onPress={() => (item.pantalla != null) ?
+                            this.props.navigation.navigate(item.pantalla)
+                            : item.f()} //cridar funcion del item
+                        activeOpacity={0.5}
+                        style={{ height: 100, width: '100%' }}>
+
                         <Image
                             style={{ height: '100%', width: '100%' }}
                             resizeMode="contain"
                             source={require('../assets/activarButton.png')}
-                        /> : <ImageBackground
+                        />                 </TouchableOpacity>
+
+                    :
+                    <TouchableOpacity
+                        onPress={() => (item.pantalla != null) ?
+                            this.props.navigation.navigate(item.pantalla)
+                            : console.log("Pantalla")}
+                        activeOpacity={0.5}
+                        style={{ height: 100, width: '100%' }}>
+                        <ImageBackground
                             style={{ height: '100%', width: '100%' }}
                             resizeMode="contain"
                             source={require('../assets/usePowerUp.png')}
@@ -170,10 +187,9 @@ export default class PowerUps extends Component {
                                 color: 'white',
                                 fontSize: 20
                             }}>Utilitzar (30 min restants) {/* Et diu el temps que et queda */}</Text>
-                        </ImageBackground>}
-
-                </TouchableOpacity>
-
+                        </ImageBackground>
+                    </TouchableOpacity>
+                }
             </View>
         );
     }
