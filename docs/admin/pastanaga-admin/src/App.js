@@ -11,6 +11,7 @@ export default class App extends Component {
       isLoaded: false,
       jugantPartida: false
     };
+    this.comencarPartida = this.comencarPartida.bind(this);
 
   }
 
@@ -65,20 +66,21 @@ export default class App extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
+          this.setState({
+            jugantPartida: true
+          });
         },
         (error) => {
           console.log(error)
         }
       )
-        this.forceUpdate();
   }
 
   render() {
     return (
       <div className="container">
         <h1 className="mt-5">Usuaris Registrats</h1>
-        <div className="card mt-5 ">
+        <div className="mt-5 ">
           {this.state.users.map((item, keys) => <div className="row border" key={item.id}>
             <p className="col">Id: {keys}</p>
             <p className="col">Nom: {item.name}</p>
