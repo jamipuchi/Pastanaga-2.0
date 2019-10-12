@@ -29,10 +29,17 @@ const isThereMatch = async (parent, args, context) => {
     return false;
 }
 
+const distanceObjective = async (parent, args, context) => {
+    const objectiu = await context.prisma.user({ id: args.id }).objectiu()
+    const sender = await context.prisma.user({ id: args.id })
+    return distance(sender.latitude, sender.longitude, objectiu.latitude, sender.longitude);
+}
+
 module.exports = {
     users,
     user,
     locationInRange,
     angle,
-    isThereMatch
+    isThereMatch,
+    distanceObjective
 }

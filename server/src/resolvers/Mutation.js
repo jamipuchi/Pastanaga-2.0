@@ -131,11 +131,22 @@ const teClasse = async (parent, args, context) => {
     return false
 }
 
+const spend = async (parent, args, context) => {
+    const m = await context.prisma.user({ id: args.id }).monedes();
+    return context.prisma.updateUser({
+        data: {
+            monedes: m - args.amount,
+        },
+        where: { id: args.id }
+    })
+}
+
 module.exports = {
     createUser,
     deleteUser,
     updateLastKnown,
     createGame,
     matar,
-    teClasse
+    teClasse,
+    spend
 }

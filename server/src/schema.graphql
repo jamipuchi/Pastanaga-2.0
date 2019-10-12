@@ -8,8 +8,9 @@ type Query {
     user(id: ID!): User
     locationInRange(id: ID!): Boolean!
     objectiu(id: ID!): User
-    angle(id: ID!): Float
+    angle(id: ID!): Float!
     isThereMatch: Boolean!
+    distanceObjective(id: ID!): Float
 }
 
 type Mutation {
@@ -19,6 +20,7 @@ type Mutation {
     createGame: Boolean!
     matar(id: ID!): Boolean!
     teClasse(id: ID!, hora: Int!, diaSetmana: Int!, aula: String!): Boolean!
+    spend(id: ID!, amount: Int!): User!
 }
 
 type User {
