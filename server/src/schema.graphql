@@ -6,11 +6,17 @@ schema {
 type Query {
     users: [User!]!
     user(id: ID!): User
+    locationInRange(id: ID!): Boolean!
+    objectiu(id: ID!): User
+    angle(id: ID!): Float
 }
 
 type Mutation {
     createUser(name: String!, email: String!): User!
     deleteUser(id: ID!): User
+    updateLastKnown(id: ID!, latitude: String!, longitude: String!): User
+    createGame: Boolean!
+    matar(id: ID!): Boolean!
 }
 
 type User {
@@ -18,4 +24,9 @@ type User {
     name: String!
     email: String!
     objectiu: User
+    latitude: String
+    longitude: String
+    alive: Boolean
+    monedes: Int
+    winner: Boolean!
 }

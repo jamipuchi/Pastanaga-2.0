@@ -33,6 +33,58 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
+    /api/location-in-range:
+        get:
+            operationId: locationInRangeQuery
+            parameters:
+                -
+                    in: query
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+    '/api/objectiu/{id}':
+        get:
+            operationId: objectiuQuery
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /api/angle:
+        get:
+            operationId: angleQuery
+            parameters:
+                -
+                    in: query
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: number
+                                format: float
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -76,12 +128,75 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
+    /api/update-last-known:
+        post:
+            operationId: updateLastKnownMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                                latitude:
+                                    type: string
+                                longitude:
+                                    type: string
+                            required:
+                                - id
+                                - latitude
+                                - longitude
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /api/create-game:
+        post:
+            operationId: createGameMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties: {}
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+    /api/matar:
+        post:
+            operationId: matarMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                            required:
+                                - id
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
 components:
     schemas:
         Query:
             type: object
             required:
                 - users
+                - locationInRange
             properties:
                 users:
                     type: array
@@ -89,12 +204,20 @@ components:
                         $ref: '#/components/schemas/User'
                 user:
                     $ref: '#/components/schemas/User'
+                locationInRange:
+                    type: boolean
+                objectiu:
+                    $ref: '#/components/schemas/User'
+                angle:
+                    type: number
+                    format: float
         User:
             type: object
             required:
                 - id
                 - name
                 - email
+                - winner
             properties:
                 id:
                     type: object
@@ -104,14 +227,33 @@ components:
                     type: string
                 objectiu:
                     $ref: '#/components/schemas/User'
+                latitude:
+                    type: string
+                longitude:
+                    type: string
+                alive:
+                    type: boolean
+                monedes:
+                    type: integer
+                    format: int32
+                winner:
+                    type: boolean
         Mutation:
             type: object
             required:
                 - createUser
+                - createGame
+                - matar
             properties:
                 createUser:
                     $ref: '#/components/schemas/User'
                 deleteUser:
                     $ref: '#/components/schemas/User'
+                updateLastKnown:
+                    $ref: '#/components/schemas/User'
+                createGame:
+                    type: boolean
+                matar:
+                    type: boolean
         ID:
             type: string

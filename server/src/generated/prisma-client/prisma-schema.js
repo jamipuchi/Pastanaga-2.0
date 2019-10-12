@@ -58,6 +58,11 @@ type User {
   name: String!
   email: String!
   objectiu: User
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean!
 }
 
 type UserConnection {
@@ -70,12 +75,28 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
-  objectiu: UserCreateOneInput
+  objectiu: UserCreateOneWithoutObjectiuInput
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean!
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutObjectiuInput {
+  create: UserCreateWithoutObjectiuInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutObjectiuInput {
+  id: ID
+  name: String!
+  email: String!
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean!
 }
 
 type UserEdge {
@@ -92,6 +113,16 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  latitude_ASC
+  latitude_DESC
+  longitude_ASC
+  longitude_DESC
+  alive_ASC
+  alive_DESC
+  monedes_ASC
+  monedes_DESC
+  winner_ASC
+  winner_DESC
 }
 
 type UserPreviousValues {
@@ -99,6 +130,11 @@ type UserPreviousValues {
   createdAt: DateTime!
   name: String!
   email: String!
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean!
 }
 
 type UserSubscriptionPayload {
@@ -117,35 +153,49 @@ input UserSubscriptionWhereInput {
   AND: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  name: String
-  email: String
-  objectiu: UserUpdateOneInput
-}
-
 input UserUpdateInput {
   name: String
   email: String
-  objectiu: UserUpdateOneInput
+  objectiu: UserUpdateOneWithoutObjectiuInput
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean
 }
 
-input UserUpdateOneInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+input UserUpdateOneWithoutObjectiuInput {
+  create: UserCreateWithoutObjectiuInput
+  update: UserUpdateWithoutObjectiuDataInput
+  upsert: UserUpsertWithoutObjectiuInput
   delete: Boolean
   disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutObjectiuDataInput {
+  name: String
+  email: String
+  latitude: String
+  longitude: String
+  alive: Boolean
+  monedes: Int
+  winner: Boolean
+}
+
+input UserUpsertWithoutObjectiuInput {
+  update: UserUpdateWithoutObjectiuDataInput!
+  create: UserCreateWithoutObjectiuInput!
 }
 
 input UserWhereInput {
@@ -200,6 +250,46 @@ input UserWhereInput {
   email_ends_with: String
   email_not_ends_with: String
   objectiu: UserWhereInput
+  latitude: String
+  latitude_not: String
+  latitude_in: [String!]
+  latitude_not_in: [String!]
+  latitude_lt: String
+  latitude_lte: String
+  latitude_gt: String
+  latitude_gte: String
+  latitude_contains: String
+  latitude_not_contains: String
+  latitude_starts_with: String
+  latitude_not_starts_with: String
+  latitude_ends_with: String
+  latitude_not_ends_with: String
+  longitude: String
+  longitude_not: String
+  longitude_in: [String!]
+  longitude_not_in: [String!]
+  longitude_lt: String
+  longitude_lte: String
+  longitude_gt: String
+  longitude_gte: String
+  longitude_contains: String
+  longitude_not_contains: String
+  longitude_starts_with: String
+  longitude_not_starts_with: String
+  longitude_ends_with: String
+  longitude_not_ends_with: String
+  alive: Boolean
+  alive_not: Boolean
+  monedes: Int
+  monedes_not: Int
+  monedes_in: [Int!]
+  monedes_not_in: [Int!]
+  monedes_lt: Int
+  monedes_lte: Int
+  monedes_gt: Int
+  monedes_gte: Int
+  winner: Boolean
+  winner_not: Boolean
   AND: [UserWhereInput!]
 }
 

@@ -1,25 +1,31 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { makeExecutableSchema } = require('graphql-tools');
-const { useSofa } = require('sofa-api');
 const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const sofaAPI = require('sofa-api');
+const { useSofa, OpenAPI } = require('sofa-api');
 const path = require('path');
 const graphqlImport = require('graphql-import');
 const _ = require('lodash');
 const { prisma } = require('./generated/prisma-client');
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
+const User = require('./resolvers/User')
 
 const resolvers = {
     Query,
-    Mutation
+    Mutation,
+    User
 }
 
-const typeDefs = graphqlImport.importSchema('./src/schema.graphql')
+const typeDefs = graphqlImport.importSchema(path.resolve(__dirname, './schema.graphql'))
 
 const schema = new makeExecutableSchema({
+    typeDefs,
+    resolvers,
+})
+
+const server = new GraphQLServer({
     typeDefs,
     resolvers,
     context: request => {
@@ -30,21 +36,10 @@ const schema = new makeExecutableSchema({
     },
 })
 
-const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
-    resolvers,
-    context: request => {
-        return {
-            ...request,
-            prisma,
-        }
-    },
-})
-server.start(() => console.log(`Server is running on http://localhost:4000`))
 
-const app = express();
+// const app = express();
 
-const openApi = sofaAPI.OpenAPI({
+const openApi = OpenAPI({
     schema,
     info: {
         title: 'Pastanaga API',
@@ -52,14 +47,22 @@ const openApi = sofaAPI.OpenAPI({
     },
 });
 
-app.use(
+server.express.use(bodyParser.json());
+
+server.express.use(
     '/api',
-    sofaAPI.useSofa({
+    useSofa({
         schema,
         onRoute(info) {
             openApi.addRoute(info, {
                 basePath: '/api',
             });
+        },
+        context: request => {
+            return {
+                ...request,
+                prisma,
+            }
         },
     })
 );
@@ -70,10 +73,9 @@ openApi.save(path.resolve(__dirname, './swagger.yml'));
 
 const swaggerDocument = require('./swagger.json');
 
-app.use(bodyParser.json());
-app.use('/api', useSofa({ schema }));
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.listen(3000, () => {
-    console.log('REST API Server listening  on http://localhost:3000')
-})
+server.express.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.listen(2368, () => {
+//     console.log('REST API Server listening  on http://localhost:3000')
+// })
 
+server.start({ port: 2368 }, () => console.log(`Server is running on http://localhost:2368`))

@@ -3,7 +3,9 @@ import {
   Text,
   View,
   StyleSheet,
-  Button
+  Button,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -26,7 +28,7 @@ export default class Escanejar extends React.Component {
     this.getPermissionsAsync();
   }
 
-  getPermissionsAsync = async() => {
+  getPermissionsAsync = async () => {
     const {
       status
     } = await Permissions.askAsync(Permissions.CAMERA);
@@ -45,60 +47,83 @@ export default class Escanejar extends React.Component {
 
     if (hasCameraPermission === null) {
       console.log("no camera permission")
-      return <Text > Requesting
-      for camera permission < /Text>;
+      return <Text> Requesting
+      for camera permission </Text>;
     }
     if (hasCameraPermission === false) {
       console.log("no acces for camera");
-      return <Text > No access to camera < /Text>;
+      return <Text> No access to camera </Text>;
     }
 
     return (
-      <View style = {
+      <View style={
         {
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
+          width: '100%',
+          height: '100%',
+          padding: 40,
+          backgroundColor: '#262626'
         }}>
-        <BarCodeScanner onBarCodeScanned = {
-          scanned ? undefined : this.handleBarCodeScanned
-        }
-        style = {
-          StyleSheet.absoluteFillObject
-        }
-        />
+        <Text style={{
+          marginLeft: 40, fontSize: 30, color: '#6BDD5F',
+          position: 'absolute', width: ('100%'), textAlign: 'center', top: '10%'
+        }}>
+          Escanejar
+          </Text>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("MainScreen")}
+          style={{ width: 30, position: 'absolute', left: '5%', top: '12%' }}>
+          <Image
+            source={require('../assets/back.png')}
+            style={{ height: 20, width: 20, resizeMode: 'contain' }}
+          ></Image>
+        </TouchableOpacity>
+        <View style={
+          {
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+          }}>
+          <BarCodeScanner onBarCodeScanned={
+            scanned ? undefined : this.handleBarCodeScanned
+          }
+            style={
+              StyleSheet.absoluteFillObject
+            }
+          />
+        </View>
+
         <ConfirmDialog
-            visible={this.state.dialogVisible}
-            title="El saber no ocupa lloc!"
-            animationType="slider"
-            onTouchOutside={() => {
-              this.setState({dialogVisible: false})
+          visible={this.state.dialogVisible}
+          title="El saber no ocupa lloc!"
+          animationType="slider"
+          onTouchOutside={() => {
+            this.setState({ dialogVisible: false })
+            this.props.navigation.navigate("MainScreen")
+
+          }}
+          positiveButton={{
+            title: "OK",
+            onPress: () => {
+              this.setState({ dialogVisible: false })
               this.props.navigation.navigate("MainScreen")
+            }
+          }} >
 
-            }}
-            positiveButton={{
-              title: "OK",
-              onPress: () => {
-                this.setState({dialogVisible: false})
-                this.props.navigation.navigate("MainScreen")
-              }
-            }} >
-
-            <View>
-                <Text>Ara mateix estàs a{this.state.classe}< /Text>
-            </View>
+          <View>
+            <Text>Ara mateix estàs a{this.state.classe}</Text>
+          </View>
         </ConfirmDialog>
         {
-          scanned && ( <
-            Button title = {
+          scanned && (<
+            Button title={
               'Tap to Scan Again'
             }
-            onPress = {
+            onPress={
               () => this.setState({
                 scanned: false
               })
             }
-            />
+          />
           )
         }
       </View>
@@ -117,12 +142,12 @@ export default class Escanejar extends React.Component {
     this.setState({
       scanned: true
     });
-    if(type != "256"){
+    if (type != "256") {
       alert("codi QR no reconegut")
     } else {
       this.comprovaAula
-      this.setState({classe: data})
-      this.setState({dialogVisible: true})
+      this.setState({ classe: data })
+      this.setState({ dialogVisible: true })
     }
 
   };

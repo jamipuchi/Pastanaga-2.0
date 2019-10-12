@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { AccordionList } from "accordion-collapse-react-native";
 import { Separator, Icon } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import { hasStartedLocationUpdatesAsync } from 'expo-location';
 
 
 export default class PowerUps extends Component {
@@ -15,21 +16,23 @@ export default class PowerUps extends Component {
                     name: 'Brújola',
                     price: 100,
                     description: 'T`indica cap a quina direcció està el teu objectiu en el cas que estigui dintre el recinte de joc durant una hora.',
-                    link: require("../assets/powerUps/1.png")
+                    link: require("../assets/powerUps/1.png"),
+                    pantalla: "Brujola",
                 },
                 {
                     id: 2,
                     name: 'Distància',
                     price: 100,
                     description: 'T`indica La distància que hi ha entre tu i el teu objectiu durant 1 hora.',
-                    link: require("../assets/powerUps/2.png")
+                    link: require("../assets/powerUps/2.png"),
+                    pantalla: "Distancia",
                 },
                 {
                     id: 3,
                     name: 'Rang Matar',
                     price: 100,
                     description: 'Augmenta el teu rang d`ús del botó disparar durant 24 hores.',
-                    link: require("../assets/powerUps/3.png")
+                    link: require("../assets/powerUps/3.png"),
                 },
                 {
                     id: 4,
@@ -57,25 +60,34 @@ export default class PowerUps extends Component {
                     name: 'Està?',
                     price: 100,
                     description: 'Getting Started',
-                    link: require("../assets/powerUps/7.png")
+                    link: require("../assets/powerUps/7.png"),
+                    pantalla: "Esta"
+
                 },
                 {
                     id: 8,
                     name: 'Nom',
                     price: 10,
                     description: 'T`indica si el teu objectiu està dintre el recinte del joc.',
-                    link: require("../assets/powerUps/8.png")
+                    link: require("../assets/powerUps/8.png"),
+                    pantalla: "Nom"
                 },
                 {
                     id: 9,
                     name: 'Foto',
                     price: 100,
                     description: 'T`ensenya la foto del teu objectiu perquè sàpigues qui has de disparar',
-                    link: require("../assets/powerUps/9.png")
+                    link: require("../assets/powerUps/9.png"),
+                    pantalla: "Foto"
+
                 }
             ],
         }
 
+    }
+
+    async restarMonedes(i){
+        
     }
 
     _head(item) {
@@ -89,7 +101,8 @@ export default class PowerUps extends Component {
 
 
             }, (item.id == 1) ? { borderTopLeftRadius: 8, borderTopRightRadius: 8 } : {}
-                , (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8
+                , (item.id == 9) ? {
+                    borderBottomLeftRadius: 8, borderBottomRightRadius: 8
                 } : {}]}>
                 <Image
                     style={{ width: 40, height: 40, resizeMode: 'contain' }}
@@ -113,7 +126,7 @@ export default class PowerUps extends Component {
                         textAlignVertical: 'center',
                         fontSize: 15
                     }}>
-                    {item.price+" "}
+                    {item.price + " "}
                 </Text>
                 <Image
                     style={{ height: 20, width: 20, marginTop: 10 }}
@@ -132,21 +145,51 @@ export default class PowerUps extends Component {
     _body(item) {
         return (
             <View style={[{ padding: 10, backgroundColor: 'white', width: '100%' },
-            (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
-            marginTop:-10, paddingTop:10 } : {}
-        ]
+            (item.id == 9) ? {
+                borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
+                marginTop: -10, paddingTop: 10
+            } : {}
+            ]
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    style={{ height: 100, width: '100%' }}>
-                    <Image
-                        style={{ height: '100%', width: '100%' }}
-                        resizeMode="contain"
-                        source={require('../assets/activarButton.png')}
-                    />
-                </TouchableOpacity>
 
+                {(false) ? //condició que diu si ja el tens comprat o no 
+                    <TouchableOpacity
+                        onPress={() => (item.pantalla != null) ?
+                            this.props.navigation.navigate(item.pantalla)
+                            : item.f()} //cridar funcion del item
+                        activeOpacity={0.5}
+                        style={{ height: 100, width: '100%' }}>
+
+                        <Image
+                            style={{ height: '100%', width: '100%' }}
+                            resizeMode="contain"
+                            source={require('../assets/activarButton.png')}
+                        />                 </TouchableOpacity>
+
+                    :
+                    <TouchableOpacity
+                        onPress={() => (item.pantalla != null) ?
+                            this.props.navigation.navigate(item.pantalla)
+                            : console.log("Pantalla")}
+                        activeOpacity={0.5}
+                        style={{ height: 100, width: '100%' }}>
+                        <ImageBackground
+                            style={{ height: '100%', width: '100%' }}
+                            resizeMode="contain"
+                            source={require('../assets/usePowerUp.png')}
+                        >
+                            <Text style={{
+                                width: '100%',
+                                height: '100%',
+                                textAlign: "center",
+                                textAlignVertical: "center",
+                                color: 'white',
+                                fontSize: 20
+                            }}>Utilitzar (30 min restants) {/* Et diu el temps que et queda */}</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                }
             </View>
         );
     }
@@ -162,21 +205,21 @@ export default class PowerUps extends Component {
                     Power Ups
                 </Text>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}
+                    onPress={() => this.props.navigation.navigate("MainScreen")}
                     style={{ width: 30, position: 'absolute', left: '5%', top: '12%' }}>
                     <Image
                         source={require('../assets/back.png')}
                         style={{ height: 20, width: 20, resizeMode: 'contain' }}
                     ></Image>
                 </TouchableOpacity>
-                    <ScrollView >
-                        <AccordionList
-                            style={{ width: '90%', marginLeft: '5%', borderRadius: 10 }}
-                            list={this.state.list}
-                            header={this._head}
-                            body={this._body}
-                        />
-                    </ScrollView>
+                <ScrollView >
+                    <AccordionList
+                        style={{ width: '90%', marginLeft: '5%', borderRadius: 10 }}
+                        list={this.state.list}
+                        header={this._head}
+                        body={this._body.bind(this)}
+                    />
+                </ScrollView>
 
             </View>
         );
