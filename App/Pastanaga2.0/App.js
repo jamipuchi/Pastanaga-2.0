@@ -17,6 +17,7 @@ import Distancia from './Components/PowerUps/Distancia';
 import Esta from './Components/PowerUps/Esta';
 import Nom from './Components/PowerUps/Nom';
 import Foto from './Components/PowerUps/Foto';
+import * as Permissions from 'expo-permissions';
 
 class AuthLoadingScreen extends React.Component {
 
@@ -26,6 +27,13 @@ class AuthLoadingScreen extends React.Component {
     this._bootstrapAsync();
   }
   componentDidMount = async ()=>{
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    console.log("status: "+status);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
     await Location.startLocationUpdatesAsync("firstTask", {
           accuracy: Location.Accuracy.Balanced,
           timeInterval: 5000,
