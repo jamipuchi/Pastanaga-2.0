@@ -60,7 +60,7 @@ export default class App extends Component {
             <p className="col">{item.monedes}</p>
           </div>)}
         </div>
-        <button onClick={this.handleClick} type="button" class="btn btn-primary mt-2">Començar partida</button>
+        <button onClick={this.handleClick} type="button" className="btn btn-primary mt-2">Començar partida</button>
 
       </div>
     );
