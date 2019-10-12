@@ -14,12 +14,13 @@ export default class MainScreen extends Component {
     render() {
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
+                <View style={{height:'7.5%'}}></View>
                 <TouchableOpacity
-                    style={{ width: '100%', height: '20%', marginBottom: '5%', marginTop: '10%', backgroundColor: 'red' }}
+                    style={{ width: '100%', height: '25%', marginBottom: '5%' }}
                     onPress={() => this.props.navigation.navigate("Guanyat")}
                 >
                     <Image
-                        style={{ width: '100%', height:'150%', backgroundColor: 'blue' }}
+                        style={{ width: '100%', height:'100%' }}
                         resizeMode="contain"
                         source={require('../assets/Logo.png')}
                     />
