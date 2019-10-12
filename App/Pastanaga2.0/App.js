@@ -6,7 +6,7 @@ import Login from './Components/Login';
 import MainScreen from './Components/MainScreen';
 import PowerUps from './Components/PowerUps';
 import Escanejar from './Components/Escanejar';
-import ObtenirPunts from './Components/ObtenirPunts'
+import Disparar from './Components/Disparar'
 
 
 class AuthLoadingScreen extends React.Component {
@@ -52,7 +52,7 @@ const AppStack = createStackNavigator(
   MainScreen: {screen: MainScreen},
   Escanejar: {screen: Escanejar},
   PowerUps: {screen: PowerUps},
-  ObtenirPunts:{screen: ObtenirPunts},
+  Disparar:{screen: Disparar},
   },
   {
     initialRouteName: 'MainScreen',

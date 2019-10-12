@@ -7,7 +7,7 @@ import * as Permissions from 'expo-permissions';
 
 
 
-export default class ObtenirPunts extends Component {
+export default class Disparar extends Component {
   state = {
     location: null,
     errorMessage: null,
