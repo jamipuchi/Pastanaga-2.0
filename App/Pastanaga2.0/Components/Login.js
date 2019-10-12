@@ -77,7 +77,7 @@ export default class Login extends Component {
 
   _handlePressAsync = async () => {
     let redirectUrl = await AuthSession.getRedirectUrl();
-    console.log(redirectUrl);
+    console.log("REDERIECTTTTTTTTTTT"+redirectUrl);
     let result = await AuthSession.startAsync({
       authUrl:
         `https://api.fib.upc.edu/v2/o/authorize/?` +
