@@ -10,6 +10,7 @@ import Disparar from './Components/Disparar'
 import Tutorial from './Components/Tutorial';
 import Perdut from './Components/Perdut';
 import Guanyat from './Components/Guanyat';
+import Brujola from './Components/PowerUps/Brujola';
 
 class AuthLoadingScreen extends React.Component {
 
@@ -49,12 +50,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const PowerUpStack = createStackNavigator(
+  {
+    PowerUps: {screen: PowerUps},
+    Brujola: {screen: Brujola}
+    },
+    {
+      initialRouteName: 'PowerUps',
+      headerMode: 'none',
+      navigationOptions: {
+          headerVisible: false,
+      }
+    }
+)
+
 const AppStack = createStackNavigator(
   {
   Login: {screen: Login},
   MainScreen: {screen: MainScreen},
   Escanejar: {screen: Escanejar},
-  PowerUps: {screen: PowerUps},
+  PowerUps: {screen: PowerUpStack},
   Disparar:{screen: Disparar},
   Tutorial:{screen: Tutorial},
   Perdut:{screen:Perdut},

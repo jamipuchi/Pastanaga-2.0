@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { AccordionList } from "accordion-collapse-react-native";
 import { Separator, Icon } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -89,7 +89,8 @@ export default class PowerUps extends Component {
 
 
             }, (item.id == 1) ? { borderTopLeftRadius: 8, borderTopRightRadius: 8 } : {}
-                , (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8
+                , (item.id == 9) ? {
+                    borderBottomLeftRadius: 8, borderBottomRightRadius: 8
                 } : {}]}>
                 <Image
                     style={{ width: 40, height: 40, resizeMode: 'contain' }}
@@ -113,7 +114,7 @@ export default class PowerUps extends Component {
                         textAlignVertical: 'center',
                         fontSize: 15
                     }}>
-                    {item.price+" "}
+                    {item.price + " "}
                 </Text>
                 <Image
                     style={{ height: 20, width: 20, marginTop: 10 }}
@@ -132,19 +133,34 @@ export default class PowerUps extends Component {
     _body(item) {
         return (
             <View style={[{ padding: 10, backgroundColor: 'white', width: '100%' },
-            (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
-            marginTop:-10, paddingTop:10 } : {}
-        ]
+            (item.id == 9) ? {
+                borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
+                marginTop: -10, paddingTop: 10
+            } : {}
+            ]
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
                 <TouchableOpacity
                     activeOpacity={0.5}
                     style={{ height: 100, width: '100%' }}>
-                    <Image
+                    {(false) ? //condició que diu si ja el tens comprat o no 
+                    <Image 
                         style={{ height: '100%', width: '100%' }}
                         resizeMode="contain"
                         source={require('../assets/activarButton.png')}
-                    />
+                    /> : <ImageBackground
+                            style={{ height: '100%', width: '100%' }}
+                            resizeMode="contain"
+                            source={require('../assets/usePowerUp.png')}
+                        >
+                            <Text style={{width:'100%', 
+                            height:'100%', 
+                            textAlign:"center", 
+                            textAlignVertical:"center",
+                            color:'white',
+                            fontSize:20}}>Utilitzar (30 min restants) {/* Et diu el temps que et queda */}</Text>
+                        </ImageBackground>}
+
                 </TouchableOpacity>
 
             </View>
@@ -169,14 +185,14 @@ export default class PowerUps extends Component {
                         style={{ height: 20, width: 20, resizeMode: 'contain' }}
                     ></Image>
                 </TouchableOpacity>
-                    <ScrollView >
-                        <AccordionList
-                            style={{ width: '90%', marginLeft: '5%', borderRadius: 10 }}
-                            list={this.state.list}
-                            header={this._head}
-                            body={this._body}
-                        />
-                    </ScrollView>
+                <ScrollView >
+                    <AccordionList
+                        style={{ width: '90%', marginLeft: '5%', borderRadius: 10 }}
+                        list={this.state.list}
+                        header={this._head}
+                        body={this._body}
+                    />
+                </ScrollView>
 
             </View>
         );
