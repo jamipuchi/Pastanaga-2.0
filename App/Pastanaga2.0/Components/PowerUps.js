@@ -14,33 +14,34 @@ export default class PowerUps extends Component {
                     id: 1,
                     name: 'Brújola',
                     price: 100,
-                    description: 'Getting Started',
+                    description: 'T`indica cap a quina direcció està el teu objectiu en el cas que estigui dintre el recinte de joc durant una hora.',
                     link: require("../assets/powerUps/1.png")
                 },
                 {
                     id: 2,
                     name: 'Distància',
                     price: 100,
-                    description: 'Getting Started',
+                    description: 'T`indica La distància que hi ha entre tu i el teu objectiu durant 1 hora.',
                     link: require("../assets/powerUps/2.png")
                 },
                 {
                     id: 3,
                     name: 'Rang Matar',
                     price: 100,
-                    description: 'Getting Started',
+                    description: 'Augmenta el teu rang d`ús del botó disparar durant 24 hores.',
                     link: require("../assets/powerUps/3.png")
                 },
                 {
                     id: 4,
                     name: 'Avís',
                     price: 100,
-                    description: 'Getting Started',
+                    description: 'El següent cop que el teu assassí estigui en rang de matar-te t`avisarà',
                     link: require("../assets/powerUps/4.png")
                 },
                 {
                     id: 5,
                     name: 'Invisibilitat',
+                    description: 'El teu assassí no podrà utilitzar els power ups per saber on estàs',
                     price: 100,
                     link: require("../assets/powerUps/5.png")
                 },
@@ -48,7 +49,7 @@ export default class PowerUps extends Component {
                     id: 6,
                     name: 'Invulnerabilitat',
                     price: 100,
-                    description: 'Getting Started',
+                    description: 'El teu assassí no et podrà matar durant 1h',
                     link: require("../assets/powerUps/6.png")
                 },
                 {
@@ -61,15 +62,15 @@ export default class PowerUps extends Component {
                 {
                     id: 8,
                     name: 'Nom',
-                    price: 100,
-                    description: 'Getting Started',
+                    price: 10,
+                    description: 'T`indica si el teu objectiu està dintre el recinte del joc.',
                     link: require("../assets/powerUps/8.png")
                 },
                 {
                     id: 9,
                     name: 'Foto',
                     price: 100,
-                    description: 'Getting Started',
+                    description: 'T`ensenya la foto del teu objectiu perquè sàpigues qui has de disparar',
                     link: require("../assets/powerUps/9.png")
                 }
             ],
@@ -78,7 +79,6 @@ export default class PowerUps extends Component {
     }
 
     _head(item) {
-        var link = "../assets/powerUps/" + item.id + ".png";
         return (
             <View style={[{
                 backgroundColor: 'white',
@@ -113,7 +113,7 @@ export default class PowerUps extends Component {
                         textAlignVertical: 'center',
                         fontSize: 15
                     }}>
-                    300{" "}
+                    item.price{" "}
                 </Text>
                 <Image
                     style={{ height: 20, width: 20, marginTop: 10 }}
