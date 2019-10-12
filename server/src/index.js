@@ -11,6 +11,7 @@ const { prisma } = require('./generated/prisma-client');
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const User = require('./resolvers/User')
+const cors = require('cors');
 
 const resolvers = {
     Query,
@@ -74,15 +75,7 @@ openApi.save(path.resolve(__dirname, './swagger.yml'));
 const swaggerDocument = require('./swagger.json');
 
 server.express.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-// app.listen(2368, () => {
-//     console.log('REST API Server listening  on http://localhost:3000')
-// })
 
-server.express.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
+server.express.use(cors());
 
 server.start({ port: 2368 }, () => console.log(`Server is running on http://localhost:2368`))
