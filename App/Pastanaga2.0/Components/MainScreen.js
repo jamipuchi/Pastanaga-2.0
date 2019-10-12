@@ -15,15 +15,16 @@ export default class MainScreen extends Component {
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
                 <TouchableOpacity
+                    style={{ width: '100%', height: '20%', marginBottom: '5%', marginTop: '10%', backgroundColor: 'red' }}
                     onPress={() => this.props.navigation.navigate("Guanyat")}
                 >
                     <Image
-                        style={{ width: '100%', height: '25%', marginBottom: '5%', marginTop: '20%' }}
+                        style={{ width: '100%', height:'150%', backgroundColor: 'blue' }}
                         resizeMode="contain"
                         source={require('../assets/Logo.png')}
                     />
                 </TouchableOpacity>
-
+                <Text style={{ width: '100%', color: 'white', textAlign: 'center', fontSize:20 }}>Objectiu:</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Tutorial")}
                     style={{ height: '12%', width: '100%' }}
