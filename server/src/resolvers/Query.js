@@ -14,6 +14,7 @@ const locationInRange = async (parent, args, context) => {
 const angle = async (parent, args, context) => {
     const p1 = await context.prisma.user({ id: args.id }).objectiu()
     const p2 = await context.prisma.user({ id: args.id })
+    if (p1 == null || p2 == null) return 404.0;
     const angle = Math.atan2(p2.latitude - p1.latitude, p2.longitude - p1.longitude) * 180 / Math.PI;
     return angle;
 }

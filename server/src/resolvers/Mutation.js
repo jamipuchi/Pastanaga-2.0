@@ -12,7 +12,8 @@ const createUser = async (parent, args, context) => {
         horari: {
             create: args.horari,
         },
-        monedes: 0
+        monedes: 0,
+        rang: 20
     })
 }
 
@@ -141,6 +142,16 @@ const spend = async (parent, args, context) => {
     })
 }
 
+const changeRange = async (parent, args, context) => {
+    const m = await context.prisma.user({ id: args.id }).rang();
+    return context.prisma.updateUser({
+        data: {
+            rang: m + args.amount,
+        },
+        where: { id: args.id }
+    })
+}
+
 module.exports = {
     createUser,
     deleteUser,
@@ -148,5 +159,6 @@ module.exports = {
     createGame,
     matar,
     teClasse,
-    spend
+    spend,
+    changeRange
 }

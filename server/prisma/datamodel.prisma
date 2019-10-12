@@ -10,6 +10,7 @@ type User {
     monedes: Int
     winner: Boolean!
     horari: [Classe!] @relation(link: INLINE)
+    rang: Int!
 }
 
 type Classe {

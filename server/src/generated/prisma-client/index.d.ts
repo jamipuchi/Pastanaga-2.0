@@ -170,7 +170,9 @@ export type UserOrderByInput =
   | "monedes_ASC"
   | "monedes_DESC"
   | "winner_ASC"
-  | "winner_DESC";
+  | "winner_DESC"
+  | "rang_ASC"
+  | "rang_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -267,6 +269,14 @@ export interface UserWhereInput {
   winner?: Maybe<Boolean>;
   winner_not?: Maybe<Boolean>;
   horari_some?: Maybe<ClasseWhereInput>;
+  rang?: Maybe<Int>;
+  rang_not?: Maybe<Int>;
+  rang_in?: Maybe<Int[] | Int>;
+  rang_not_in?: Maybe<Int[] | Int>;
+  rang_lt?: Maybe<Int>;
+  rang_lte?: Maybe<Int>;
+  rang_gt?: Maybe<Int>;
+  rang_gte?: Maybe<Int>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
@@ -309,6 +319,7 @@ export interface UserUpdateWithoutObjectiuDataInput {
   monedes?: Maybe<Int>;
   winner?: Maybe<Boolean>;
   horari?: Maybe<ClasseUpdateManyInput>;
+  rang?: Maybe<Int>;
 }
 
 export interface ClasseWhereInput {
@@ -437,6 +448,7 @@ export interface UserUpdateManyMutationInput {
   alive?: Maybe<Boolean>;
   monedes?: Maybe<Int>;
   winner?: Maybe<Boolean>;
+  rang?: Maybe<Int>;
 }
 
 export interface UserCreateWithoutObjectiuInput {
@@ -449,6 +461,7 @@ export interface UserCreateWithoutObjectiuInput {
   monedes?: Maybe<Int>;
   winner: Boolean;
   horari?: Maybe<ClasseCreateManyInput>;
+  rang: Int;
 }
 
 export interface UserCreateOneWithoutObjectiuInput {
@@ -467,6 +480,7 @@ export interface UserCreateInput {
   monedes?: Maybe<Int>;
   winner: Boolean;
   horari?: Maybe<ClasseCreateManyInput>;
+  rang: Int;
 }
 
 export interface UserUpdateInput {
@@ -479,6 +493,7 @@ export interface UserUpdateInput {
   monedes?: Maybe<Int>;
   winner?: Maybe<Boolean>;
   horari?: Maybe<ClasseUpdateManyInput>;
+  rang?: Maybe<Int>;
 }
 
 export interface ClasseUpdateManyDataInput {
@@ -654,6 +669,7 @@ export interface UserPreviousValues {
   alive?: Boolean;
   monedes?: Int;
   winner: Boolean;
+  rang: Int;
 }
 
 export interface UserPreviousValuesPromise
@@ -668,6 +684,7 @@ export interface UserPreviousValuesPromise
   alive: () => Promise<Boolean>;
   monedes: () => Promise<Int>;
   winner: () => Promise<Boolean>;
+  rang: () => Promise<Int>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -682,6 +699,7 @@ export interface UserPreviousValuesSubscription
   alive: () => Promise<AsyncIterator<Boolean>>;
   monedes: () => Promise<AsyncIterator<Int>>;
   winner: () => Promise<AsyncIterator<Boolean>>;
+  rang: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserEdge {
@@ -856,6 +874,7 @@ export interface User {
   alive?: Boolean;
   monedes?: Int;
   winner: Boolean;
+  rang: Int;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -878,6 +897,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  rang: () => Promise<Int>;
 }
 
 export interface UserSubscription
@@ -902,6 +922,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  rang: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserNullablePromise
@@ -926,6 +947,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  rang: () => Promise<Int>;
 }
 
 export interface UserSubscriptionPayload {

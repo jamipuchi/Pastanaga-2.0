@@ -153,6 +153,34 @@
         }
       }
     },
+    "/api/distance-objective": {
+      "get": {
+        "operationId": "distanceObjectiveQuery",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/create-user": {
       "post": {
         "operationId": "createUserMutation",
@@ -382,6 +410,84 @@
           }
         }
       }
+    },
+    "/api/spend": {
+      "post": {
+        "operationId": "spendMutation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/ID"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "required": [
+                  "id",
+                  "amount"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/change-range": {
+      "post": {
+        "operationId": "changeRangeMutation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/ID"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "required": [
+                  "id",
+                  "amount"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -391,6 +497,7 @@
         "required": [
           "users",
           "locationInRange",
+          "angle",
           "isThereMatch"
         ],
         "properties": {
@@ -415,6 +522,10 @@
           },
           "isThereMatch": {
             "type": "boolean"
+          },
+          "distanceObjective": {
+            "type": "number",
+            "format": "float"
           }
         }
       },
@@ -424,7 +535,8 @@
           "id",
           "name",
           "email",
-          "winner"
+          "winner",
+          "rang"
         ],
         "properties": {
           "id": {
@@ -460,6 +572,10 @@
             "items": {
               "$ref": "#/components/schemas/Classe"
             }
+          },
+          "rang": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -495,7 +611,9 @@
           "createUser",
           "createGame",
           "matar",
-          "teClasse"
+          "teClasse",
+          "spend",
+          "changeRange"
         ],
         "properties": {
           "createUser": {
@@ -515,6 +633,12 @@
           },
           "teClasse": {
             "type": "boolean"
+          },
+          "spend": {
+            "$ref": "#/components/schemas/User"
+          },
+          "changeRange": {
+            "$ref": "#/components/schemas/User"
           }
         }
       },
