@@ -8,11 +8,8 @@ import PowerUps from './Components/PowerUps';
 import Escanejar from './Components/Escanejar';
 import Disparar from './Components/Disparar'
 import Tutorial from './Components/Tutorial';
-<<<<<<< HEAD
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
-
-=======
 import Perdut from './Components/Perdut';
 import Guanyat from './Components/Guanyat';
 import Brujola from './Components/PowerUps/Brujola';
@@ -20,7 +17,6 @@ import Distancia from './Components/PowerUps/Distancia';
 import Esta from './Components/PowerUps/Esta';
 import Nom from './Components/PowerUps/Nom';
 import Foto from './Components/PowerUps/Foto';
->>>>>>> 5f1a5c444a916349b3362dfce62e6833ea519c9c
 
 class AuthLoadingScreen extends React.Component {
 
