@@ -11,7 +11,7 @@ const { prisma } = require('./generated/prisma-client');
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const User = require('./resolvers/User')
-const cors = require('cors');
+const morgan = require('morgan')
 
 const resolvers = {
     Query,
@@ -37,11 +37,13 @@ const server = new GraphQLServer({
     },
 })
 
-server.express.use(function(req, res, next) {
+server.express.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
+
+server.express.use(morgan());
 
 // const app = express();
 
