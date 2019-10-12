@@ -10,7 +10,7 @@ export default class Login extends Component {
 
     state = {
       nom: '',
-      password: '',
+      mail:''
     };
 
 
@@ -18,13 +18,31 @@ export default class Login extends Component {
     m = await this._handlePressAsync()
     this.props.navigation.navigate("MainScreen")
   }
+
+  async registerToApiAsync() {
+        return fetch('http://abuch.ddns.net:3080/api/create-user', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nom: this.state.mail,
+                mail: this.state.nom,
+            }),
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson.msg);
+                return responseJson;
+            }).catch((error) => {
+                console.error(error);
+            });
+    }
+
   render() {
-
-
 
     return (
       <View style={styles.container}>
-
 
         <Button title="Login amb FIB" onPress={() => {
           this.boto()
@@ -47,6 +65,7 @@ export default class Login extends Component {
       await this.setState({ result });
       console.log("result ===" + this.state.result);
       await this.comprovaResultat()
+      //await this.registerToApiAsync()
       console.log("------NAVEGANT..................");
 
   };
@@ -61,6 +80,7 @@ export default class Login extends Component {
     this.getParamsFromApi()
 
   }
+
 
   getParamsFromApi = () => {
 
@@ -82,8 +102,7 @@ export default class Login extends Component {
         console.log(nom)
         console.log(cognoms)
         console.log(mail)
-        AsyncStorage.setItem('nom',nom)
-        AsyncStorage.setItem('cognoms',cognoms)
+        AsyncStorage.setItem('nom',nom + cognoms)
         AsyncStorage.setItem('mail',mail)
 
 

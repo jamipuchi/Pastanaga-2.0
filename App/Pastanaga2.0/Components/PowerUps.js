@@ -113,7 +113,7 @@ export default class PowerUps extends Component {
                         textAlignVertical: 'center',
                         fontSize: 15
                     }}>
-                    item.price{" "}
+                    {item.price+" "}
                 </Text>
                 <Image
                     style={{ height: 20, width: 20, marginTop: 10 }}
