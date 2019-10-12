@@ -10,20 +10,23 @@ import Disparar from './Components/Disparar'
 
 
 class AuthLoadingScreen extends React.Component {
+
   constructor() {
     super();
+    console.log("hola");
     this._bootstrapAsync();
   }
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
+    console.log("acc_token")
     const access_token = await AsyncStorage.getItem('access_token');
-    console.log(access_token)
+    console.log("access token: "+access_token)
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate(access_token ? 'Auth' : 'App');
+    this.props.navigation.navigate(access_token ? 'App' : 'Login');
   };
 
   render() {
@@ -62,10 +65,11 @@ const AppStack = createStackNavigator(
 )
 
 const AuthStack = createStackNavigator({
+  AuthLoadingScreen: {screen: AuthLoadingScreen},
   Login: {screen: Login},
   MainScreen: {screen: MainScreen},
  },  {
-     initialRouteName: 'Login',
+     initialRouteName: 'AuthLoadingScreen',
      headerMode: 'none',
      navigationOptions: {
          headerVisible: false
