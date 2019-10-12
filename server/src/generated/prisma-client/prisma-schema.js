@@ -321,6 +321,7 @@ type User {
   monedes: Int
   winner: Boolean!
   horari(where: ClasseWhereInput, orderBy: ClasseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Classe!]
+  rang: Int!
 }
 
 type UserConnection {
@@ -340,6 +341,7 @@ input UserCreateInput {
   monedes: Int
   winner: Boolean!
   horari: ClasseCreateManyInput
+  rang: Int!
 }
 
 input UserCreateOneWithoutObjectiuInput {
@@ -357,6 +359,7 @@ input UserCreateWithoutObjectiuInput {
   monedes: Int
   winner: Boolean!
   horari: ClasseCreateManyInput
+  rang: Int!
 }
 
 type UserEdge {
@@ -383,6 +386,8 @@ enum UserOrderByInput {
   monedes_DESC
   winner_ASC
   winner_DESC
+  rang_ASC
+  rang_DESC
 }
 
 type UserPreviousValues {
@@ -395,6 +400,7 @@ type UserPreviousValues {
   alive: Boolean
   monedes: Int
   winner: Boolean!
+  rang: Int!
 }
 
 type UserSubscriptionPayload {
@@ -423,6 +429,7 @@ input UserUpdateInput {
   monedes: Int
   winner: Boolean
   horari: ClasseUpdateManyInput
+  rang: Int
 }
 
 input UserUpdateManyMutationInput {
@@ -433,6 +440,7 @@ input UserUpdateManyMutationInput {
   alive: Boolean
   monedes: Int
   winner: Boolean
+  rang: Int
 }
 
 input UserUpdateOneWithoutObjectiuInput {
@@ -453,6 +461,7 @@ input UserUpdateWithoutObjectiuDataInput {
   monedes: Int
   winner: Boolean
   horari: ClasseUpdateManyInput
+  rang: Int
 }
 
 input UserUpsertWithoutObjectiuInput {
@@ -553,6 +562,14 @@ input UserWhereInput {
   winner: Boolean
   winner_not: Boolean
   horari_some: ClasseWhereInput
+  rang: Int
+  rang_not: Int
+  rang_in: [Int!]
+  rang_not_in: [Int!]
+  rang_lt: Int
+  rang_lte: Int
+  rang_gt: Int
+  rang_gte: Int
   AND: [UserWhereInput!]
 }
 

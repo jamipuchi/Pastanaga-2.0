@@ -96,6 +96,24 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
+    /api/distance-objective:
+        get:
+            operationId: distanceObjectiveQuery
+            parameters:
+                -
+                    in: query
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: number
+                                format: float
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -237,6 +255,54 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
+    /api/spend:
+        post:
+            operationId: spendMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                                amount:
+                                    type: integer
+                                    format: int32
+                            required:
+                                - id
+                                - amount
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /api/change-range:
+        post:
+            operationId: changeRangeMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                                amount:
+                                    type: integer
+                                    format: int32
+                            required:
+                                - id
+                                - amount
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
 components:
     schemas:
         Query:
@@ -244,6 +310,7 @@ components:
             required:
                 - users
                 - locationInRange
+                - angle
                 - isThereMatch
             properties:
                 users:
@@ -261,6 +328,9 @@ components:
                     format: float
                 isThereMatch:
                     type: boolean
+                distanceObjective:
+                    type: number
+                    format: float
         User:
             type: object
             required:
@@ -268,6 +338,7 @@ components:
                 - name
                 - email
                 - winner
+                - rang
             properties:
                 id:
                     type: object
@@ -292,6 +363,9 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Classe'
+                rang:
+                    type: integer
+                    format: int32
         Classe:
             type: object
             required:
@@ -318,6 +392,8 @@ components:
                 - createGame
                 - matar
                 - teClasse
+                - spend
+                - changeRange
             properties:
                 createUser:
                     $ref: '#/components/schemas/User'
@@ -331,6 +407,10 @@ components:
                     type: boolean
                 teClasse:
                     type: boolean
+                spend:
+                    $ref: '#/components/schemas/User'
+                changeRange:
+                    $ref: '#/components/schemas/User'
         InputClasse:
             type: object
             required:

@@ -12,7 +12,8 @@ const createUser = async (parent, args, context) => {
         horari: {
             create: args.horari,
         },
-        monedes: 0
+        monedes: 0,
+        rang: 20
     })
 }
 
@@ -101,7 +102,6 @@ const matar = async (parent, args, context) => {
         if (sender.id == objectiuObj.id) { // ha guanyat!!
             await context.prisma.updateUser({
                 data: {
-                    alive: false,
                     objectiu: { disconnect: true },
                     winner: true
                 },
@@ -131,11 +131,33 @@ const teClasse = async (parent, args, context) => {
     return false
 }
 
+const spend = async (parent, args, context) => {
+    const m = await context.prisma.user({ id: args.id }).monedes();
+    return context.prisma.updateUser({
+        data: {
+            monedes: m - args.amount,
+        },
+        where: { id: args.id }
+    })
+}
+
+const changeRange = async (parent, args, context) => {
+    const m = await context.prisma.user({ id: args.id }).rang();
+    return context.prisma.updateUser({
+        data: {
+            rang: m + args.amount,
+        },
+        where: { id: args.id }
+    })
+}
+
 module.exports = {
     createUser,
     deleteUser,
     updateLastKnown,
     createGame,
     matar,
-    teClasse
+    teClasse,
+    spend,
+    changeRange
 }
