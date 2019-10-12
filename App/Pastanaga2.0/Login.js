@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
+import { Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet, AsyncStorage } from 'react-native';
 import { AuthSession } from 'expo';
 
 const FIB_APP_ID = '6XzThAtJTyA1VtLKHarEeQ8jVsoaUuslG55qBjDQ';
@@ -7,46 +7,98 @@ const FIB_APP_ID = '6XzThAtJTyA1VtLKHarEeQ8jVsoaUuslG55qBjDQ';
 export default class Login extends Component {
 
     state = {
-      email: '',
+      nom: '',
       password: '',
     };
 
 
-  onLogin() {
-    const { email, password } = this.state;
-
-    Alert.alert('Credentials', `email: ${email} + password: ${password}`);
-  }
 
   render() {
     return (
       <View style={styles.container}>
 
 
-        <Button title="Open FB Auth" onPress={this._handlePressAsync} />
+        <Button title="Login amb FIB" onPress={this._handlePressAsync} />
              {this.state.result ? (
-               <Text>{JSON.stringify(this.state.result)}</Text>
+               <Text>HOLA! {this.state.nom}</Text>
              ) : null}
 
-         <Text> Sign Up / Login </Text>
 
       </View>
     );
   }
 
   _handlePressAsync = async () => {
-  let redirectUrl = AuthSession.getRedirectUrl();
-  let result = await AuthSession.startAsync({
-    authUrl:
-      `https://api.fib.upc.edu/v2/o/authorize/?` +
-      `client_id=${encodeURIComponent(FIB_APP_ID)}` +
-      `&redirect_uri=${encodeURIComponent(redirectUrl)}`+
-      `&response_type=token&state=random_string`,
-    });
-    this.setState({ result });
+    let redirectUrl = AuthSession.getRedirectUrl();
+    let result = await AuthSession.startAsync({
+      authUrl:
+        `https://api.fib.upc.edu/v2/o/authorize/?` +
+        `client_id=${encodeURIComponent(FIB_APP_ID)}` +
+        `&redirect_uri=${encodeURIComponent(redirectUrl)}`+
+        `&response_type=token&state=random_string`,
+      });
+      await this.setState({ result });
+      this.comprovaResultat()
+
   };
 
+  comprovaResultat = () => {
+    console.log("comprovant resultat")
+    let resultat = this.state.result;
+    console.log(resultat)
+    console.log(resultat.params.access_token)
+    AsyncStorage.setItem('access_token',resultat.params.access_token)
+    this.setState({ access_token : resultat.params.access_token})
+    this.getParamsFromApi()
 
+  }
+
+  getParamsFromApi = () => {
+
+   fetch('https://api.fib.upc.edu/v2/jo/', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Authorization': `Bearer ${this.state.access_token}`
+      },
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        let nom = responseJson.nom
+        this.setState({ nom : nom})
+
+        let cognoms = responseJson.responseJson
+        let mail = responseJson.email
+        console.log(nom)
+        console.log(cognoms)
+        console.log(mail)
+        AsyncStorage.setItem('nom',nom)
+        AsyncStorage.setItem('cognoms',cognoms)
+        AsyncStorage.setItem('mail',mail)
+
+
+      })
+
+      fetch('https://api.fib.upc.edu/v2/jo/classes/', {
+         method: 'GET',
+         headers: {
+           Accept: 'application/json',
+           'Authorization': `Bearer ${this.state.access_token}`
+         },
+         })
+         .then((response) => response.json())
+         .then((responseJson) => {
+
+           console.log(responseJson)
+           let results = responseJson.results
+           console.log(results.dia_setmana)
+           AsyncStorage.setItem('access_token',resultat.params.access_token)
+
+
+         })
+
+    }
 }
 
 const styles = StyleSheet.create({
