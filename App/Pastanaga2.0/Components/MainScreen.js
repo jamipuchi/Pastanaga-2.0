@@ -20,7 +20,7 @@ export default class MainScreen extends Component {
                 />
 
                 <TouchableOpacity
-                    style={{ height: '10%' }}
+                    style={{ height: '10%', width: '100%' }}
                     activeOpacity={0.5}>
                     <Image
                         style={{ width: '90%', height: '100%', marginLeft: '5%' }}
@@ -29,8 +29,10 @@ export default class MainScreen extends Component {
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Escanejar")}
                     activeOpacity={0.5}
-                    style={{ height: '10%' }}>
+                    style={{ height: '10%', width: '100%' }}
+                >
 
                     <Image
                         style={{ width: '90%', height: 100, marginLeft: '5%' }}
@@ -40,9 +42,7 @@ export default class MainScreen extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.5}
-                    style={{ height: '10%' }}>
-
-
+                    style={{ height: '10%', width: '100%' }}>
                     <Image
                         style={{ width: '90%', height: 100, marginLeft: '5%' }}
                         resizeMode="contain"
@@ -51,7 +51,7 @@ export default class MainScreen extends Component {
                 </TouchableOpacity>
 
                 <View
-                    style={{ height: '10%', flexDirection: 'row' }}>
+                    style={{ height: '10%', width:'100%', flexDirection: 'row' }}>
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}>
@@ -140,7 +140,7 @@ export default class MainScreen extends Component {
                                 fontSize: 20
                             }}>
                                 300{' '}
-                        </Text>
+                            </Text>
                             <Image
                                 style={{ height: 20, width: 20 }}
                                 source={require('../assets/coin.png')}
@@ -150,7 +150,7 @@ export default class MainScreen extends Component {
                     </View>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        style={{ height: '50%', width: '15%', marginLeft:'2%' }}>
+                        style={{ height: '50%', width: '15%', marginLeft: '2%' }}>
                         <Image
                             style={{ height: '100%', width: '100%', marginLeft: '20%' }}
                             resizeMode="contain"
