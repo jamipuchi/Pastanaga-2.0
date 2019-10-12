@@ -16,7 +16,6 @@ export default class Login extends Component {
 
   async boto(){
     m = await this._handlePressAsync()
-
     this.props.navigation.navigate("MainScreen")
   }
 
@@ -34,12 +33,11 @@ export default class Login extends Component {
             body: JSON.stringify({
                 name: "jnasdnjanjs",
                 //email: mail,
-                  email: "asdssksdsddpndjs@ajhjjsdkf"
+                  email: "asdsssdsddpndjs@ajhjjsdkf"
             }),
         }).then((response) => response.json())
             .then(async(responseJson) => {
                 console.log("response json: " + responseJson);
-                console.log("stringify"+JSON.stringify(responseJson).id);
                 const id = JSON.stringify(responseJson.id);
                 console.log("ID USUARI ES"+id)
                 await AsyncStorage.setItem('id_user', id)
