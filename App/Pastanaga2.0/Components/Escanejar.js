@@ -71,10 +71,17 @@ export default class Escanejar extends React.Component {
             visible={this.state.dialogVisible}
             title="El saber no ocupa lloc!"
             animationType="slider"
-            onTouchOutside={() => this.setState({dialogVisible: false})}
+            onTouchOutside={() => {
+              this.setState({dialogVisible: false})
+              this.props.navigation.navigate("MainScreen")
+
+            }}
             positiveButton={{
               title: "OK",
-              onPress: () => {this.props.navigation.goBack}
+              onPress: () => {
+                this.setState({dialogVisible: false})
+                this.props.navigation.navigate("MainScreen")
+              }
             }} >
 
             <View>
