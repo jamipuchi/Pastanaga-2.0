@@ -1,8 +1,6 @@
-import logo from './logo.svg';
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 export default class App extends Component {
 
@@ -10,58 +8,78 @@ export default class App extends Component {
     super(props);
     this.state = {
       users: [],
-      isLoaded: false
+      isLoaded: false,
+      jugantPartida: false
     };
-    this.handleClick = this.handleClick.bind(this);
 
   }
 
-  async getUsers(){
+  componentDidMount() {
     fetch("http://abuch.ddns.net:3080/api/users", {
       crossDomain: true,
       method: 'GET',
-      headers: {'Content-Type':'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     })
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result)
+          console.log(result);
           this.setState({
             isLoaded: true,
-            users: result.users
+            users: result
           });
         },
         (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
+          console.log(error)
         }
       )
+      this.isThereMatch();
   }
 
-  componentDidMount() {
-    this.getUsers();
-  }
+  isThereMatch() {
+    fetch("http://abuch.ddns.net:3080/api/is-there-match", {
+      crossDomain: true,
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            jugantPartida: result
+          });
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
 
-  handleClick() {
-    console.log("Click");
   }
 
   render() {
     return (
       <div className="container">
         <h1 className="mt-5">Usuaris Registrats</h1>
-        <div className="card w-50 mt-5 ">
-          {this.state.users.map((item, keys) => <div className="row m-3 border">
-            <p className="col">{item.name}</p>
-            <p className="col">{item.email}</p>
-            <p className="col">{item.alive}</p>
-            <p className="col">{item.monedes}</p>
+        <div className="card mt-5 ">
+          {this.state.users.map((item, keys) => <div className="row border" key={item.id}>
+            <p className="col">Id: {keys}</p>
+            <p className="col">Nom: {item.name}</p>
+            <p className="col">E-mail: {item.email}</p>
+            <p className="col">Viu?: {item.alive ? "Si" : "No"}</p>
+            <p className="col">Monedes: {item.monedes}</p>
           </div>)}
         </div>
-        <button onClick={this.handleClick} type="button" className="btn btn-primary mt-2">Començar partida</button>
+        {(this.state.jugantPartida) ?
+          <p>Jugant Partida</p>
+          :
+          <button
+            onClick={this.comencarPartida}
+            type="button"
+            className="btn btn-primary mt-2">
+            Començar partida
+              </button>
 
+        }
       </div>
     );
   }
