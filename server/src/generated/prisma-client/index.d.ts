@@ -113,22 +113,26 @@ export type UserOrderByInput =
   | "latitude_ASC"
   | "latitude_DESC"
   | "longitude_ASC"
-  | "longitude_DESC";
+  | "longitude_DESC"
+  | "alive_ASC"
+  | "alive_DESC"
+  | "monedes_ASC"
+  | "monedes_DESC"
+  | "winner_ASC"
+  | "winner_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
-  objectiu?: Maybe<UserCreateOneInput>;
+  objectiu?: Maybe<UserCreateOneWithoutObjectiuInput>;
   latitude?: Maybe<String>;
   longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner: Boolean;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -136,43 +140,44 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
+export interface UserCreateOneWithoutObjectiuInput {
+  create?: Maybe<UserCreateWithoutObjectiuInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
-  objectiu?: Maybe<UserUpdateOneInput>;
+  objectiu?: Maybe<UserUpdateOneWithoutObjectiuInput>;
   latitude?: Maybe<String>;
   longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
 }
 
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
+export interface UserUpdateOneWithoutObjectiuInput {
+  create?: Maybe<UserCreateWithoutObjectiuInput>;
+  update?: Maybe<UserUpdateWithoutObjectiuDataInput>;
+  upsert?: Maybe<UserUpsertWithoutObjectiuInput>;
   delete?: Maybe<Boolean>;
   disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateDataInput {
+export interface UserUpdateWithoutObjectiuDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
-  objectiu?: Maybe<UserUpdateOneInput>;
   latitude?: Maybe<String>;
   longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+export interface UserUpsertWithoutObjectiuInput {
+  update: UserUpdateWithoutObjectiuDataInput;
+  create: UserCreateWithoutObjectiuInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -180,6 +185,9 @@ export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   latitude?: Maybe<String>;
   longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
 }
 
 export interface UserWhereInput {
@@ -262,11 +270,83 @@ export interface UserWhereInput {
   longitude_not_starts_with?: Maybe<String>;
   longitude_ends_with?: Maybe<String>;
   longitude_not_ends_with?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  alive_not?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  monedes_not?: Maybe<Int>;
+  monedes_in?: Maybe<Int[] | Int>;
+  monedes_not_in?: Maybe<Int[] | Int>;
+  monedes_lt?: Maybe<Int>;
+  monedes_lte?: Maybe<Int>;
+  monedes_gt?: Maybe<Int>;
+  monedes_gte?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
+  winner_not?: Maybe<Boolean>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface UserCreateWithoutObjectiuInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner: Boolean;
 }
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  name: String;
+  email: String;
+  latitude?: String;
+  longitude?: String;
+  alive?: Boolean;
+  monedes?: Int;
+  winner: Boolean;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  latitude: () => Promise<String>;
+  longitude: () => Promise<String>;
+  alive: () => Promise<Boolean>;
+  monedes: () => Promise<Int>;
+  winner: () => Promise<Boolean>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  latitude: () => Promise<AsyncIterator<String>>;
+  longitude: () => Promise<AsyncIterator<String>>;
+  alive: () => Promise<AsyncIterator<Boolean>>;
+  monedes: () => Promise<AsyncIterator<Int>>;
+  winner: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface BatchPayload {
@@ -285,63 +365,29 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface User {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  name: String;
-  email: String;
-  latitude?: String;
-  longitude?: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  objectiu: <T = UserPromise>() => T;
-  latitude: () => Promise<String>;
-  longitude: () => Promise<String>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  objectiu: <T = UserSubscription>() => T;
-  latitude: () => Promise<AsyncIterator<String>>;
-  longitude: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  objectiu: <T = UserPromise>() => T;
-  latitude: () => Promise<String>;
-  longitude: () => Promise<String>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface UserConnection {
@@ -388,31 +434,6 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
 export interface UserEdge {
   node: User;
   cursor: String;
@@ -430,35 +451,75 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserPreviousValues {
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface User {
   id: ID_Output;
   createdAt: DateTimeOutput;
   name: String;
   email: String;
   latitude?: String;
   longitude?: String;
+  alive?: Boolean;
+  monedes?: Int;
+  winner: Boolean;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  objectiu: <T = UserPromise>() => T;
   latitude: () => Promise<String>;
   longitude: () => Promise<String>;
+  alive: () => Promise<Boolean>;
+  monedes: () => Promise<Int>;
+  winner: () => Promise<Boolean>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  objectiu: <T = UserSubscription>() => T;
   latitude: () => Promise<AsyncIterator<String>>;
   longitude: () => Promise<AsyncIterator<String>>;
+  alive: () => Promise<AsyncIterator<Boolean>>;
+  monedes: () => Promise<AsyncIterator<Int>>;
+  winner: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  objectiu: <T = UserPromise>() => T;
+  latitude: () => Promise<String>;
+  longitude: () => Promise<String>;
+  alive: () => Promise<Boolean>;
+  monedes: () => Promise<Int>;
+  winner: () => Promise<Boolean>;
 }
 
 /*

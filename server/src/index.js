@@ -10,13 +10,15 @@ const _ = require('lodash');
 const { prisma } = require('./generated/prisma-client');
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
+const User = require('./resolvers/User')
 
 const resolvers = {
     Query,
-    Mutation
+    Mutation,
+    User
 }
 
-const typeDefs = graphqlImport.importSchema('./src/schema.graphql')
+const typeDefs = graphqlImport.importSchema(path.resolve(__dirname, './schema.graphql'))
 
 const schema = new makeExecutableSchema({
     typeDefs,
@@ -33,9 +35,9 @@ const server = new GraphQLServer({
         }
     },
 })
-server.start(() => console.log(`Server is running on http://localhost:4000`))
 
-const app = express();
+
+// const app = express();
 
 const openApi = OpenAPI({
     schema,
@@ -45,10 +47,9 @@ const openApi = OpenAPI({
     },
 });
 
-app.use(bodyParser.json());
+server.express.use(bodyParser.json());
 
-
-app.use(
+server.express.use(
     '/api',
     useSofa({
         schema,
@@ -72,8 +73,9 @@ openApi.save(path.resolve(__dirname, './swagger.yml'));
 
 const swaggerDocument = require('./swagger.json');
 
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.listen(2368, () => {
-    console.log('REST API Server listening  on http://localhost:3000')
-})
+server.express.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.listen(2368, () => {
+//     console.log('REST API Server listening  on http://localhost:3000')
+// })
 
+server.start({ port: 2368 }, () => console.log(`Server is running on http://localhost:2368`))
