@@ -65,7 +65,6 @@ server.express.use(
             }
         },
         errorHandler(res, errors) {
-            logErrors(errors);
             res.code(500);
             res.json(formatError(errors[0]));
         },
