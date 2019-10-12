@@ -141,24 +141,28 @@ export default class PowerUps extends Component {
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
                 <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Brujola")}
                     activeOpacity={0.5}
                     style={{ height: 100, width: '100%' }}>
+
                     {(false) ? //condició que diu si ja el tens comprat o no 
-                    <Image 
-                        style={{ height: '100%', width: '100%' }}
-                        resizeMode="contain"
-                        source={require('../assets/activarButton.png')}
-                    /> : <ImageBackground
+                        <Image
+                            style={{ height: '100%', width: '100%' }}
+                            resizeMode="contain"
+                            source={require('../assets/activarButton.png')}
+                        /> : <ImageBackground
                             style={{ height: '100%', width: '100%' }}
                             resizeMode="contain"
                             source={require('../assets/usePowerUp.png')}
                         >
-                            <Text style={{width:'100%', 
-                            height:'100%', 
-                            textAlign:"center", 
-                            textAlignVertical:"center",
-                            color:'white',
-                            fontSize:20}}>Utilitzar (30 min restants) {/* Et diu el temps que et queda */}</Text>
+                            <Text style={{
+                                width: '100%',
+                                height: '100%',
+                                textAlign: "center",
+                                textAlignVertical: "center",
+                                color: 'white',
+                                fontSize: 20
+                            }}>Utilitzar (30 min restants) {/* Et diu el temps que et queda */}</Text>
                         </ImageBackground>}
 
                 </TouchableOpacity>
@@ -190,7 +194,7 @@ export default class PowerUps extends Component {
                         style={{ width: '90%', marginLeft: '5%', borderRadius: 10 }}
                         list={this.state.list}
                         header={this._head}
-                        body={this._body}
+                        body={this._body.bind(this)}
                     />
                 </ScrollView>
 
