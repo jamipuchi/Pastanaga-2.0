@@ -85,6 +85,13 @@ export default class Disparar extends Component {
     }).then((response) => response.json())
       .then(async (responseJson) => {
         const jsonresp = JSON.stringify(responseJson);
+        console.log("RESPOSTA JSONA+0"+responseJson);
+        if(responseJson === true){
+          await this.setState({resultat: "encerta"})
+        }else{
+          await this.setState({resultat: "falla"})
+
+        }
         //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
       }).catch((error) => {
         console.error(error);
