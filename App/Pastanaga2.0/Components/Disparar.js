@@ -56,7 +56,7 @@ export default class Disparar extends Component {
 
     }
 
-    static getIdUsuari = async () =>{
+     getIdUsuari = async () =>{
       const currentUser = await AsyncStorage.getItem('id_user')
       console.log("USUARI CORENT  "+ currentUser)
       if(currentUser != null){

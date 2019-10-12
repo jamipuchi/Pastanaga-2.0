@@ -31,9 +31,8 @@ export default class Login extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: "jnasdnjanjs",
-                //email: mail,
-                  email: "asdsssdsddpndjs@ajhjjsdkf"
+                name: nom,
+                email: mail,
             }),
         }).then((response) => response.json())
             .then(async(responseJson) => {
@@ -64,6 +63,7 @@ export default class Login extends Component {
 
   _handlePressAsync = async () => {
     let redirectUrl = await AuthSession.getRedirectUrl();
+    console.log(redirectUrl);
     let result = await AuthSession.startAsync({
       authUrl:
         `https://api.fib.upc.edu/v2/o/authorize/?` +
