@@ -14,7 +14,10 @@ export default class Login extends Component {
     };
 
 
-
+  async boto(){
+    m = await this._handlePressAsync()
+    this.props.navigation.navigate("MainScreen")
+  }
   render() {
 
 
@@ -23,8 +26,9 @@ export default class Login extends Component {
       <View style={styles.container}>
 
 
-        <Button title="Login amb FIB"      onPress={() => {
-          this._handlePressAsync()
+        <Button title="Login amb FIB" onPress={() => {
+          this.boto()
+
         }} />
 
       </View>
@@ -32,7 +36,7 @@ export default class Login extends Component {
   }
 
   _handlePressAsync = async () => {
-    let redirectUrl = AuthSession.getRedirectUrl();
+    let redirectUrl = await AuthSession.getRedirectUrl();
     let result = await AuthSession.startAsync({
       authUrl:
         `https://api.fib.upc.edu/v2/o/authorize/?` +
@@ -44,7 +48,6 @@ export default class Login extends Component {
       console.log("result ===" + this.state.result);
       await this.comprovaResultat()
       console.log("------NAVEGANT..................");
-      this.props.navigation.navigate("MainScreen")
 
   };
 

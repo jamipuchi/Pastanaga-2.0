@@ -23,7 +23,7 @@ class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate("auth");
+    this.props.navigation.navigate(access_token ? 'Auth' : 'App');
   };
 
   render() {
@@ -76,7 +76,7 @@ const AuthStack = createStackNavigator({
 
 export default createAppContainer(createSwitchNavigator(
   {
-  //  App: AppStack,
+    App: AppStack,
     Auth: AuthStack,
   },
   {
