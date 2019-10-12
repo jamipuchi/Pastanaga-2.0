@@ -53,7 +53,7 @@ const AppStack = createStackNavigator(
   ObtenirPunts:{screen: ObtenirPunts},
   },
   {
-    initialRouteName: 'ObtenirPunts',
+    initialRouteName: 'Escanejar',
     headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
