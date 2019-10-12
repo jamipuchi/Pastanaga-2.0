@@ -7,6 +7,7 @@ import MainScreen from './Components/MainScreen';
 import PowerUps from './Components/PowerUps';
 import Escanejar from './Components/Escanejar';
 import Disparar from './Components/Disparar'
+import Tutorial from './Components/Tutorial';
 
 
 class AuthLoadingScreen extends React.Component {
@@ -23,7 +24,7 @@ class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate(!access_token ? 'Auth' : 'App');
+    this.props.navigation.navigate(access_token ? 'Auth' : 'App');
   };
 
   render() {
@@ -53,6 +54,7 @@ const AppStack = createStackNavigator(
   Escanejar: {screen: Escanejar},
   PowerUps: {screen: PowerUps},
   Disparar:{screen: Disparar},
+  Tutorial:{screen: Tutorial}
   },
   {
     initialRouteName: 'MainScreen',
