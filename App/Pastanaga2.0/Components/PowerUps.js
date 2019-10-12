@@ -82,11 +82,38 @@ export default class PowerUps extends Component {
 
                 }
             ],
+            monedes:0
         }
 
     }
 
-    async gasta(diners) {
+    getInfoUsuari = async () => {
+        uid = await this.getIdUsuari();
+        uid2 = uid.substr(1);
+        uid3 = uid2.substring(0, uid2.length - 1);
+
+        console.log("ENTRANT");
+        console.log("IDIDIDIDIDIDII   " + uid3)
+        fetch(`http://abuch.ddns.net:3080/api/user/${encodeURIComponent(uid3)}`, {
+            method: "GET",
+            headers: {
+                Accept: 'application/json',
+            },
+        }).then((response) => response.json())
+            .then(async (responseJson) => {
+                await this.setState({ monedes: diners })
+                console.log(this.state.monedes);
+            }).catch(async (error) => {
+                console.log(error)
+            });
+    }
+
+    componentWillUpdate(){
+        console.log(this.state.monedes);
+        this.getInfoUsuari();
+    }
+
+    async gasta(diners, pantalla) {
         fetch('http://abuch.ddns.net:3080/api/spend', {
             method: 'POST',
             headers: {
@@ -101,7 +128,7 @@ export default class PowerUps extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.props.navigation.navigate(item.pantalla)
+                    this.props.navigation.navigate(pantalla)
                 },
                 (error) => {
                     console.log(error)
@@ -172,14 +199,14 @@ export default class PowerUps extends Component {
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
 
-                {(true) ? //condició que diu si ja el tens comprat o no 
+                {(this.state.monedes-item.price>0) ? //condició que diu si ja el tens comprat o no 
                     <TouchableOpacity
                         onPress={() => Alert.alert(
                             'Compra',
                             'Et vols gastar ' + item.price + ' dels ' + 10 + ' que tens?',
                             [
                                 { text: 'No' },
-                                { text: 'Si', onPress: () => this.gasta(item.price) },
+                                { text: 'Si', onPress: () => this.gasta(item.price, item.pantalla) },
                             ],
                             { cancelable: false },
                         )
@@ -195,27 +222,7 @@ export default class PowerUps extends Component {
                     </TouchableOpacity>
 
                     :
-                    <TouchableOpacity
-                        onPress={() => (item.pantalla != null) ?
-                            this.props.navigation.navigate(item.pantalla)
-                            : console.log("Pantalla")}
-                        activeOpacity={0.5}
-                        style={{ height: 100, width: '100%' }}>
-                        <ImageBackground
-                            style={{ height: '100%', width: '100%' }}
-                            resizeMode="contain"
-                            source={require('../assets/usePowerUp.png')}
-                        >
-                            <Text style={{
-                                width: '100%',
-                                height: '100%',
-                                textAlign: "center",
-                                textAlignVertical: "center",
-                                color: 'white',
-                                fontSize: 20
-                            }}>Utilitzar (30 min restants) {/* Et diu el temps que et queda */}</Text>
-                        </ImageBackground>
-                    </TouchableOpacity>
+                    <Text style={{ width: '100%', textAlign: 'center', fontSize: 20, color: 'red' }}>No tens prous diners</Text>
                 }
             </View>
         );
