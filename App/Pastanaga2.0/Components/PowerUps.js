@@ -89,7 +89,8 @@ export default class PowerUps extends Component {
 
 
             }, (item.id == 1) ? { borderTopLeftRadius: 8, borderTopRightRadius: 8 } : {}
-                , (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8 } : {}]}>
+                , (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8
+                } : {}]}>
                 <Image
                     style={{ width: 40, height: 40, resizeMode: 'contain' }}
                     source={item.link}
@@ -130,7 +131,11 @@ export default class PowerUps extends Component {
 
     _body(item) {
         return (
-            <View style={{ padding: 10, backgroundColor: 'white', width: '100%' }}>
+            <View style={[{ padding: 10, backgroundColor: 'white', width: '100%' },
+            (item.id == 9) ? { borderBottomLeftRadius: 8, borderBottomRightRadius: 8,
+            marginTop:-10, paddingTop:10 } : {}
+        ]
+            }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
                 <TouchableOpacity
                     activeOpacity={0.5}
@@ -149,7 +154,7 @@ export default class PowerUps extends Component {
 
     render() {
         return (
-            <View style={{ width: '100%', height: '100%', paddingTop: '30%', paddingLeft: '5%', paddingRight: '5%', borderRadius: 10, backgroundColor: '#262626' }} >
+            <View style={{ width: '100%', height: '112%', paddingTop: '30%', paddingLeft: '5%', paddingRight: '5%', backgroundColor: '#262626' }} >
                 <Text style={{
                     marginLeft: '5%', fontSize: 30, color: '#6BDD5F',
                     position: 'absolute', width: '100%', textAlign: 'center', top: '10%'
