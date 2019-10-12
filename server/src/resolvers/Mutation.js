@@ -1,4 +1,5 @@
 const { distance } = require('../utils/distance')
+const { estaFIB } = require('../utils/estaFIB')
 
 const createUser = (parent, args, context) => {
     console.log(args)
@@ -15,14 +16,24 @@ const deleteUser = (parent, args, context) => {
     })
 }
 
-const updateLastKnown = (parent, args, context) => {
-    return context.prisma.updateUser({
-        data: {
-            latitude: args.latitude,
-            longitude: args.longitude
-        },
-        where: { id: args.id }
-    })
+const updateLastKnown = async (parent, args, context) => {
+    if (estaFIB(args.latitude, args.longitude)) {
+        return await context.prisma.updateUser({
+            data: {
+                latitude: args.latitude,
+                longitude: args.longitude
+            },
+            where: { id: args.id }
+        })
+    } else {
+        return await context.prisma.updateUser({
+            data: {
+                latitude: null,
+                longitude: null
+            },
+            where: { id: args.id }
+        })
+    }
 }
 
 const createGame = async (parent, args, context) => {
@@ -45,7 +56,7 @@ const createGame = async (parent, args, context) => {
     users = shuffle(users);
     for (let i = 0; i < size; ++i) {
         const pos = (i == size - 1) ? 0 : (i + 1);
-        console.log(i, ' -> ',pos)
+        console.log(i, ' -> ', pos)
         const updatedUser = await context.prisma.updateUser({
             data: {
                 objectiu: {
