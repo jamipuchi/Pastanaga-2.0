@@ -3,6 +3,7 @@ import { View, Image, TouchableOpacity, Text, ImageBackground, AsyncStorage } fr
 import { NavigationActions, StackActions } from 'react-navigation';
 
 
+
 export default class MainScreen extends Component {
     constructor(props) {
         super(props);

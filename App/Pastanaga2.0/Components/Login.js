@@ -16,10 +16,15 @@ export default class Login extends Component {
 
   async boto(){
     m = await this._handlePressAsync()
+
     this.props.navigation.navigate("MainScreen")
   }
 
   async registerToApiAsync() {
+        const {nom, mail}=this.state;
+        console.log("nom: "+nom)
+        console.log("mail: "+mail)
+
         return fetch('http://abuch.ddns.net:3080/api/create-user', {
             method: 'POST',
             headers: {
@@ -27,12 +32,18 @@ export default class Login extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                nom: this.state.mail,
-                mail: this.state.nom,
+                name: "jnasdnjanjs",
+                //email: mail,
+                  email: "asdssksdsddpndjs@ajhjjsdkf"
             }),
         }).then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson.msg);
+            .then(async(responseJson) => {
+                console.log("response json: " + responseJson);
+                console.log("stringify"+JSON.stringify(responseJson).id);
+                const id = JSON.stringify(responseJson.id);
+                console.log("ID USUARI ES"+id)
+                await AsyncStorage.setItem('id_user', id)
+                console.log((await AsyncStorage.getItem('id_user')))
                 return responseJson;
             }).catch((error) => {
                 console.error(error);
@@ -65,8 +76,7 @@ export default class Login extends Component {
       await this.setState({ result });
       console.log("result ===" + this.state.result);
       await this.comprovaResultat()
-      //await this.registerToApiAsync()
-      console.log("------NAVEGANT..................");
+      await this.registerToApiAsync()
 
   };
 
@@ -75,16 +85,17 @@ export default class Login extends Component {
     let resultat = this.state.result;
     console.log("resultat:"+resultat)
     console.log(resultat.params.access_token)
-    AsyncStorage.setItem('access_token',resultat.params.access_token)
+
     this.setState({ access_token : resultat.params.access_token})
-    this.getParamsFromApi()
+    params = await this.getParamsFromApi()
+    return params;
 
   }
 
 
-  getParamsFromApi = () => {
+  getParamsFromApi = async () => {
 
-   fetch('https://api.fib.upc.edu/v2/jo/', {
+   await fetch('https://api.fib.upc.edu/v2/jo/', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -102,13 +113,14 @@ export default class Login extends Component {
         console.log(nom)
         console.log(cognoms)
         console.log(mail)
+        this.setState({ mail, nom})
         AsyncStorage.setItem('nom',nom + cognoms)
         AsyncStorage.setItem('mail',mail)
-
+        AsyncStorage.setItem('access_token', this.state.access_token)
 
       })
 
-      fetch('https://api.fib.upc.edu/v2/jo/classes/', {
+      await fetch('https://api.fib.upc.edu/v2/jo/classes/', {
          method: 'GET',
          headers: {
            Accept: 'application/json',
@@ -117,15 +129,12 @@ export default class Login extends Component {
          })
          .then((response) => response.json())
          .then((responseJson) => {
-
            console.log(responseJson)
            let results = responseJson.results
          })
-         console.log("AQUI NAVEGUEM DE VERITAT");
-
-
     }
 }
+
 
 const styles = StyleSheet.create({
   container: {
