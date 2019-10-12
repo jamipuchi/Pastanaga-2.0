@@ -11,28 +11,29 @@ export default class ObtenirPunts extends Component {
   state = {
     location: null,
     errorMessage: null,
+    longitude: null,
+    latitude: null,
   };
 
   componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
+
       this._getLocationAsync();
-    }
+
   }
 
   _getLocationAsync = async () => {
+    console.log("getting location");
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    console.log("status: "+status);
     if (status !== 'granted') {
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
     }
-
     let location = await Location.getCurrentPositionAsync({});
     this.setState({ location });
+    this.setState({ longitude: location.coords.longitude});
+    this.setState({latitude: location.coords.latitude});
   };
 
   render() {
@@ -40,7 +41,8 @@ export default class ObtenirPunts extends Component {
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
+      text = "longitude: " + JSON.stringify(this.state.longitude) +"/ latitude "+JSON.stringify(this.state.latitude);
+
     }
 
     return (
