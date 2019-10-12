@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './Login';
+import MainScreen from './Components/MainScreen';
 
 export default function App() {
   return (
-    <Login />
+    <MainScreen />
   );
 }
 
