@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { AccordionList } from "accordion-collapse-react-native";
 import { Separator, Icon } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -85,11 +85,7 @@ export default class PowerUps extends Component {
         }
 
     }
-
-    async restarMonedes(i){
-        
-    }
-
+    
     _head(item) {
         return (
             <View style={[{
@@ -153,19 +149,27 @@ export default class PowerUps extends Component {
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
 
-                {(false) ? //condició que diu si ja el tens comprat o no 
+                {(true) ? //condició que diu si ja el tens comprat o no 
                     <TouchableOpacity
-                        onPress={() => (item.pantalla != null) ?
-                            this.props.navigation.navigate(item.pantalla)
-                            : item.f()} //cridar funcion del item
+                        onPress={() => Alert.alert(
+                            'Compra',
+                            'Et vols gastar ' + item.price + ' dels ' + 10 + ' que tens?',
+                            [
+                              {text: 'No'},
+                              {text: 'Si', onPress: () => this.props.navigation.navigate(item.pantalla)},
+                            ],
+                            {cancelable: false},
+                          )
+                          
+                            }
                         activeOpacity={0.5}
                         style={{ height: 100, width: '100%' }}>
-
                         <Image
                             style={{ height: '100%', width: '100%' }}
                             resizeMode="contain"
                             source={require('../assets/activarButton.png')}
-                        />                 </TouchableOpacity>
+                        />
+                    </TouchableOpacity>
 
                     :
                     <TouchableOpacity
