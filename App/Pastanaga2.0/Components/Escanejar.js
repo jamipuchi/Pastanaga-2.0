@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import { Dialog, ConfirmDialog } from 'react-native-simple-dialogs';
+
 
 import {
   BarCodeScanner
@@ -16,6 +18,8 @@ export default class Escanejar extends React.Component {
   state = {
     hasCameraPermission: null,
     scanned: false,
+    classe: "",
+    dialogVisible: false
   };
 
   async componentDidMount() {
@@ -48,6 +52,7 @@ export default class Escanejar extends React.Component {
       console.log("no acces for camera");
       return <Text > No access to camera < /Text>;
     }
+
     return (
       <View style = {
         {
@@ -62,7 +67,20 @@ export default class Escanejar extends React.Component {
           StyleSheet.absoluteFillObject
         }
         />
+        <ConfirmDialog
+            visible={this.state.dialogVisible}
+            title="El saber no ocupa lloc!"
+            animationType="slider"
+            onTouchOutside={() => this.setState({dialogVisible: false})}
+            positiveButton={{
+              title: "OK",
+              onPress: () => {this.props.navigation.goBack}
+            }} >
 
+            <View>
+                <Text>Ara mateix estàs a{this.state.classe}< /Text>
+            </View>
+        </ConfirmDialog>
         {
           scanned && ( <
             Button title = {
@@ -80,6 +98,11 @@ export default class Escanejar extends React.Component {
     );
   }
 
+  comprovaResultat = () => {
+
+  }
+
+
   handleBarCodeScanned = ({
     type,
     data
@@ -87,6 +110,13 @@ export default class Escanejar extends React.Component {
     this.setState({
       scanned: true
     });
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    if(type != "256"){
+      alert("codi QR no reconegut")
+    } else {
+      this.comprovaAula
+      this.setState({classe: data})
+      this.setState({dialogVisible: true})
+    }
+
   };
 }
