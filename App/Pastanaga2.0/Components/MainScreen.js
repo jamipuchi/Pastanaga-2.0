@@ -13,14 +13,14 @@ export default class MainScreen extends Component {
         return (
             <View style={{ backgroundColor: "#262626", height: '100%' }}>
                 <Image
-                    style={{ width: '100%', height: '30%', marginBottom: '10%', marginTop: '25%' }}
+                    style={{ width: '100%', height: '25%', marginBottom: '5%', marginTop: '20%' }}
                     resizeMode="contain"
                     source={require('../assets/Logo.png')}
 
                 />
 
                 <TouchableOpacity
-                    style={{ height: '10%', width: '100%' }}
+                    style={{ height: '12%', width: '100%' }}
                     activeOpacity={0.5}>
                     <Image
                         style={{ width: '90%', height: '100%', marginLeft: '5%' }}
@@ -31,32 +31,32 @@ export default class MainScreen extends Component {
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Escanejar")}
                     activeOpacity={0.5}
-                    style={{ height: '10%', width: '100%' }}
+                    style={{ height: '12%', width: '100%' }}
                 >
 
                     <Image
-                        style={{ width: '90%', height: 100, marginLeft: '5%' }}
+                        style={{ width: '90%', height: '100%', marginLeft: '5%' }}
                         resizeMode="contain"
                         source={require('../assets/obtenirMonedesButton.png')}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.5}
-                    style={{ height: '10%', width: '100%' }}>
+                    style={{ height: '12%', width: '100%' }}>
                     <Image
-                        style={{ width: '90%', height: 100, marginLeft: '5%' }}
+                        style={{ width: '90%', height: '100%', marginLeft: '5%' }}
                         resizeMode="contain"
                         source={require('../assets/powerUpsButton.png')}
                     />
                 </TouchableOpacity>
 
                 <View
-                    style={{ height: '10%', width:'100%', flexDirection: 'row' }}>
+                    style={{ height: '12%', width:'100%', flexDirection: 'row' }}>
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}>
                         <Image
-                            style={{ height: '100%', width: '100%', marginLeft: '5%' }}
+                            style={{ height: '100%', width: '100%', marginLeft: '7%' }}
                             resizeMode="contain"
                             source={require('../assets/dispararButton.png')}
                         />
