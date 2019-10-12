@@ -85,6 +85,17 @@ paths:
                             schema:
                                 type: number
                                 format: float
+    /api/is-there-match:
+        get:
+            operationId: isThereMatchQuery
+            parameters: []
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -233,6 +244,7 @@ components:
             required:
                 - users
                 - locationInRange
+                - isThereMatch
             properties:
                 users:
                     type: array
@@ -247,6 +259,8 @@ components:
                 angle:
                     type: number
                     format: float
+                isThereMatch:
+                    type: boolean
         User:
             type: object
             required:

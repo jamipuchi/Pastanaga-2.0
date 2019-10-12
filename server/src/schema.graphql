@@ -9,6 +9,7 @@ type Query {
     locationInRange(id: ID!): Boolean!
     objectiu(id: ID!): User
     angle(id: ID!): Float
+    isThereMatch: Boolean!
 }
 
 type Mutation {
