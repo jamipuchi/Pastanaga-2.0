@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 const tutorial = [{
-    descripcio: "Aquest joc consisteix a eliminar els altres usuaris. Un cop estiguis a prop del teu objectiu pots apretar el botó de disparar per eliminar-lo.",
+    descripcio: "Aquest joc consisteix a eliminar els altres usuaris. Un cop estiguis a prop del teu objectiu pots apretar el botó de disparar per eliminar-lo. Però al tanto, només pots disparar un nombre limitat de cops. Si l'exedeixes quedaràs eliminat.",
     src: require("../assets/tutorial/1.png")
 }, {
     descripcio: "Pots aconseguir crèdits escanejant els codis QR que trobaràs al campus. Com a més classes vagis més diners podràs aconseguir!",
