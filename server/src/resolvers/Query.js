@@ -1,26 +1,26 @@
+const { distance } = require('../utils/distance');
+
 const users = (parent, args, context) => context.prisma.users();
 
 const user = (parent, args, context, info) => context.prisma.user({ id: args.id });
 
-const locationInRange = (parent, args, context) => {
-    function distance(lat1,lon1,lat2,lon2) {
-    	var R = 6371; // km (change this constant to get miles)
-    	var dLat = (lat2-lat1) * Math.PI / 180;
-    	var dLon = (lon2-lon1) * Math.PI / 180;
-    	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    		Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-    		Math.sin(dLon/2) * Math.sin(dLon/2);
-    	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    	var d = R * c;
-    	if (d>1) return Math.round(d)+"km";
-    	else if (d<=1) return Math.round(d*1000)+"m";
-    	return d;
-    }
-    const d = distance(args.lat1, args.lon1, args.lat2, args.lon2);
+const locationInRange = async (parent, args, context) => {
+    const objectiu = await context.prisma.user({ id: args.id }).objectiu()
+    const sender = await context.prisma.user({ id: args.id })
+    const d = distance(sender.latitude, sender.longitude, objectiu.latitude, sender.longitude);
     return d <= 5;
+}
+
+const angle = async (parent, args, context) => {
+    const p1 = await context.prisma.user({ id: args.id }).objectiu()
+    const p2 = await context.prisma.user({ id: args.id })
+    const angle = Math.atan2(p2.latitude - p1.latitude, p2.longitude - p1.longitude) * 180 / Math.PI;
+    return angle;
 }
 
 module.exports = {
     users,
-    user
+    user,
+    locationInRange,
+    angle
 }

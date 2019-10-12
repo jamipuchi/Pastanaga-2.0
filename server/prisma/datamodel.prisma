@@ -3,7 +3,10 @@ type User {
     createdAt: DateTime! @createdAt
     name: String!
     email: String! @unique
-    objectiu: User @relation(link: INLINE)
+    objectiu: User @relation(name: "Objectiu" onDelete: SET_NULL link: INLINE)
     latitude: String
     longitude: String
+    alive: Boolean
+    monedes: Int
+    winner: Boolean!
 }
