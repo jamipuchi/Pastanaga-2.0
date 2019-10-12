@@ -6,11 +6,13 @@ schema {
 type Query {
     users: [User!]!
     user(id: ID!): User
+    # locationInRange(l1: Location, l2: Location): Boolean
 }
 
 type Mutation {
     createUser(name: String!, email: String!): User!
     deleteUser(id: ID!): User
+    updateLastKnown(id: ID!, latitude: String!, longitude: String!): User
 }
 
 type User {
@@ -18,4 +20,11 @@ type User {
     name: String!
     email: String!
     objectiu: User
+    latitude: String
+    longitude: String
+}
+
+input UserUpdateInput {
+    latitude: String
+    longitude: String
 }

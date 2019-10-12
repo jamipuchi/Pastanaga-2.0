@@ -4,4 +4,6 @@ type User {
     name: String!
     email: String! @unique
     objectiu: User @relation(link: INLINE)
+    latitude: String
+    longitude: String
 }

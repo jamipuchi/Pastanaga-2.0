@@ -76,6 +76,32 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
+    /api/update-last-known:
+        post:
+            operationId: updateLastKnownMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                                latitude:
+                                    type: string
+                                longitude:
+                                    type: string
+                            required:
+                                - id
+                                - latitude
+                                - longitude
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
 components:
     schemas:
         Query:
@@ -104,6 +130,10 @@ components:
                     type: string
                 objectiu:
                     $ref: '#/components/schemas/User'
+                latitude:
+                    type: string
+                longitude:
+                    type: string
         Mutation:
             type: object
             required:
@@ -113,5 +143,14 @@ components:
                     $ref: '#/components/schemas/User'
                 deleteUser:
                     $ref: '#/components/schemas/User'
+                updateLastKnown:
+                    $ref: '#/components/schemas/User'
+        UserUpdateInput:
+            type: object
+            properties:
+                latitude:
+                    type: string
+                longitude:
+                    type: string
         ID:
             type: string

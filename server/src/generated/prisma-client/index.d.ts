@@ -109,7 +109,11 @@ export type UserOrderByInput =
   | "name_ASC"
   | "name_DESC"
   | "email_ASC"
-  | "email_DESC";
+  | "email_DESC"
+  | "latitude_ASC"
+  | "latitude_DESC"
+  | "longitude_ASC"
+  | "longitude_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -123,6 +127,8 @@ export interface UserCreateInput {
   name: String;
   email: String;
   objectiu?: Maybe<UserCreateOneInput>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -139,6 +145,8 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   objectiu?: Maybe<UserUpdateOneInput>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
 }
 
 export interface UserUpdateOneInput {
@@ -154,6 +162,8 @@ export interface UserUpdateDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   objectiu?: Maybe<UserUpdateOneInput>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -168,6 +178,8 @@ export interface UserSubscriptionWhereInput {
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
 }
 
 export interface UserWhereInput {
@@ -222,6 +234,34 @@ export interface UserWhereInput {
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
   objectiu?: Maybe<UserWhereInput>;
+  latitude?: Maybe<String>;
+  latitude_not?: Maybe<String>;
+  latitude_in?: Maybe<String[] | String>;
+  latitude_not_in?: Maybe<String[] | String>;
+  latitude_lt?: Maybe<String>;
+  latitude_lte?: Maybe<String>;
+  latitude_gt?: Maybe<String>;
+  latitude_gte?: Maybe<String>;
+  latitude_contains?: Maybe<String>;
+  latitude_not_contains?: Maybe<String>;
+  latitude_starts_with?: Maybe<String>;
+  latitude_not_starts_with?: Maybe<String>;
+  latitude_ends_with?: Maybe<String>;
+  latitude_not_ends_with?: Maybe<String>;
+  longitude?: Maybe<String>;
+  longitude_not?: Maybe<String>;
+  longitude_in?: Maybe<String[] | String>;
+  longitude_not_in?: Maybe<String[] | String>;
+  longitude_lt?: Maybe<String>;
+  longitude_lte?: Maybe<String>;
+  longitude_gt?: Maybe<String>;
+  longitude_gte?: Maybe<String>;
+  longitude_contains?: Maybe<String>;
+  longitude_not_contains?: Maybe<String>;
+  longitude_starts_with?: Maybe<String>;
+  longitude_not_starts_with?: Maybe<String>;
+  longitude_ends_with?: Maybe<String>;
+  longitude_not_ends_with?: Maybe<String>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
@@ -266,6 +306,8 @@ export interface User {
   createdAt: DateTimeOutput;
   name: String;
   email: String;
+  latitude?: String;
+  longitude?: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -274,6 +316,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   objectiu: <T = UserPromise>() => T;
+  latitude: () => Promise<String>;
+  longitude: () => Promise<String>;
 }
 
 export interface UserSubscription
@@ -284,6 +328,8 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   objectiu: <T = UserSubscription>() => T;
+  latitude: () => Promise<AsyncIterator<String>>;
+  longitude: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserNullablePromise
@@ -294,6 +340,8 @@ export interface UserNullablePromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   objectiu: <T = UserPromise>() => T;
+  latitude: () => Promise<String>;
+  longitude: () => Promise<String>;
 }
 
 export interface UserConnection {
@@ -387,6 +435,8 @@ export interface UserPreviousValues {
   createdAt: DateTimeOutput;
   name: String;
   email: String;
+  latitude?: String;
+  longitude?: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -396,6 +446,8 @@ export interface UserPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
   email: () => Promise<String>;
+  latitude: () => Promise<String>;
+  longitude: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -405,6 +457,8 @@ export interface UserPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  latitude: () => Promise<AsyncIterator<String>>;
+  longitude: () => Promise<AsyncIterator<String>>;
 }
 
 /*
