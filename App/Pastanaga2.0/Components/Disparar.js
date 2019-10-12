@@ -13,6 +13,7 @@ export default class Disparar extends Component {
     errorMessage: null,
     longitude: null,
     latitude: null,
+    resultat: "waiting",
   };
 
   componentWillMount() {
@@ -20,6 +21,7 @@ export default class Disparar extends Component {
     this.handleDisparar();
 
   }
+
   handleDisparar = async () => {
     m = await this._getLocationAsync();
     l = await this.updateCoords();
@@ -70,6 +72,7 @@ export default class Disparar extends Component {
     uid = await this.getIdUsuari();
     uid2 = uid.substr(1);
     uid3 = uid2.substring(0, uid2.length - 1);
+    console.log(uid3);
     return fetch('http://abuch.ddns.net:3080/api/matar', {
       method: 'POST',
       headers: {
@@ -81,10 +84,11 @@ export default class Disparar extends Component {
       }),
     }).then((response) => response.json())
       .then(async (responseJson) => {
-        console.log("response json: " + responseJson);
-
+        const jsonresp = JSON.stringify(responseJson);
+        //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
       }).catch((error) => {
         console.error(error);
+        this.setState({resultat: "falla"})
       });
   }
 
@@ -105,28 +109,53 @@ export default class Disparar extends Component {
   };
 
   render() {
-    let text = 'Disparant';
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = "longitude: " + JSON.stringify(this.state.longitude) + "/ latitude " + JSON.stringify(this.state.latitude);
+
+    var resultat;
+
+    if (this.state.resultat === "waiting") {
+      resultat=(
+      <Text style={styles.paragraph}>Calculant la trajectòria...</Text>);
+    }
+    else if (this.state.resultat === "falla"){
+      resultat = (
+        <View>
+      <Text style={styles.paragraph}> </Text>
+      <LottieView source={require('../assets/fallat.json')} autoPlay loop={false} />
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate("MainScreen")}
+        activeOpacity={0.5}
+        style={{ position:'absolute', bottom:40, height: '12%', width: '100%' }}>
+        <Image
+          style={{ width: '90%', height: '100%', marginLeft: '5%' }}
+          resizeMode="contain"
+          source={require('../assets/Dacord.png')}
+        />
+      </TouchableOpacity></View>);
+    }
+    else {
+      resultat = (
+      <View>
+      <Text style={styles.paragraph}> Felicitats! Has encertat de ple! </Text>
+      <LottieView source={require('../assets/tocat.json')} autoPlay loop={false} />
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate("MainScreen")}
+        activeOpacity={0.5}
+        style={{ position:'absolute', bottom:40, height: '12%', width: '100%' }}>
+        <Image
+          style={{ width: '90%', height: '100%', marginLeft: '5%' }}
+          resizeMode="contain"
+          source={require('../assets/Dacord.png')}
+        />
+      </TouchableOpacity>
+      </View>
+    );
     }
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>{text}</Text>
-        <LottieView source={require('../assets/fallat.json')} autoPlay loop={false} />
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("MainScreen")}
-          activeOpacity={0.5}
-          style={{ position:'absolute', bottom:40, height: '12%', width: '100%' }}>
-          <Image
-            style={{ width: '90%', height: '100%', marginLeft: '5%' }}
-            resizeMode="contain"
-            source={require('../assets/Dacord.png')}
-          />
-        </TouchableOpacity>
 
+
+      <View style={styles.container}>
+        {resultat}
       </View>
     );
   }
@@ -141,7 +170,8 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 24,
-    fontSize: 18,
+    fontSize: 28,
+    fontWeight: 'bold',
     textAlign: 'center',
     color: 'white'
   },
