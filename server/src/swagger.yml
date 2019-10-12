@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+    title: 'Pastanaga API'
+    version: 1.0.0
+paths:
+    /api/users:
+        get:
+            operationId: usersQuery
+            parameters: []
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+    '/api/user/{id}':
+        get:
+            operationId: userQuery
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /api/create-user:
+        post:
+            operationId: createUserMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                email:
+                                    type: string
+                            required:
+                                - name
+                                - email
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /api/delete-user:
+        post:
+            operationId: deleteUserMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                            required:
+                                - id
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+components:
+    schemas:
+        Query:
+            type: object
+            required:
+                - users
+            properties:
+                users:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/User'
+                user:
+                    $ref: '#/components/schemas/User'
+        User:
+            type: object
+            required:
+                - id
+                - name
+                - email
+            properties:
+                id:
+                    type: object
+                name:
+                    type: string
+                email:
+                    type: string
+                objectiu:
+                    $ref: '#/components/schemas/User'
+        Mutation:
+            type: object
+            required:
+                - createUser
+            properties:
+                createUser:
+                    $ref: '#/components/schemas/User'
+                deleteUser:
+                    $ref: '#/components/schemas/User'
+        ID:
+            type: string
