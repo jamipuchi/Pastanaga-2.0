@@ -23,7 +23,7 @@ class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate(!access_token ? 'Auth' : 'App');
+    this.props.navigation.navigate("auth");
   };
 
   render() {
@@ -44,11 +44,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-const AuthStack = createStackNavigator({ SignIn: Login }, {headerMode: 'none'});
-
 const AppStack = createStackNavigator(
   {
+  Login: {screen: Login},
   MainScreen: {screen: MainScreen},
   Escanejar: {screen: Escanejar},
   PowerUps: {screen: PowerUps},
@@ -63,13 +61,25 @@ const AppStack = createStackNavigator(
   }
 )
 
+const AuthStack = createStackNavigator({
+  Login: {screen: Login},
+  MainScreen: {screen: MainScreen},
+ },  {
+     initialRouteName: 'Login',
+     headerMode: 'none',
+     navigationOptions: {
+         headerVisible: false
+     }})
+
+
+
+
 export default createAppContainer(createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
-    App: AppStack,
+  //  App: AppStack,
     Auth: AuthStack,
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'Auth',
   }
 ));

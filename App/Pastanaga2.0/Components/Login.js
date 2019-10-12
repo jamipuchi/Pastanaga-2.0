@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Alert, Button, Text, TouchableOpacity, TextInput, View, StyleSheet, AsyncStorage } from 'react-native';
 import { AuthSession } from 'expo';
+import { NavigationActions, StackActions } from 'react-navigation';
+
 
 const FIB_APP_ID = '6XzThAtJTyA1VtLKHarEeQ8jVsoaUuslG55qBjDQ';
 
@@ -14,15 +16,16 @@ export default class Login extends Component {
 
 
   render() {
+
+
+
     return (
       <View style={styles.container}>
 
 
-        <Button title="Login amb FIB" onPress={this._handlePressAsync} />
-             {this.state.result ? (
-               <Text>HOLA! {this.state.nom}</Text>
-             ) : null}
-
+        <Button title="Login amb FIB"      onPress={() => {
+          this._handlePressAsync()
+        }} />
 
       </View>
     );
@@ -38,14 +41,17 @@ export default class Login extends Component {
         `&response_type=token&state=random_string`,
       });
       await this.setState({ result });
-      this.comprovaResultat()
+      console.log("result ===" + this.state.result);
+      await this.comprovaResultat()
+      console.log("------NAVEGANT..................");
+      this.props.navigation.navigate("MainScreen")
 
   };
 
-  comprovaResultat = () => {
+  comprovaResultat = async () => {
     console.log("comprovant resultat")
     let resultat = this.state.result;
-    console.log(resultat)
+    console.log("resultat:"+resultat)
     console.log(resultat.params.access_token)
     AsyncStorage.setItem('access_token',resultat.params.access_token)
     this.setState({ access_token : resultat.params.access_token})
@@ -92,12 +98,10 @@ export default class Login extends Component {
 
            console.log(responseJson)
            let results = responseJson.results
-           console.log(results.dia_setmana)
-           AsyncStorage.setItem('access_token',resultat.params.access_token)
-
-
          })
-         this.props.navigation.navigate("app")
+         console.log("AQUI NAVEGUEM DE VERITAT");
+
+
     }
 }
 
