@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateClasse {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -11,11 +15,260 @@ type BatchPayload {
   count: Long!
 }
 
+type Classe {
+  id: ID!
+  aules: String!
+  durada: Int!
+  inici: Int!
+  dia_setmana: Int!
+}
+
+type ClasseConnection {
+  pageInfo: PageInfo!
+  edges: [ClasseEdge]!
+  aggregate: AggregateClasse!
+}
+
+input ClasseCreateInput {
+  id: ID
+  aules: String!
+  durada: Int!
+  inici: Int!
+  dia_setmana: Int!
+}
+
+input ClasseCreateManyInput {
+  create: [ClasseCreateInput!]
+  connect: [ClasseWhereUniqueInput!]
+}
+
+type ClasseEdge {
+  node: Classe!
+  cursor: String!
+}
+
+enum ClasseOrderByInput {
+  id_ASC
+  id_DESC
+  aules_ASC
+  aules_DESC
+  durada_ASC
+  durada_DESC
+  inici_ASC
+  inici_DESC
+  dia_setmana_ASC
+  dia_setmana_DESC
+}
+
+type ClassePreviousValues {
+  id: ID!
+  aules: String!
+  durada: Int!
+  inici: Int!
+  dia_setmana: Int!
+}
+
+input ClasseScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  aules: String
+  aules_not: String
+  aules_in: [String!]
+  aules_not_in: [String!]
+  aules_lt: String
+  aules_lte: String
+  aules_gt: String
+  aules_gte: String
+  aules_contains: String
+  aules_not_contains: String
+  aules_starts_with: String
+  aules_not_starts_with: String
+  aules_ends_with: String
+  aules_not_ends_with: String
+  durada: Int
+  durada_not: Int
+  durada_in: [Int!]
+  durada_not_in: [Int!]
+  durada_lt: Int
+  durada_lte: Int
+  durada_gt: Int
+  durada_gte: Int
+  inici: Int
+  inici_not: Int
+  inici_in: [Int!]
+  inici_not_in: [Int!]
+  inici_lt: Int
+  inici_lte: Int
+  inici_gt: Int
+  inici_gte: Int
+  dia_setmana: Int
+  dia_setmana_not: Int
+  dia_setmana_in: [Int!]
+  dia_setmana_not_in: [Int!]
+  dia_setmana_lt: Int
+  dia_setmana_lte: Int
+  dia_setmana_gt: Int
+  dia_setmana_gte: Int
+  AND: [ClasseScalarWhereInput!]
+  OR: [ClasseScalarWhereInput!]
+  NOT: [ClasseScalarWhereInput!]
+}
+
+type ClasseSubscriptionPayload {
+  mutation: MutationType!
+  node: Classe
+  updatedFields: [String!]
+  previousValues: ClassePreviousValues
+}
+
+input ClasseSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ClasseWhereInput
+  AND: [ClasseSubscriptionWhereInput!]
+}
+
+input ClasseUpdateDataInput {
+  aules: String
+  durada: Int
+  inici: Int
+  dia_setmana: Int
+}
+
+input ClasseUpdateInput {
+  aules: String
+  durada: Int
+  inici: Int
+  dia_setmana: Int
+}
+
+input ClasseUpdateManyDataInput {
+  aules: String
+  durada: Int
+  inici: Int
+  dia_setmana: Int
+}
+
+input ClasseUpdateManyInput {
+  create: [ClasseCreateInput!]
+  update: [ClasseUpdateWithWhereUniqueNestedInput!]
+  upsert: [ClasseUpsertWithWhereUniqueNestedInput!]
+  delete: [ClasseWhereUniqueInput!]
+  connect: [ClasseWhereUniqueInput!]
+  set: [ClasseWhereUniqueInput!]
+  disconnect: [ClasseWhereUniqueInput!]
+  deleteMany: [ClasseScalarWhereInput!]
+  updateMany: [ClasseUpdateManyWithWhereNestedInput!]
+}
+
+input ClasseUpdateManyMutationInput {
+  aules: String
+  durada: Int
+  inici: Int
+  dia_setmana: Int
+}
+
+input ClasseUpdateManyWithWhereNestedInput {
+  where: ClasseScalarWhereInput!
+  data: ClasseUpdateManyDataInput!
+}
+
+input ClasseUpdateWithWhereUniqueNestedInput {
+  where: ClasseWhereUniqueInput!
+  data: ClasseUpdateDataInput!
+}
+
+input ClasseUpsertWithWhereUniqueNestedInput {
+  where: ClasseWhereUniqueInput!
+  update: ClasseUpdateDataInput!
+  create: ClasseCreateInput!
+}
+
+input ClasseWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  aules: String
+  aules_not: String
+  aules_in: [String!]
+  aules_not_in: [String!]
+  aules_lt: String
+  aules_lte: String
+  aules_gt: String
+  aules_gte: String
+  aules_contains: String
+  aules_not_contains: String
+  aules_starts_with: String
+  aules_not_starts_with: String
+  aules_ends_with: String
+  aules_not_ends_with: String
+  durada: Int
+  durada_not: Int
+  durada_in: [Int!]
+  durada_not_in: [Int!]
+  durada_lt: Int
+  durada_lte: Int
+  durada_gt: Int
+  durada_gte: Int
+  inici: Int
+  inici_not: Int
+  inici_in: [Int!]
+  inici_not_in: [Int!]
+  inici_lt: Int
+  inici_lte: Int
+  inici_gt: Int
+  inici_gte: Int
+  dia_setmana: Int
+  dia_setmana_not: Int
+  dia_setmana_in: [Int!]
+  dia_setmana_not_in: [Int!]
+  dia_setmana_lt: Int
+  dia_setmana_lte: Int
+  dia_setmana_gt: Int
+  dia_setmana_gte: Int
+  AND: [ClasseWhereInput!]
+}
+
+input ClasseWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 scalar Long
 
 type Mutation {
+  createClasse(data: ClasseCreateInput!): Classe!
+  updateClasse(data: ClasseUpdateInput!, where: ClasseWhereUniqueInput!): Classe
+  updateManyClasses(data: ClasseUpdateManyMutationInput!, where: ClasseWhereInput): BatchPayload!
+  upsertClasse(where: ClasseWhereUniqueInput!, create: ClasseCreateInput!, update: ClasseUpdateInput!): Classe!
+  deleteClasse(where: ClasseWhereUniqueInput!): Classe
+  deleteManyClasses(where: ClasseWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -42,6 +295,9 @@ type PageInfo {
 }
 
 type Query {
+  classe(where: ClasseWhereUniqueInput!): Classe
+  classes(where: ClasseWhereInput, orderBy: ClasseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Classe]!
+  classesConnection(where: ClasseWhereInput, orderBy: ClasseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClasseConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -49,6 +305,7 @@ type Query {
 }
 
 type Subscription {
+  classe(where: ClasseSubscriptionWhereInput): ClasseSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -63,6 +320,7 @@ type User {
   alive: Boolean
   monedes: Int
   winner: Boolean!
+  horari(where: ClasseWhereInput, orderBy: ClasseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Classe!]
 }
 
 type UserConnection {
@@ -81,6 +339,7 @@ input UserCreateInput {
   alive: Boolean
   monedes: Int
   winner: Boolean!
+  horari: ClasseCreateManyInput
 }
 
 input UserCreateOneWithoutObjectiuInput {
@@ -97,6 +356,7 @@ input UserCreateWithoutObjectiuInput {
   alive: Boolean
   monedes: Int
   winner: Boolean!
+  horari: ClasseCreateManyInput
 }
 
 type UserEdge {
@@ -162,6 +422,7 @@ input UserUpdateInput {
   alive: Boolean
   monedes: Int
   winner: Boolean
+  horari: ClasseUpdateManyInput
 }
 
 input UserUpdateManyMutationInput {
@@ -191,6 +452,7 @@ input UserUpdateWithoutObjectiuDataInput {
   alive: Boolean
   monedes: Int
   winner: Boolean
+  horari: ClasseUpdateManyInput
 }
 
 input UserUpsertWithoutObjectiuInput {
@@ -290,6 +552,7 @@ input UserWhereInput {
   monedes_gte: Int
   winner: Boolean
   winner_not: Boolean
+  horari_some: ClasseWhereInput
   AND: [UserWhereInput!]
 }
 

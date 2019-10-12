@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  classe: (where?: ClasseWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  classe: (where: ClasseWhereUniqueInput) => ClasseNullablePromise;
+  classes: (args?: {
+    where?: ClasseWhereInput;
+    orderBy?: ClasseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Classe>;
+  classesConnection: (args?: {
+    where?: ClasseWhereInput;
+    orderBy?: ClasseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ClasseConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createClasse: (data: ClasseCreateInput) => ClassePromise;
+  updateClasse: (args: {
+    data: ClasseUpdateInput;
+    where: ClasseWhereUniqueInput;
+  }) => ClassePromise;
+  updateManyClasses: (args: {
+    data: ClasseUpdateManyMutationInput;
+    where?: ClasseWhereInput;
+  }) => BatchPayloadPromise;
+  upsertClasse: (args: {
+    where: ClasseWhereUniqueInput;
+    create: ClasseCreateInput;
+    update: ClasseUpdateInput;
+  }) => ClassePromise;
+  deleteClasse: (where: ClasseWhereUniqueInput) => ClassePromise;
+  deleteManyClasses: (where?: ClasseWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  classe: (
+    where?: ClasseSubscriptionWhereInput
+  ) => ClasseSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -100,6 +139,18 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type ClasseOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "aules_ASC"
+  | "aules_DESC"
+  | "durada_ASC"
+  | "durada_DESC"
+  | "inici_ASC"
+  | "inici_DESC"
+  | "dia_setmana_ASC"
+  | "dia_setmana_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -122,73 +173,6 @@ export type UserOrderByInput =
   | "winner_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  objectiu?: Maybe<UserCreateOneWithoutObjectiuInput>;
-  latitude?: Maybe<String>;
-  longitude?: Maybe<String>;
-  alive?: Maybe<Boolean>;
-  monedes?: Maybe<Int>;
-  winner: Boolean;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface UserCreateOneWithoutObjectiuInput {
-  create?: Maybe<UserCreateWithoutObjectiuInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  objectiu?: Maybe<UserUpdateOneWithoutObjectiuInput>;
-  latitude?: Maybe<String>;
-  longitude?: Maybe<String>;
-  alive?: Maybe<Boolean>;
-  monedes?: Maybe<Int>;
-  winner?: Maybe<Boolean>;
-}
-
-export interface UserUpdateOneWithoutObjectiuInput {
-  create?: Maybe<UserCreateWithoutObjectiuInput>;
-  update?: Maybe<UserUpdateWithoutObjectiuDataInput>;
-  upsert?: Maybe<UserUpsertWithoutObjectiuInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutObjectiuDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  latitude?: Maybe<String>;
-  longitude?: Maybe<String>;
-  alive?: Maybe<Boolean>;
-  monedes?: Maybe<Int>;
-  winner?: Maybe<Boolean>;
-}
-
-export interface UserUpsertWithoutObjectiuInput {
-  update: UserUpdateWithoutObjectiuDataInput;
-  create: UserCreateWithoutObjectiuInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  latitude?: Maybe<String>;
-  longitude?: Maybe<String>;
-  alive?: Maybe<Boolean>;
-  monedes?: Maybe<Int>;
-  winner?: Maybe<Boolean>;
-}
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -282,16 +266,177 @@ export interface UserWhereInput {
   monedes_gte?: Maybe<Int>;
   winner?: Maybe<Boolean>;
   winner_not?: Maybe<Boolean>;
+  horari_some?: Maybe<ClasseWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface UserSubscriptionWhereInput {
+export interface ClasseCreateManyInput {
+  create?: Maybe<ClasseCreateInput[] | ClasseCreateInput>;
+  connect?: Maybe<ClasseWhereUniqueInput[] | ClasseWhereUniqueInput>;
+}
+
+export interface ClasseUpdateManyInput {
+  create?: Maybe<ClasseCreateInput[] | ClasseCreateInput>;
+  update?: Maybe<
+    | ClasseUpdateWithWhereUniqueNestedInput[]
+    | ClasseUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | ClasseUpsertWithWhereUniqueNestedInput[]
+    | ClasseUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<ClasseWhereUniqueInput[] | ClasseWhereUniqueInput>;
+  connect?: Maybe<ClasseWhereUniqueInput[] | ClasseWhereUniqueInput>;
+  set?: Maybe<ClasseWhereUniqueInput[] | ClasseWhereUniqueInput>;
+  disconnect?: Maybe<ClasseWhereUniqueInput[] | ClasseWhereUniqueInput>;
+  deleteMany?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
+  updateMany?: Maybe<
+    | ClasseUpdateManyWithWhereNestedInput[]
+    | ClasseUpdateManyWithWhereNestedInput
+  >;
+}
+
+export type ClasseWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateWithoutObjectiuDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
+  horari?: Maybe<ClasseUpdateManyInput>;
+}
+
+export interface ClasseWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  aules?: Maybe<String>;
+  aules_not?: Maybe<String>;
+  aules_in?: Maybe<String[] | String>;
+  aules_not_in?: Maybe<String[] | String>;
+  aules_lt?: Maybe<String>;
+  aules_lte?: Maybe<String>;
+  aules_gt?: Maybe<String>;
+  aules_gte?: Maybe<String>;
+  aules_contains?: Maybe<String>;
+  aules_not_contains?: Maybe<String>;
+  aules_starts_with?: Maybe<String>;
+  aules_not_starts_with?: Maybe<String>;
+  aules_ends_with?: Maybe<String>;
+  aules_not_ends_with?: Maybe<String>;
+  durada?: Maybe<Int>;
+  durada_not?: Maybe<Int>;
+  durada_in?: Maybe<Int[] | Int>;
+  durada_not_in?: Maybe<Int[] | Int>;
+  durada_lt?: Maybe<Int>;
+  durada_lte?: Maybe<Int>;
+  durada_gt?: Maybe<Int>;
+  durada_gte?: Maybe<Int>;
+  inici?: Maybe<Int>;
+  inici_not?: Maybe<Int>;
+  inici_in?: Maybe<Int[] | Int>;
+  inici_not_in?: Maybe<Int[] | Int>;
+  inici_lt?: Maybe<Int>;
+  inici_lte?: Maybe<Int>;
+  inici_gt?: Maybe<Int>;
+  inici_gte?: Maybe<Int>;
+  dia_setmana?: Maybe<Int>;
+  dia_setmana_not?: Maybe<Int>;
+  dia_setmana_in?: Maybe<Int[] | Int>;
+  dia_setmana_not_in?: Maybe<Int[] | Int>;
+  dia_setmana_lt?: Maybe<Int>;
+  dia_setmana_lte?: Maybe<Int>;
+  dia_setmana_gt?: Maybe<Int>;
+  dia_setmana_gte?: Maybe<Int>;
+  AND?: Maybe<ClasseWhereInput[] | ClasseWhereInput>;
+}
+
+export interface UserUpsertWithoutObjectiuInput {
+  update: UserUpdateWithoutObjectiuDataInput;
+  create: UserCreateWithoutObjectiuInput;
+}
+
+export interface ClasseUpdateManyWithWhereNestedInput {
+  where: ClasseScalarWhereInput;
+  data: ClasseUpdateManyDataInput;
+}
+
+export interface ClasseCreateInput {
+  id?: Maybe<ID_Input>;
+  aules: String;
+  durada: Int;
+  inici: Int;
+  dia_setmana: Int;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface ClasseUpdateInput {
+  aules?: Maybe<String>;
+  durada?: Maybe<Int>;
+  inici?: Maybe<Int>;
+  dia_setmana?: Maybe<Int>;
+}
+
+export interface ClasseUpdateDataInput {
+  aules?: Maybe<String>;
+  durada?: Maybe<Int>;
+  inici?: Maybe<Int>;
+  dia_setmana?: Maybe<Int>;
+}
+
+export interface ClasseUpdateManyMutationInput {
+  aules?: Maybe<String>;
+  durada?: Maybe<Int>;
+  inici?: Maybe<Int>;
+  dia_setmana?: Maybe<Int>;
+}
+
+export interface ClasseSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  node?: Maybe<ClasseWhereInput>;
+  AND?: Maybe<ClasseSubscriptionWhereInput[] | ClasseSubscriptionWhereInput>;
+}
+
+export interface UserUpdateOneWithoutObjectiuInput {
+  create?: Maybe<UserCreateWithoutObjectiuInput>;
+  update?: Maybe<UserUpdateWithoutObjectiuDataInput>;
+  upsert?: Maybe<UserUpsertWithoutObjectiuInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
 }
 
 export interface UserCreateWithoutObjectiuInput {
@@ -303,10 +448,200 @@ export interface UserCreateWithoutObjectiuInput {
   alive?: Maybe<Boolean>;
   monedes?: Maybe<Int>;
   winner: Boolean;
+  horari?: Maybe<ClasseCreateManyInput>;
+}
+
+export interface UserCreateOneWithoutObjectiuInput {
+  create?: Maybe<UserCreateWithoutObjectiuInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  objectiu?: Maybe<UserCreateOneWithoutObjectiuInput>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner: Boolean;
+  horari?: Maybe<ClasseCreateManyInput>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  objectiu?: Maybe<UserUpdateOneWithoutObjectiuInput>;
+  latitude?: Maybe<String>;
+  longitude?: Maybe<String>;
+  alive?: Maybe<Boolean>;
+  monedes?: Maybe<Int>;
+  winner?: Maybe<Boolean>;
+  horari?: Maybe<ClasseUpdateManyInput>;
+}
+
+export interface ClasseUpdateManyDataInput {
+  aules?: Maybe<String>;
+  durada?: Maybe<Int>;
+  inici?: Maybe<Int>;
+  dia_setmana?: Maybe<Int>;
+}
+
+export interface ClasseUpdateWithWhereUniqueNestedInput {
+  where: ClasseWhereUniqueInput;
+  data: ClasseUpdateDataInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface ClasseUpsertWithWhereUniqueNestedInput {
+  where: ClasseWhereUniqueInput;
+  update: ClasseUpdateDataInput;
+  create: ClasseCreateInput;
+}
+
+export interface ClasseScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  aules?: Maybe<String>;
+  aules_not?: Maybe<String>;
+  aules_in?: Maybe<String[] | String>;
+  aules_not_in?: Maybe<String[] | String>;
+  aules_lt?: Maybe<String>;
+  aules_lte?: Maybe<String>;
+  aules_gt?: Maybe<String>;
+  aules_gte?: Maybe<String>;
+  aules_contains?: Maybe<String>;
+  aules_not_contains?: Maybe<String>;
+  aules_starts_with?: Maybe<String>;
+  aules_not_starts_with?: Maybe<String>;
+  aules_ends_with?: Maybe<String>;
+  aules_not_ends_with?: Maybe<String>;
+  durada?: Maybe<Int>;
+  durada_not?: Maybe<Int>;
+  durada_in?: Maybe<Int[] | Int>;
+  durada_not_in?: Maybe<Int[] | Int>;
+  durada_lt?: Maybe<Int>;
+  durada_lte?: Maybe<Int>;
+  durada_gt?: Maybe<Int>;
+  durada_gte?: Maybe<Int>;
+  inici?: Maybe<Int>;
+  inici_not?: Maybe<Int>;
+  inici_in?: Maybe<Int[] | Int>;
+  inici_not_in?: Maybe<Int[] | Int>;
+  inici_lt?: Maybe<Int>;
+  inici_lte?: Maybe<Int>;
+  inici_gt?: Maybe<Int>;
+  inici_gte?: Maybe<Int>;
+  dia_setmana?: Maybe<Int>;
+  dia_setmana_not?: Maybe<Int>;
+  dia_setmana_in?: Maybe<Int[] | Int>;
+  dia_setmana_not_in?: Maybe<Int[] | Int>;
+  dia_setmana_lt?: Maybe<Int>;
+  dia_setmana_lte?: Maybe<Int>;
+  dia_setmana_gt?: Maybe<Int>;
+  dia_setmana_gte?: Maybe<Int>;
+  AND?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
+  OR?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
+  NOT?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
 }
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AggregateClasse {
+  count: Int;
+}
+
+export interface AggregateClassePromise
+  extends Promise<AggregateClasse>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateClasseSubscription
+  extends Promise<AsyncIterator<AggregateClasse>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ClasseSubscriptionPayload {
+  mutation: MutationType;
+  node: Classe;
+  updatedFields: String[];
+  previousValues: ClassePreviousValues;
+}
+
+export interface ClasseSubscriptionPayloadPromise
+  extends Promise<ClasseSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ClassePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ClassePreviousValuesPromise>() => T;
+}
+
+export interface ClasseSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ClasseSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ClasseSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ClassePreviousValuesSubscription>() => T;
+}
+
+export interface ClasseEdge {
+  node: Classe;
+  cursor: String;
+}
+
+export interface ClasseEdgePromise extends Promise<ClasseEdge>, Fragmentable {
+  node: <T = ClassePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ClasseEdgeSubscription
+  extends Promise<AsyncIterator<ClasseEdge>>,
+    Fragmentable {
+  node: <T = ClasseSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserPreviousValues {
@@ -349,66 +684,70 @@ export interface UserPreviousValuesSubscription
   winner: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
+export interface UserEdge {
   node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+  cursor: String;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
   node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
   node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserConnection {
+export interface ClassePreviousValues {
+  id: ID_Output;
+  aules: String;
+  durada: Int;
+  inici: Int;
+  dia_setmana: Int;
+}
+
+export interface ClassePreviousValuesPromise
+  extends Promise<ClassePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  aules: () => Promise<String>;
+  durada: () => Promise<Int>;
+  inici: () => Promise<Int>;
+  dia_setmana: () => Promise<Int>;
+}
+
+export interface ClassePreviousValuesSubscription
+  extends Promise<AsyncIterator<ClassePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  aules: () => Promise<AsyncIterator<String>>;
+  durada: () => Promise<AsyncIterator<Int>>;
+  inici: () => Promise<AsyncIterator<Int>>;
+  dia_setmana: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ClasseConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: ClasseEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface ClasseConnectionPromise
+  extends Promise<ClasseConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<ClasseEdge>>() => T;
+  aggregate: <T = AggregateClassePromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface ClasseConnectionSubscription
+  extends Promise<AsyncIterator<ClasseConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ClasseEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateClasseSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -434,21 +773,61 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface Classe {
+  id: ID_Output;
+  aules: String;
+  durada: Int;
+  inici: Int;
+  dia_setmana: Int;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
+export interface ClassePromise extends Promise<Classe>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  aules: () => Promise<String>;
+  durada: () => Promise<Int>;
+  inici: () => Promise<Int>;
+  dia_setmana: () => Promise<Int>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface ClasseSubscription
+  extends Promise<AsyncIterator<Classe>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  aules: () => Promise<AsyncIterator<String>>;
+  durada: () => Promise<AsyncIterator<Int>>;
+  inici: () => Promise<AsyncIterator<Int>>;
+  dia_setmana: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ClasseNullablePromise
+  extends Promise<Classe | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  aules: () => Promise<String>;
+  durada: () => Promise<Int>;
+  inici: () => Promise<Int>;
+  dia_setmana: () => Promise<Int>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface AggregateUser {
@@ -490,6 +869,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   alive: () => Promise<Boolean>;
   monedes: () => Promise<Int>;
   winner: () => Promise<Boolean>;
+  horari: <T = FragmentableArray<Classe>>(args?: {
+    where?: ClasseWhereInput;
+    orderBy?: ClasseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
@@ -505,6 +893,15 @@ export interface UserSubscription
   alive: () => Promise<AsyncIterator<Boolean>>;
   monedes: () => Promise<AsyncIterator<Int>>;
   winner: () => Promise<AsyncIterator<Boolean>>;
+  horari: <T = Promise<AsyncIterator<ClasseSubscription>>>(args?: {
+    where?: ClasseWhereInput;
+    orderBy?: ClasseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserNullablePromise
@@ -520,7 +917,48 @@ export interface UserNullablePromise
   alive: () => Promise<Boolean>;
   monedes: () => Promise<Int>;
   winner: () => Promise<Boolean>;
+  horari: <T = FragmentableArray<Classe>>(args?: {
+    where?: ClasseWhereInput;
+    orderBy?: ClasseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+export type Long = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -539,21 +977,14 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type Boolean = boolean;
+export type Int = number;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-export type Long = string;
 
 /**
  * Model Metadata
@@ -562,6 +993,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Classe",
     embedded: false
   }
 ];

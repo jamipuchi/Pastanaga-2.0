@@ -85,6 +85,43 @@ paths:
                             schema:
                                 type: number
                                 format: float
+    /api/te-classe:
+        get:
+            operationId: teClasseQuery
+            parameters:
+                -
+                    in: query
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+                -
+                    in: query
+                    name: hora
+                    required: true
+                    schema:
+                        type: integer
+                        format: int32
+                -
+                    in: query
+                    name: dia_setmana
+                    required: true
+                    schema:
+                        type: integer
+                        format: int32
+                -
+                    in: query
+                    name: aula
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -98,6 +135,10 @@ paths:
                                     type: string
                                 email:
                                     type: string
+                                horari:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/InputClasse'
                             required:
                                 - name
                                 - email
@@ -211,6 +252,8 @@ components:
                 angle:
                     type: number
                     format: float
+                teClasse:
+                    type: boolean
         User:
             type: object
             required:
@@ -238,6 +281,29 @@ components:
                     format: int32
                 winner:
                     type: boolean
+                horari:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Classe'
+        Classe:
+            type: object
+            required:
+                - aules
+                - durada
+                - inici
+                - dia_setmana
+            properties:
+                aules:
+                    type: string
+                durada:
+                    type: integer
+                    format: int32
+                inici:
+                    type: integer
+                    format: int32
+                dia_setmana:
+                    type: integer
+                    format: int32
         Mutation:
             type: object
             required:
@@ -255,5 +321,24 @@ components:
                     type: boolean
                 matar:
                     type: boolean
+        InputClasse:
+            type: object
+            required:
+                - aules
+                - durada
+                - inici
+                - dia_setmana
+            properties:
+                aules:
+                    type: string
+                durada:
+                    type: integer
+                    format: int32
+                inici:
+                    type: integer
+                    format: int32
+                dia_setmana:
+                    type: integer
+                    format: int32
         ID:
             type: string
