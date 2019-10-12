@@ -115,8 +115,6 @@ input UserSubscriptionWhereInput {
   updatedFields_contains_some: [String!]
   node: UserWhereInput
   AND: [UserSubscriptionWhereInput!]
-  OR: [UserSubscriptionWhereInput!]
-  NOT: [UserSubscriptionWhereInput!]
 }
 
 input UserUpdateDataInput {
@@ -203,8 +201,6 @@ input UserWhereInput {
   email_not_ends_with: String
   objectiu: UserWhereInput
   AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {

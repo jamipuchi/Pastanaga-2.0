@@ -163,8 +163,6 @@ export interface UserSubscriptionWhereInput {
   updatedFields_contains_some?: Maybe<String[] | String>;
   node?: Maybe<UserWhereInput>;
   AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -225,8 +223,6 @@ export interface UserWhereInput {
   email_not_ends_with?: Maybe<String>;
   objectiu?: Maybe<UserWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
 export interface NodeNode {
