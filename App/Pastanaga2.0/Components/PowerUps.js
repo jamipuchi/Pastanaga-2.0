@@ -205,7 +205,7 @@ export default class PowerUps extends Component {
                     Power Ups
                 </Text>
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}
+                    onPress={() => this.props.navigation.navigate("MainScreen")}
                     style={{ width: 30, position: 'absolute', left: '5%', top: '12%' }}>
                     <Image
                         source={require('../assets/back.png')}
