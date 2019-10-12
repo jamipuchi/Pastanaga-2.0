@@ -41,6 +41,7 @@ export default class MainScreen extends Component {
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("PowerUps")}
                     activeOpacity={0.5}
                     style={{ height: '12%', width: '100%' }}>
                     <Image
@@ -51,7 +52,7 @@ export default class MainScreen extends Component {
                 </TouchableOpacity>
 
                 <View
-                    style={{ height: '12%', width:'100%', flexDirection: 'row' }}>
+                    style={{ height: '12%', width: '100%', flexDirection: 'row' }}>
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}>

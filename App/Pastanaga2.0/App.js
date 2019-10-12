@@ -5,6 +5,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import Login from './Login';
 import MainScreen from './Components/MainScreen';
 import Escanejar from './Escanejar';
+import PowerUps from './Components/PowerUps';
 
 
 class AuthLoadingScreen extends React.Component {
@@ -20,7 +21,7 @@ class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.props.navigation.navigate(!userToken ? 'App' : 'Auth');
   };
 
   render() {
@@ -48,6 +49,7 @@ const AppStack = createStackNavigator(
   {
   MainScreen: {screen: MainScreen},
   Escanejar: {screen: Escanejar},
+  PowerUps: {screen: PowerUps}
   },
   {
     initialRouteName: 'MainScreen',
