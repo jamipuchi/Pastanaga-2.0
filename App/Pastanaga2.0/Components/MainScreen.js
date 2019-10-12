@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, Text, ImageBackground } from 'react-native';
+import { View, Image, TouchableOpacity, Text, ImageBackground, AsyncStorage } from 'react-native';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 
 export default class MainScreen extends Component {
@@ -155,7 +156,9 @@ export default class MainScreen extends Component {
                     </View>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        style={{ height: '50%', width: '15%', marginLeft: '2%' }}>
+                        style={{ height: '50%', width: '15%', marginLeft: '2%' }}
+                        onPress={() => this.logout()}>
+
                         <Image
                             style={{ height: '100%', width: '100%', marginLeft: '20%' }}
                             resizeMode="contain"
@@ -166,5 +169,14 @@ export default class MainScreen extends Component {
 
             </View>
         );
+    }
+
+    logout = () => {
+      AsyncStorage.removeItem('access_token');
+      const resetAction = StackActions.reset({
+                                  index: 0,
+                                  actions: [NavigationActions.navigate({ routeName: 'Login' })],
+                              });
+                              this.props.navigation.dispatch(resetAction);
     }
 }

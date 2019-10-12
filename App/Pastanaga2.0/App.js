@@ -7,7 +7,6 @@ import MainScreen from './Components/MainScreen';
 import PowerUps from './Components/PowerUps';
 import Escanejar from './Components/Escanejar';
 import Disparar from './Components/Disparar'
-import Tutorial from './Components/Tutorial';
 
 
 class AuthLoadingScreen extends React.Component {
@@ -45,16 +44,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-const AuthStack = createStackNavigator({ SignIn: Login }, {headerMode: 'none'});
-
 const AppStack = createStackNavigator(
   {
+  Login: {screen: Login},
   MainScreen: {screen: MainScreen},
   Escanejar: {screen: Escanejar},
   PowerUps: {screen: PowerUps},
   Disparar:{screen: Disparar},
-  Tutorial:{screen: Tutorial}
   },
   {
     initialRouteName: 'MainScreen',
@@ -65,13 +61,25 @@ const AppStack = createStackNavigator(
   }
 )
 
+const AuthStack = createStackNavigator({
+  Login: {screen: Login},
+  MainScreen: {screen: MainScreen},
+ },  {
+     initialRouteName: 'Login',
+     headerMode: 'none',
+     navigationOptions: {
+         headerVisible: false
+     }})
+
+
+
+
 export default createAppContainer(createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'Auth',
   }
 ));
