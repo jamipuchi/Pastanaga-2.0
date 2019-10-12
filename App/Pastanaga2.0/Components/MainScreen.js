@@ -56,7 +56,9 @@ export default class MainScreen extends Component {
                     style={{ height: '12%', width: '100%', flexDirection: 'row' }}>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        style={{ height: '100%', width: '70%' }}>
+                        style={{ height: '100%', width: '70%' }}
+                        onPress={() => this.props.navigation.navigate("Disparar")}
+                        >
                         <Image
                             style={{ height: '100%', width: '100%', marginLeft: '7%' }}
                             resizeMode="contain"
