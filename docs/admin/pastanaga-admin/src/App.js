@@ -87,6 +87,7 @@ export default class App extends Component {
             <p className="col">E-mail: {item.email}</p>
             <p className="col">Viu?: {item.alive ? "Si" : "No"}</p>
             <p className="col">Monedes: {item.monedes}</p>
+            <p className="col">Objectiu: {item.objectiu.name}</p>
           </div>)}
         </div>
         {(this.state.jugantPartida) ?
