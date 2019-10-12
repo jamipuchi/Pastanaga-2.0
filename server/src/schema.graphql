@@ -20,7 +20,7 @@ type Mutation {
     createGame: Boolean!
     matar(id: ID!): Boolean!
     teClasse(id: ID!, hora: Int!, diaSetmana: Int!, aula: String!): Boolean!
-    spend(id: ID!, amount: Int!): User!
+    spend(id: ID!, amount: Int!): Boolean!
     changeRange(id: ID!, amount: Int!): User!
 }
 

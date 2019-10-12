@@ -133,12 +133,14 @@ const teClasse = async (parent, args, context) => {
 
 const spend = async (parent, args, context) => {
     const m = await context.prisma.user({ id: args.id }).monedes();
-    return context.prisma.updateUser({
+    if (m - args.amount < 0) return false;
+    await context.prisma.updateUser({
         data: {
             monedes: m - args.amount,
         },
         where: { id: args.id }
     })
+    return true;
 }
 
 const changeRange = async (parent, args, context) => {
