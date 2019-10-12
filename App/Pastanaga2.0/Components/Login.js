@@ -22,8 +22,8 @@ export default class Login extends Component {
 
   async registerToApiAsync() {
     const { nom, mail, horari } = this.state;
-    console.log("nom: " + nom)
-    console.log("mail: " + mail)
+    console.log("nom: " + "string")
+    console.log("mail: " + "string")
 
     return fetch('http://abuch.ddns.net:3080/api/create-user', {
       method: 'POST',
@@ -152,8 +152,10 @@ export default class Login extends Component {
           ar3[i].inici = parseInt(string)
         }
 
-        this.setState({ "horari": ar3 })
-        console.log(ar3)
+        const resultArray = ar3.map(elm => ({ aules: elm.aules, diaSetmana: elm.dia_setmana, durada:elm.durada, inici:elm.inici}));
+
+        this.setState({ "horari": resultArray })
+        console.log(resultArray)
 
       })
   }

@@ -22,14 +22,15 @@ export default class Escanejar extends React.Component {
     hasCameraPermission: null,
     scanned: false,
     classe: "",
-    dialogVisible: false
+    dialogVisible: false,
+    result:"",
   };
 
   async componentDidMount() {
     this.getPermissionsAsync();
   }
 
-       getIdUsuari = async () =>{
+  getIdUsuari = async () =>{
         const currentUser = await AsyncStorage.getItem('id_user')
         console.log("USUARI CORENT  "+ currentUser)
         if(currentUser != null){
@@ -39,39 +40,41 @@ export default class Escanejar extends React.Component {
         }
       }
 
-  sendAulaApi= async()=>{
-   uid = await this.getIdUsuari();
-   uid2 = await uid.substr(1);
-   uid3 = uid2.substring(0, uid2.length - 1);
-   aula = await this.state.classe;
-   hora = new Date().getHours();
-   console.log(hora);
-   dia = new Date().getDay();
-   console.log(dia);
-   console.log(uid3);
-   console.log(aula);
-   url =
-    `http://abuch.ddns.net:3080/api/te-classe?` +
-    `id=${encodeURIComponent(uid3)}`+
-    `&aula=${encodeURIComponent(aula)}`+
-    `&hora=${encodeURIComponent(hora)}`+
-    `&dia_setmana=${encodeURIComponent(dia)}`
 
-    fetch(url, {
-        method: "GET",
-        headers: {
+      sendAulaApi= async()=>{
+       uid = await this.getIdUsuari();
+       uid2 = await uid.substr(1);
+       uid3 = uid2.substring(0, uid2.length - 1);
+       aula = await this.state.classe;
+       hora = new Date().getHours();
+       console.log("hora"+hora);
+       dia = new Date().getDay();
+       console.log("dia"+dia);
+       console.log("id"+uid3);
+       console.log("aula"+aula);
+      return fetch('http://abuch.ddns.net:3080/api/te-classe', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
             'Content-Type': 'application/json',
-        }
-      }).then(async(responseJson) => {
-          console.log("response json: " + responseJson);
-          const jsonresp = JSON.stringify(responseJson);
-          console.log(jsonresp)
-      }).catch((error) => {
-          console.error(error);
-      });
+          },
+          body: JSON.stringify({
+            id: uid3,
+            aula: aula,
+            hora: hora,
+            diaSetmana: dia
+          }),
+        }).then((response) => response.json())
+          .then(async (responseJson) => {
+            const response = JSON.stringify(responseJson);
+            console.log( response);
+            this.setState({result: response})
 
+          }).catch((error) => {
+            console.error(error);
+          });
+      }
 
- }
 
   getPermissionsAsync = async () => {
     const {
@@ -155,7 +158,7 @@ export default class Escanejar extends React.Component {
           }} >
 
           <View>
-            <Text>Ara mateix estàs a {this.state.classe}</Text>
+            <Text>{this.state.text}</Text>
           </View>
         </ConfirmDialog>
         {
@@ -186,8 +189,13 @@ export default class Escanejar extends React.Component {
     if (type != "256") {
       alert("codi QR no reconegut")
     } else {
-      this.setState({ classe: data })
+      await this.setState({ classe: data })
       await this.sendAulaApi();
+      if(this.state.result === "true"){
+        await this.setState({text: "MOLT BÉ! El coneixement no ocupa lloc, aquí tens 20 monedes!"})
+      } else {
+        await this.setState({text: "Ens sap greu, però sembla que no tens classe aquí..."})
+      }
       this.setState({ dialogVisible: true });
 
     }
