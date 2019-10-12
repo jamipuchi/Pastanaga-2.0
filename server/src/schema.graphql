@@ -12,7 +12,7 @@ type Query {
 }
 
 type Mutation {
-    createUser(name: String!, email: String!, horari: [InputClasse!]): User!
+    createUser(name: String!, email: String!, horari: [InputClasse!]!): User!
     deleteUser(id: ID!): User
     updateLastKnown(id: ID!, latitude: String!, longitude: String!): User
     createGame: Boolean!

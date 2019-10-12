@@ -43,7 +43,7 @@ server.express.use(function (req, res, next) {
     next();
 });
 
-server.express.use(morgan());
+server.express.use(morgan('combined'));
 
 // const app = express();
 

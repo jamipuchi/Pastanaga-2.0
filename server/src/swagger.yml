@@ -105,6 +105,7 @@ paths:
                             required:
                                 - name
                                 - email
+                                - horari
             responses:
                 '200':
                     description: ""
