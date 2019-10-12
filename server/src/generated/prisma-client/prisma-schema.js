@@ -20,7 +20,7 @@ type Classe {
   aules: String!
   durada: Int!
   inici: Int!
-  dia_setmana: Int!
+  diaSetmana: Int!
 }
 
 type ClasseConnection {
@@ -34,7 +34,7 @@ input ClasseCreateInput {
   aules: String!
   durada: Int!
   inici: Int!
-  dia_setmana: Int!
+  diaSetmana: Int!
 }
 
 input ClasseCreateManyInput {
@@ -56,8 +56,8 @@ enum ClasseOrderByInput {
   durada_DESC
   inici_ASC
   inici_DESC
-  dia_setmana_ASC
-  dia_setmana_DESC
+  diaSetmana_ASC
+  diaSetmana_DESC
 }
 
 type ClassePreviousValues {
@@ -65,7 +65,7 @@ type ClassePreviousValues {
   aules: String!
   durada: Int!
   inici: Int!
-  dia_setmana: Int!
+  diaSetmana: Int!
 }
 
 input ClasseScalarWhereInput {
@@ -113,14 +113,14 @@ input ClasseScalarWhereInput {
   inici_lte: Int
   inici_gt: Int
   inici_gte: Int
-  dia_setmana: Int
-  dia_setmana_not: Int
-  dia_setmana_in: [Int!]
-  dia_setmana_not_in: [Int!]
-  dia_setmana_lt: Int
-  dia_setmana_lte: Int
-  dia_setmana_gt: Int
-  dia_setmana_gte: Int
+  diaSetmana: Int
+  diaSetmana_not: Int
+  diaSetmana_in: [Int!]
+  diaSetmana_not_in: [Int!]
+  diaSetmana_lt: Int
+  diaSetmana_lte: Int
+  diaSetmana_gt: Int
+  diaSetmana_gte: Int
   AND: [ClasseScalarWhereInput!]
   OR: [ClasseScalarWhereInput!]
   NOT: [ClasseScalarWhereInput!]
@@ -146,21 +146,21 @@ input ClasseUpdateDataInput {
   aules: String
   durada: Int
   inici: Int
-  dia_setmana: Int
+  diaSetmana: Int
 }
 
 input ClasseUpdateInput {
   aules: String
   durada: Int
   inici: Int
-  dia_setmana: Int
+  diaSetmana: Int
 }
 
 input ClasseUpdateManyDataInput {
   aules: String
   durada: Int
   inici: Int
-  dia_setmana: Int
+  diaSetmana: Int
 }
 
 input ClasseUpdateManyInput {
@@ -179,7 +179,7 @@ input ClasseUpdateManyMutationInput {
   aules: String
   durada: Int
   inici: Int
-  dia_setmana: Int
+  diaSetmana: Int
 }
 
 input ClasseUpdateManyWithWhereNestedInput {
@@ -243,14 +243,14 @@ input ClasseWhereInput {
   inici_lte: Int
   inici_gt: Int
   inici_gte: Int
-  dia_setmana: Int
-  dia_setmana_not: Int
-  dia_setmana_in: [Int!]
-  dia_setmana_not_in: [Int!]
-  dia_setmana_lt: Int
-  dia_setmana_lte: Int
-  dia_setmana_gt: Int
-  dia_setmana_gte: Int
+  diaSetmana: Int
+  diaSetmana_not: Int
+  diaSetmana_in: [Int!]
+  diaSetmana_not_in: [Int!]
+  diaSetmana_lt: Int
+  diaSetmana_lte: Int
+  diaSetmana_gt: Int
+  diaSetmana_gte: Int
   AND: [ClasseWhereInput!]
 }
 

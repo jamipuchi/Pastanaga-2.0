@@ -9,7 +9,6 @@ type Query {
     locationInRange(id: ID!): Boolean!
     objectiu(id: ID!): User
     angle(id: ID!): Float
-    teClasse(id: ID! hora: Int! dia_setmana: Int! aula: String!): Boolean
 }
 
 type Mutation {
@@ -18,6 +17,7 @@ type Mutation {
     updateLastKnown(id: ID!, latitude: String!, longitude: String!): User
     createGame: Boolean!
     matar(id: ID!): Boolean!
+    teClasse(id: ID!, hora: Int!, diaSetmana: Int!, aula: String!): Boolean!
 }
 
 type User {
@@ -37,12 +37,12 @@ type Classe {
     aules: String!
     durada: Int!
     inici: Int!
-    dia_setmana: Int!
+    diaSetmana: Int!
 }
 
 input InputClasse {
     aules: String!
     durada: Int!
     inici: Int!
-    dia_setmana: Int!
+    diaSetmana: Int!
 }

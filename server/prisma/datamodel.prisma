@@ -17,5 +17,5 @@ type Classe {
     aules: String!
     durada: Int!
     inici: Int!
-    dia_setmana: Int!
+    diaSetmana: Int!
 }

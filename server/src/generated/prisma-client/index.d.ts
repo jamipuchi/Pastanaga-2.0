@@ -149,8 +149,8 @@ export type ClasseOrderByInput =
   | "durada_DESC"
   | "inici_ASC"
   | "inici_DESC"
-  | "dia_setmana_ASC"
-  | "dia_setmana_DESC";
+  | "diaSetmana_ASC"
+  | "diaSetmana_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -356,14 +356,14 @@ export interface ClasseWhereInput {
   inici_lte?: Maybe<Int>;
   inici_gt?: Maybe<Int>;
   inici_gte?: Maybe<Int>;
-  dia_setmana?: Maybe<Int>;
-  dia_setmana_not?: Maybe<Int>;
-  dia_setmana_in?: Maybe<Int[] | Int>;
-  dia_setmana_not_in?: Maybe<Int[] | Int>;
-  dia_setmana_lt?: Maybe<Int>;
-  dia_setmana_lte?: Maybe<Int>;
-  dia_setmana_gt?: Maybe<Int>;
-  dia_setmana_gte?: Maybe<Int>;
+  diaSetmana?: Maybe<Int>;
+  diaSetmana_not?: Maybe<Int>;
+  diaSetmana_in?: Maybe<Int[] | Int>;
+  diaSetmana_not_in?: Maybe<Int[] | Int>;
+  diaSetmana_lt?: Maybe<Int>;
+  diaSetmana_lte?: Maybe<Int>;
+  diaSetmana_gt?: Maybe<Int>;
+  diaSetmana_gte?: Maybe<Int>;
   AND?: Maybe<ClasseWhereInput[] | ClasseWhereInput>;
 }
 
@@ -382,7 +382,7 @@ export interface ClasseCreateInput {
   aules: String;
   durada: Int;
   inici: Int;
-  dia_setmana: Int;
+  diaSetmana: Int;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -394,21 +394,21 @@ export interface ClasseUpdateInput {
   aules?: Maybe<String>;
   durada?: Maybe<Int>;
   inici?: Maybe<Int>;
-  dia_setmana?: Maybe<Int>;
+  diaSetmana?: Maybe<Int>;
 }
 
 export interface ClasseUpdateDataInput {
   aules?: Maybe<String>;
   durada?: Maybe<Int>;
   inici?: Maybe<Int>;
-  dia_setmana?: Maybe<Int>;
+  diaSetmana?: Maybe<Int>;
 }
 
 export interface ClasseUpdateManyMutationInput {
   aules?: Maybe<String>;
   durada?: Maybe<Int>;
   inici?: Maybe<Int>;
-  dia_setmana?: Maybe<Int>;
+  diaSetmana?: Maybe<Int>;
 }
 
 export interface ClasseSubscriptionWhereInput {
@@ -485,7 +485,7 @@ export interface ClasseUpdateManyDataInput {
   aules?: Maybe<String>;
   durada?: Maybe<Int>;
   inici?: Maybe<Int>;
-  dia_setmana?: Maybe<Int>;
+  diaSetmana?: Maybe<Int>;
 }
 
 export interface ClasseUpdateWithWhereUniqueNestedInput {
@@ -553,14 +553,14 @@ export interface ClasseScalarWhereInput {
   inici_lte?: Maybe<Int>;
   inici_gt?: Maybe<Int>;
   inici_gte?: Maybe<Int>;
-  dia_setmana?: Maybe<Int>;
-  dia_setmana_not?: Maybe<Int>;
-  dia_setmana_in?: Maybe<Int[] | Int>;
-  dia_setmana_not_in?: Maybe<Int[] | Int>;
-  dia_setmana_lt?: Maybe<Int>;
-  dia_setmana_lte?: Maybe<Int>;
-  dia_setmana_gt?: Maybe<Int>;
-  dia_setmana_gte?: Maybe<Int>;
+  diaSetmana?: Maybe<Int>;
+  diaSetmana_not?: Maybe<Int>;
+  diaSetmana_in?: Maybe<Int[] | Int>;
+  diaSetmana_not_in?: Maybe<Int[] | Int>;
+  diaSetmana_lt?: Maybe<Int>;
+  diaSetmana_lte?: Maybe<Int>;
+  diaSetmana_gt?: Maybe<Int>;
+  diaSetmana_gte?: Maybe<Int>;
   AND?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
   OR?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
   NOT?: Maybe<ClasseScalarWhereInput[] | ClasseScalarWhereInput>;
@@ -706,7 +706,7 @@ export interface ClassePreviousValues {
   aules: String;
   durada: Int;
   inici: Int;
-  dia_setmana: Int;
+  diaSetmana: Int;
 }
 
 export interface ClassePreviousValuesPromise
@@ -716,7 +716,7 @@ export interface ClassePreviousValuesPromise
   aules: () => Promise<String>;
   durada: () => Promise<Int>;
   inici: () => Promise<Int>;
-  dia_setmana: () => Promise<Int>;
+  diaSetmana: () => Promise<Int>;
 }
 
 export interface ClassePreviousValuesSubscription
@@ -726,7 +726,7 @@ export interface ClassePreviousValuesSubscription
   aules: () => Promise<AsyncIterator<String>>;
   durada: () => Promise<AsyncIterator<Int>>;
   inici: () => Promise<AsyncIterator<Int>>;
-  dia_setmana: () => Promise<AsyncIterator<Int>>;
+  diaSetmana: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ClasseConnection {
@@ -778,7 +778,7 @@ export interface Classe {
   aules: String;
   durada: Int;
   inici: Int;
-  dia_setmana: Int;
+  diaSetmana: Int;
 }
 
 export interface ClassePromise extends Promise<Classe>, Fragmentable {
@@ -786,7 +786,7 @@ export interface ClassePromise extends Promise<Classe>, Fragmentable {
   aules: () => Promise<String>;
   durada: () => Promise<Int>;
   inici: () => Promise<Int>;
-  dia_setmana: () => Promise<Int>;
+  diaSetmana: () => Promise<Int>;
 }
 
 export interface ClasseSubscription
@@ -796,7 +796,7 @@ export interface ClasseSubscription
   aules: () => Promise<AsyncIterator<String>>;
   durada: () => Promise<AsyncIterator<Int>>;
   inici: () => Promise<AsyncIterator<Int>>;
-  dia_setmana: () => Promise<AsyncIterator<Int>>;
+  diaSetmana: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ClasseNullablePromise
@@ -806,7 +806,7 @@ export interface ClasseNullablePromise
   aules: () => Promise<String>;
   durada: () => Promise<Int>;
   inici: () => Promise<Int>;
-  dia_setmana: () => Promise<Int>;
+  diaSetmana: () => Promise<Int>;
 }
 
 export interface UserConnection {

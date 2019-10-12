@@ -85,43 +85,6 @@ paths:
                             schema:
                                 type: number
                                 format: float
-    /api/te-classe:
-        get:
-            operationId: teClasseQuery
-            parameters:
-                -
-                    in: query
-                    name: id
-                    required: true
-                    schema:
-                        $ref: '#/components/schemas/ID'
-                -
-                    in: query
-                    name: hora
-                    required: true
-                    schema:
-                        type: integer
-                        format: int32
-                -
-                    in: query
-                    name: dia_setmana
-                    required: true
-                    schema:
-                        type: integer
-                        format: int32
-                -
-                    in: query
-                    name: aula
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                '200':
-                    description: ""
-                    content:
-                        application/json:
-                            schema:
-                                type: boolean
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -231,6 +194,37 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
+    /api/te-classe:
+        post:
+            operationId: teClasseMutation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    $ref: '#/components/schemas/ID'
+                                hora:
+                                    type: integer
+                                    format: int32
+                                diaSetmana:
+                                    type: integer
+                                    format: int32
+                                aula:
+                                    type: string
+                            required:
+                                - id
+                                - hora
+                                - diaSetmana
+                                - aula
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
 components:
     schemas:
         Query:
@@ -252,8 +246,6 @@ components:
                 angle:
                     type: number
                     format: float
-                teClasse:
-                    type: boolean
         User:
             type: object
             required:
@@ -291,7 +283,7 @@ components:
                 - aules
                 - durada
                 - inici
-                - dia_setmana
+                - diaSetmana
             properties:
                 aules:
                     type: string
@@ -301,7 +293,7 @@ components:
                 inici:
                     type: integer
                     format: int32
-                dia_setmana:
+                diaSetmana:
                     type: integer
                     format: int32
         Mutation:
@@ -310,6 +302,7 @@ components:
                 - createUser
                 - createGame
                 - matar
+                - teClasse
             properties:
                 createUser:
                     $ref: '#/components/schemas/User'
@@ -321,13 +314,15 @@ components:
                     type: boolean
                 matar:
                     type: boolean
+                teClasse:
+                    type: boolean
         InputClasse:
             type: object
             required:
                 - aules
                 - durada
                 - inici
-                - dia_setmana
+                - diaSetmana
             properties:
                 aules:
                     type: string
@@ -337,7 +332,7 @@ components:
                 inici:
                     type: integer
                     format: int32
-                dia_setmana:
+                diaSetmana:
                     type: integer
                     format: int32
         ID:

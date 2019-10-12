@@ -135,59 +135,6 @@
         }
       }
     },
-    "/api/te-classe": {
-      "get": {
-        "operationId": "teClasseQuery",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/ID"
-            }
-          },
-          {
-            "in": "query",
-            "name": "hora",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "in": "query",
-            "name": "dia_setmana",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "in": "query",
-            "name": "aula",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/create-user": {
       "post": {
         "operationId": "createUserMutation",
@@ -368,6 +315,54 @@
           }
         }
       }
+    },
+    "/api/te-classe": {
+      "post": {
+        "operationId": "teClasseMutation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/ID"
+                  },
+                  "hora": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "diaSetmana": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "aula": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "hora",
+                  "diaSetmana",
+                  "aula"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -397,9 +392,6 @@
           "angle": {
             "type": "number",
             "format": "float"
-          },
-          "teClasse": {
-            "type": "boolean"
           }
         }
       },
@@ -454,7 +446,7 @@
           "aules",
           "durada",
           "inici",
-          "dia_setmana"
+          "diaSetmana"
         ],
         "properties": {
           "aules": {
@@ -468,7 +460,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "dia_setmana": {
+          "diaSetmana": {
             "type": "integer",
             "format": "int32"
           }
@@ -479,7 +471,8 @@
         "required": [
           "createUser",
           "createGame",
-          "matar"
+          "matar",
+          "teClasse"
         ],
         "properties": {
           "createUser": {
@@ -496,6 +489,9 @@
           },
           "matar": {
             "type": "boolean"
+          },
+          "teClasse": {
+            "type": "boolean"
           }
         }
       },
@@ -505,7 +501,7 @@
           "aules",
           "durada",
           "inici",
-          "dia_setmana"
+          "diaSetmana"
         ],
         "properties": {
           "aules": {
@@ -519,7 +515,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "dia_setmana": {
+          "diaSetmana": {
             "type": "integer",
             "format": "int32"
           }
