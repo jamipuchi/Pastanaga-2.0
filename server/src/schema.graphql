@@ -6,7 +6,7 @@ schema {
 type Query {
     users: [User!]!
     user(id: ID!): User
-    # locationInRange(l1: Location, l2: Location): Boolean
+    locationInRange(lat1: String!, lon1: String!, lat2: String!, lon2: String!): Boolean
 }
 
 type Mutation {

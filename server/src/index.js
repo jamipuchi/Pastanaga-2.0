@@ -73,7 +73,7 @@ openApi.save(path.resolve(__dirname, './swagger.yml'));
 const swaggerDocument = require('./swagger.json');
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.listen(3000, () => {
+app.listen(2368, () => {
     console.log('REST API Server listening  on http://localhost:3000')
 })
 

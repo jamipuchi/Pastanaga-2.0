@@ -33,6 +33,41 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
+    /api/location-in-range:
+        get:
+            operationId: locationInRangeQuery
+            parameters:
+                -
+                    in: query
+                    name: lat1
+                    required: true
+                    schema:
+                        type: string
+                -
+                    in: query
+                    name: lon1
+                    required: true
+                    schema:
+                        type: string
+                -
+                    in: query
+                    name: lat2
+                    required: true
+                    schema:
+                        type: string
+                -
+                    in: query
+                    name: lon2
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -115,6 +150,8 @@ components:
                         $ref: '#/components/schemas/User'
                 user:
                     $ref: '#/components/schemas/User'
+                locationInRange:
+                    type: boolean
         User:
             type: object
             required:
