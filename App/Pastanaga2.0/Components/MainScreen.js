@@ -72,7 +72,7 @@ export default class MainScreen extends Component {
     render() {
         let text = ''
         if (this.state.objectiu == "") {
-            text = "Ho sentim, no tens cap objectiu a hores d'ara"
+            text = "Ho sentim, no estàs participant a la partida"
         } else {
             text = `El teu objectiu és en/na ${this.state.objectiu}`
         }
@@ -133,7 +133,7 @@ export default class MainScreen extends Component {
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}
-                        disabled={this.state.objectiu==""}
+                        disabled={this.state.objectiu=="" || this.state.shots==0}
                         onPress={() => {
                             if (this.state.shots > 0) {
                                 this.setState({shots: this.state.shots-1});
