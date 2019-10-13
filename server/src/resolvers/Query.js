@@ -16,7 +16,29 @@ const angle = async (parent, args, context) => {
     const p2 = await context.prisma.user({ id: args.id })
     if (p1 == null || p2 == null) return 404.0;
     const angle = Math.atan2(p2.latitude - p1.latitude, p2.longitude - p1.longitude) * 180 / Math.PI;
-    return angle;
+    function getCardinal(angle) {
+        /**
+         * Customize by changing the number of directions you have
+         * We have 8
+         */
+        const degreePerDirection = 360 / 8;
+
+        /**
+         * Offset the angle by half of the degrees per direction
+         * Example: in 4 direction system North (320-45) becomes (0-90)
+         */
+        const offsetAngle = angle + degreePerDirection / 2;
+
+        return (offsetAngle >= 0 * degreePerDirection && offsetAngle < 1 * degreePerDirection) ? "Nord"
+            : (offsetAngle >= 1 * degreePerDirection && offsetAngle < 2 * degreePerDirection) ? "NordEst"
+                : (offsetAngle >= 2 * degreePerDirection && offsetAngle < 3 * degreePerDirection) ? "Est"
+                    : (offsetAngle >= 3 * degreePerDirection && offsetAngle < 4 * degreePerDirection) ? "SudEst"
+                        : (offsetAngle >= 4 * degreePerDirection && offsetAngle < 5 * degreePerDirection) ? "Sud"
+                            : (offsetAngle >= 5 * degreePerDirection && offsetAngle < 6 * degreePerDirection) ? "SudOest"
+                                : (offsetAngle >= 6 * degreePerDirection && offsetAngle < 7 * degreePerDirection) ? "Oest"
+                                    : "NordOest";
+    }
+    return getCardinal(angle);
 }
 
 const isThereMatch = async (parent, args, context) => {

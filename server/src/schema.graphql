@@ -8,7 +8,7 @@ type Query {
     user(id: ID!): User
     locationInRange(id: ID!): Boolean!
     objectiu(id: ID!): User
-    angle(id: ID!): Float!
+    angle(id: ID!): String!
     isThereMatch: Boolean!
     distanceObjective(id: ID!): Float
     status(id: ID!): String!
