@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage, Alert } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import Login from './Components/Login';
@@ -26,17 +26,17 @@ class AuthLoadingScreen extends React.Component {
 
     this._bootstrapAsync();
   }
-  componentDidMount = async ()=>{
+  componentDidMount = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    console.log("status: "+status);
+    console.log("status: " + status);
     if (status !== 'granted') {
       this.setState({
         errorMessage: 'Permission to access location was denied',
       });
     }
     await Location.startLocationUpdatesAsync("firstTask", {
-          accuracy: Location.Accuracy.Balanced,
-          timeInterval: 5000,
+      accuracy: Location.Accuracy.Balanced,
+      timeInterval: 5000,
     });
   }
   // Fetch the token from storage then navigate to our appropriate place
@@ -51,7 +51,7 @@ class AuthLoadingScreen extends React.Component {
     this.props.navigation.navigate(access_token ? 'App' : 'Login');
   };
 
-    static updateLocation  = async (location) => {
+  static updateLocation = async (location) => {
 
     uid = await this.getIdUsuari();
     uid2 = uid.substr(1);
@@ -60,37 +60,37 @@ class AuthLoadingScreen extends React.Component {
     let longitude = location.longitude;
 
 
-    if (uid != ''){
+    if (uid != '') {
       return fetch('http://abuch.ddns.net:3080/api/update-last-known', {
-          method: 'POST',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              latitude: latitude,
-              longitude: longitude,
-              id: uid3
-          }),
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          latitude: latitude,
+          longitude: longitude,
+          id: uid3
+        }),
       }).then((response) => response.json())
-          .then(async(responseJson) => {
-              console.log("response json: " + responseJson);
+        .then(async (responseJson) => {
+          console.log("response json: " + responseJson);
 
-          }).catch((error) => {
-              console.error(error);
-          });
+        }).catch((error) => {
+          console.error(error);
+        });
     }
-    else{
+    else {
 
     }
   }
 
-  static getIdUsuari = async () =>{
+  static getIdUsuari = async () => {
     const currentUser = await AsyncStorage.getItem('id_user')
-    console.log("USUARI CORENT  "+ currentUser)
-    if(currentUser != null){
+    console.log("USUARI CORENT  " + currentUser)
+    if (currentUser != null) {
       return (currentUser);
-    }else{
+    } else {
       return '';
     }
   }
@@ -104,6 +104,83 @@ class AuthLoadingScreen extends React.Component {
 }
 
 
+class MainLoader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+    this.getStatusAsync();
+  }
+
+  getIdUsuari = async () => {
+    const currentUser = await AsyncStorage.getItem('id_user')
+    console.log("USUARI CORENT  " + currentUser)
+    if (currentUser != null) {
+      return (currentUser);
+    } else {
+      return '';
+    }
+  }
+
+  getStatusAsync = async () => {
+    uid = await this.getIdUsuari();
+    uid2 = uid.substr(1);
+    uid3 = uid2.substring(0, uid2.length - 1);
+    var status = ""
+    fetch(`http://abuch.ddns.net:3080/api/status?id=${encodeURIComponent(uid3)}`, {
+      method: "GET",
+      headers: {
+        Accept: 'application/json',
+      },
+    }).then((response) => response.json())
+      .then(async (responseJson) => {
+        status = JSON.stringify(responseJson);
+        console.log("ESAQUI!!!!!!!!!!"+status);
+
+        switch (status) {
+          case '"Alive"':
+            this.props.navigation.navigate("AppStack");
+            break;
+          case '"Winner"':
+            this.props.navigation.navigate("Guanyat");
+
+            break;
+          case '"Loser"':
+            this.props.navigation.navigate("Perdut");
+            break;
+          case '"Idle"':
+            this.props.navigation.navigate("Perdut");
+            break;
+          default:
+            Alert.alert("aixo no puto hauria de passar")
+            break;
+        }
+      }).catch(async (error) => {
+        console.error(error)
+      });
+
+
+  };
+
+
+  render() {
+    return (
+      <View style={{ width: '100%', height: '100%', backgroundColor: '#262626', }}>
+        <Text style={{
+          width: '100%',
+          height: '100%',
+          textAlign: 'center',
+          textAlignVertical: 'center',
+          color: 'white',
+          fontSize: 30
+        }}> Loading... </Text>
+      </View>
+    );
+  }
+}
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -115,59 +192,71 @@ const styles = StyleSheet.create({
 
 const PowerUpStack = createStackNavigator(
   {
-    PowerUps: {screen: PowerUps},
-    Brujola: {screen: Brujola},
-    Distancia: {screen: Distancia},
-    Esta: {screen: Esta},
-    Nom: {screen: Nom},
-    Foto: {screen: Foto}
-    },
-    {
-      initialRouteName: 'PowerUps',
-      headerMode: 'none',
-      navigationOptions: {
-          headerVisible: false,
-      }
+    PowerUps: { screen: PowerUps },
+    Brujola: { screen: Brujola },
+    Distancia: { screen: Distancia },
+    Esta: { screen: Esta },
+    Nom: { screen: Nom },
+    Foto: { screen: Foto }
+  },
+  {
+    initialRouteName: 'PowerUps',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
     }
+  }
 )
+
 
 const AppStack = createStackNavigator(
   {
-  Login: {screen: Login},
-  MainScreen: {screen: MainScreen},
-  Escanejar: {screen: Escanejar},
-  PowerUps: {screen: PowerUpStack},
-  Disparar:{screen: Disparar},
-  Tutorial:{screen: Tutorial},
-  Perdut:{screen:Perdut},
-  Guanyat:{screen:Guanyat}
+    Login: { screen: Login },
+    MainScreen: { screen: MainScreen },
+    Escanejar: { screen: Escanejar },
+    PowerUps: { screen: PowerUpStack },
+    Disparar: { screen: Disparar },
+    Tutorial: { screen: Tutorial },
   },
   {
     initialRouteName: 'MainScreen',
     headerMode: 'none',
     navigationOptions: {
-        headerVisible: false,
+      headerVisible: false,
     }
   }
 )
 
+const Mainstack = createSwitchNavigator({
+  MainLoader: { screen: MainLoader },
+  AppStack: { screen: AppStack },
+  Perdut: { screen: Perdut },
+  Guanyat: { screen: Guanyat }
+},
+  {
+    initialRouteName: 'MainLoader',
+  }
+)
+
+
 const AuthStack = createStackNavigator({
-  AuthLoadingScreen: {screen: AuthLoadingScreen},
-  Login: {screen: Login},
-  MainScreen: {screen: MainScreen},
- },  {
-     initialRouteName: 'AuthLoadingScreen',
-     headerMode: 'none',
-     navigationOptions: {
-         headerVisible: false
-     }})
+  AuthLoadingScreen: { screen: AuthLoadingScreen },
+  Login: { screen: Login },
+  MainScreen: { screen: MainScreen },
+}, {
+  initialRouteName: 'AuthLoadingScreen',
+  headerMode: 'none',
+  navigationOptions: {
+    headerVisible: false
+  }
+})
 
 
 
 
 export default createAppContainer(createSwitchNavigator(
   {
-    App: AppStack,
+    App: Mainstack,
     Auth: AuthStack,
   },
   {
@@ -177,7 +266,7 @@ export default createAppContainer(createSwitchNavigator(
 
 
 
-TaskManager.defineTask("firstTask", async({ data, error }) => {
+TaskManager.defineTask("firstTask", async ({ data, error }) => {
   if (error) {
     alert(error)
     // Error occurred - check `error.message` for more details.
