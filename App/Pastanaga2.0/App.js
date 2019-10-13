@@ -146,7 +146,7 @@ class MainLoader extends React.Component {
             this.props.navigation.navigate("Guanyat");
 
             break;
-          case '"Loser"':
+          case '"Dead"':
             this.props.navigation.navigate("Perdut");
             break;
           case '"Idle"':

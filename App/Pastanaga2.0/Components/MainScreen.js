@@ -70,7 +70,7 @@ export default class MainScreen extends Component {
     render() {
         let text = ''
         if (this.state.objectiu == "") {
-            text = "Ho sentim, no tens cap objectiu a hores d'ara"
+            text = "Ho sentim, no estàs participant a la partida"
         } else {
             text = `El teu objectiu és en/na ${this.state.objectiu}`
         }
@@ -116,9 +116,11 @@ export default class MainScreen extends Component {
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("PowerUps")}
                     activeOpacity={0.5}
+                    disabled={this.state.objectiu==""}
+                    
                     style={{ height: '12%', width: '100%' }}>
                     <Image
-                        style={{ width: '90%', height: '100%', marginLeft: '5%' }}
+                        style={[{ width: '90%', height: '100%', marginLeft: '5%' }, (this.state.objectiu=="")?{opacity:0.3}:{}]}
                         resizeMode="contain"
                         source={require('../assets/powerUpsButton.png')}
                     />
@@ -129,7 +131,8 @@ export default class MainScreen extends Component {
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}
-                        onPress={async () => {
+                        disabled={this.state.objectiu=="" || this.state.shots==0}
+                        onPress={() => {
                             if (this.state.shots > 0) {
                                 await this.setState({shots: this.state.shots - 1});
                                 await AsyncStorage.setItem('shots', this.state.shots.toString());
@@ -140,7 +143,7 @@ export default class MainScreen extends Component {
 
                     >
                         <Image
-                            style={{ height: '100%', width: '100%', marginLeft: '7%' }}
+                            style={[{ height: '100%', width: '100%', marginLeft: '7%' }, (this.state.objectiu=="")?{opacity:0.3}:{}]}
                             resizeMode="contain"
                             source={require('../assets/dispararButton.png')}
                         />
@@ -149,6 +152,7 @@ export default class MainScreen extends Component {
                         style={{
                             width: '20%',
                             height: '100%',
+                            marginLeft:'2%'
                         }}
                         onPress={() => this.setState({ shots: 4 })}>
                         <Text
