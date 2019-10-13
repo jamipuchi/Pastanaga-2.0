@@ -97,7 +97,8 @@ const killer = async (parent, args, context) => {
     else {
         const users = await context.prisma.users();
         for (let i = 0; i < users.length; ++i) {
-            if (users[i].alive && users[i].objectiu().id == sender.id) return users[i].name;
+            const obj = await context.prisma.user({ id: users[i].id }).objectiu()
+            if (users[i].alive && obj.id == sender.id) return users[i].name;
         }
     }
     return ""
