@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 
 export default class Esta extends Component {
     constructor(props) {
