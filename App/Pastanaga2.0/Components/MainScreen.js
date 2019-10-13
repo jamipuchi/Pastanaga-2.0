@@ -150,6 +150,7 @@ export default class MainScreen extends Component {
                         style={{
                             width: '20%',
                             height: '100%',
+                            marginLeft:'2%'
                         }}
                         onPress={() => this.setState({ shots: 4 })}>
                         <Text
