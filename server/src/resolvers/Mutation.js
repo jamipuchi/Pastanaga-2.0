@@ -70,7 +70,8 @@ const createGame = async (parent, args, context) => {
                     connect: { email: users[pos].email }
                 },
                 alive: true,
-                winner: false
+                winner: false,
+                rang: 20
             },
             where: { id: users[i].id },
         })
