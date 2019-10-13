@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground, Alert, AsyncStorage } from 'react-native';
 import { AccordionList } from "accordion-collapse-react-native";
 import { Separator, Icon } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -31,7 +31,7 @@ export default class PowerUps extends Component {
                     id: 3,
                     name: 'Rang Matar',
                     price: 100,
-                    description: 'Augmenta el teu rang d`ús del botó disparar durant 24 hores.',
+                    description: 'Augmenta el teu rang d\'ús del botó disparar durant 24 hores.',
                     link: require("../assets/powerUps/3.png"),
                 },
                 {
@@ -83,37 +83,54 @@ export default class PowerUps extends Component {
                 }
             ],
             monedes:0
+
         }
 
     }
-
-    getInfoUsuari = async () => {
-        uid = await this.getIdUsuari();
-        uid2 = uid.substr(1);
-        uid3 = uid2.substring(0, uid2.length - 1);
-
-        console.log("ENTRANT");
-        console.log("IDIDIDIDIDIDII   " + uid3)
-        fetch(`http://abuch.ddns.net:3080/api/user/${encodeURIComponent(uid3)}`, {
-            method: "GET",
-            headers: {
-                Accept: 'application/json',
-            },
-        }).then((response) => response.json())
-            .then(async (responseJson) => {
-                await this.setState({ monedes: diners })
-                console.log(this.state.monedes);
-            }).catch(async (error) => {
-                console.log(error)
-            });
+    getIdUsuari = async () => {
+      const currentUser = await AsyncStorage.getItem('id_user')
+      console.log("USUARI CORENT  " + currentUser)
+      if (currentUser != null) {
+        return (currentUser);
+      } else {
+        return '';
+      }
     }
 
-    componentWillUpdate(){
+    getInfoUsuari = async () => {
+    //  this.comprovarDisparus();
+      uid = await this.getIdUsuari();
+      uid2 = uid.substr(1);
+      uid3 = uid2.substring(0, uid2.length - 1);
+      console.log("ASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSHO");
+      console.log("ENTRANT");
+        console.log("IDIDIDIDIDIDII   "+uid3)
+      fetch(`http://abuch.ddns.net:3080/api/user/${encodeURIComponent(uid3)}`, {
+        method: "GET",
+        headers: {
+          Accept: 'application/json',
+        },
+      }).then((response) => response.json())
+        .then(async (responseJson) => {
+          const diners = JSON.stringify(responseJson.monedes);
+          console.log(diners);
+          await this.setState({monedes: diners})
+        }).catch(async (error) => {
+          console.error(error)
+        });
+
+
+    }
+
+    componentDidMount(){
         console.log(this.state.monedes);
         this.getInfoUsuari();
     }
 
     async gasta(diners, pantalla) {
+      uid = await this.getIdUsuari();
+      uid2 = uid.substr(1);
+      uid3 = uid2.substring(0, uid2.length - 1);
         fetch('http://abuch.ddns.net:3080/api/spend', {
             method: 'POST',
             headers: {
@@ -128,6 +145,7 @@ export default class PowerUps extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
+                    this.componentDidMount();
                     this.props.navigation.navigate(pantalla)
                 },
                 (error) => {
@@ -188,6 +206,10 @@ export default class PowerUps extends Component {
         );
     }
 
+    async onPress(item){
+      await this.gasta(item.price, item.pantalla)
+      await this.componentDidMount()
+    }
     _body(item) {
         return (
             <View style={[{ padding: 10, backgroundColor: 'white', width: '100%' },
@@ -199,14 +221,14 @@ export default class PowerUps extends Component {
             }>
                 <Text style={{ textAlign: 'center' }}>{item.description}</Text>
 
-                {(this.state.monedes-item.price>0) ? //condició que diu si ja el tens comprat o no 
+                {(this.state.monedes-item.price>=0) ? //condició que diu si ja el tens comprat o no
                     <TouchableOpacity
                         onPress={() => Alert.alert(
                             'Compra',
-                            'Et vols gastar ' + item.price + ' dels ' + 10 + ' que tens?',
+                            'Et vols gastar ' + item.price + ' dels ' + this.state.monedes+ ' que tens?',
                             [
                                 { text: 'No' },
-                                { text: 'Si', onPress: () => this.gasta(item.price, item.pantalla) },
+                                { text: 'Si', onPress: () => this.onPress(item) },
                             ],
                             { cancelable: false },
                         )
