@@ -132,7 +132,7 @@ export default class MainScreen extends Component {
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}
                         disabled={this.state.objectiu=="" || this.state.shots==0}
-                        onPress={() => {
+                        onPress={async () => {
                             if (this.state.shots > 0) {
                                 await this.setState({shots: this.state.shots - 1});
                                 await AsyncStorage.setItem('shots', this.state.shots.toString());
@@ -154,7 +154,10 @@ export default class MainScreen extends Component {
                             height: '100%',
                             marginLeft:'2%'
                         }}
-                        onPress={() => this.setState({ shots: 4 })}>
+                        onPress={async () => {
+                            await AsyncStorage.setItem('shots', this.state.shots.toString());
+                            await this.setState({ shots: 4 })}
+                            }>
                         <Text
                             style={{
                                 fontSize: 30,
