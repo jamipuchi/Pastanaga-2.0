@@ -22,7 +22,7 @@ export default class PowerUps extends Component {
                 {
                     id: 2,
                     name: 'Distància',
-                    price: 150,
+                    price: 100,
                     description: 'T`indica La distància que hi ha entre tu i el teu objectiu durant 1 hora.',
                     link: require("../assets/powerUps/2.png"),
                     pantalla: "Distancia",
@@ -30,7 +30,7 @@ export default class PowerUps extends Component {
                 {
                     id: 3,
                     name: 'Rang Matar',
-                    price: 300,
+                    price: 100,
                     description: 'Augmenta el teu rang d\'ús del botó disparar durant 24 hores.',
                     link: require("../assets/powerUps/3.png"),
                     pantalla: "Rang"
@@ -38,7 +38,7 @@ export default class PowerUps extends Component {
                 {
                     id: 4,
                     name: 'Avís',
-                    price: 300,
+                    price: 100,
                     description: 'El següent cop que el teu assassí estigui en rang de matar-te t`avisarà',
                     link: require("../assets/powerUps/4.png")
                 },
@@ -46,20 +46,20 @@ export default class PowerUps extends Component {
                     id: 5,
                     name: 'Invisibilitat',
                     description: 'El teu assassí no podrà utilitzar els power ups per saber on estàs',
-                    price: 300,
+                    price: 100,
                     link: require("../assets/powerUps/5.png")
                 },
                 {
                     id: 6,
                     name: 'Invulnerabilitat',
-                    price: 500,
+                    price: 100,
                     description: 'El teu assassí no et podrà matar durant 1h',
                     link: require("../assets/powerUps/6.png")
                 },
                 {
                     id: 7,
                     name: 'Està?',
-                    price: 50,
+                    price: 100,
                     description: 'Getting Started',
                     link: require("../assets/powerUps/7.png"),
                     pantalla: "Esta"
@@ -68,7 +68,7 @@ export default class PowerUps extends Component {
                 {
                     id: 8,
                     name: 'Nom',
-                    price: 200,
+                    price: 10,
                     description: 'T`indica si el teu objectiu està dintre el recinte del joc.',
                     link: require("../assets/powerUps/8.png"),
                     pantalla: "Nom"
@@ -76,7 +76,7 @@ export default class PowerUps extends Component {
                 {
                     id: 9,
                     name: 'Foto',
-                    price: 200,
+                    price: 100,
                     description: 'T`ensenya la foto del teu objectiu perquè sàpigues qui has de disparar',
                     link: require("../assets/powerUps/9.png"),
                     pantalla: "Foto"
