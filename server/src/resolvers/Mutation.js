@@ -60,23 +60,23 @@ const createGame = async (parent, args, context) => {
         }
         return a;
     }
+    users = users.filter((value) => value.latitude != null && value.longitude != null)
     users = shuffle(users);
     for (let i = 0; i < size; ++i) {
         const pos = (i == size - 1) ? 0 : (i + 1);
         console.log(i, ' -> ', pos)
-        if (users[i].latitude != null && users[i].longitude != null) {
-            const updatedUser = await context.prisma.updateUser({
-                data: {
-                    objectiu: {
-                        connect: { email: users[pos].email }
-                    },
-                    alive: true,
-                    winner: false,
-                    rang: 20
+        console.log(users[i])
+        const updatedUser = await context.prisma.updateUser({
+            data: {
+                objectiu: {
+                    connect: { email: users[pos].email }
                 },
-                where: { id: users[i].id },
-            })
-        }
+                alive: true,
+                winner: false,
+                rang: 20
+            },
+            where: { id: users[i].id },
+        })
     }
     return size != 0;
 }
