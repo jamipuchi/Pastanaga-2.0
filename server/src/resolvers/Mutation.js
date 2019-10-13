@@ -64,17 +64,19 @@ const createGame = async (parent, args, context) => {
     for (let i = 0; i < size; ++i) {
         const pos = (i == size - 1) ? 0 : (i + 1);
         console.log(i, ' -> ', pos)
-        const updatedUser = await context.prisma.updateUser({
-            data: {
-                objectiu: {
-                    connect: { email: users[pos].email }
+        if (users[i].latitude != null && users[i].longitude != null) {
+            const updatedUser = await context.prisma.updateUser({
+                data: {
+                    objectiu: {
+                        connect: { email: users[pos].email }
+                    },
+                    alive: true,
+                    winner: false,
+                    rang: 20
                 },
-                alive: true,
-                winner: false,
-                rang: 20
-            },
-            where: { id: users[i].id },
-        })
+                where: { id: users[i].id },
+            })
+        }
     }
     return size != 0;
 }
