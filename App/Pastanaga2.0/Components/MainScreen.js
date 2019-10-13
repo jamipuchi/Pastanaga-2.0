@@ -14,6 +14,7 @@ export default class MainScreen extends Component {
             shots: 0
         };
         this.getInfoUsuari()
+        this.getShots()
 
     }
 
@@ -28,16 +29,17 @@ export default class MainScreen extends Component {
     }
 
     getShots = async () => {
-        const shots = await AsyncStorage.getItem('shots');
+        const numShots = await AsyncStorage.getItem('shots');
+        console.log("number of shots: "+ numShots)
         if (shots != null) {
-            this.setState({ shots: shots })
+            this.setState({ shots: numShots })
         } else {
             this.setState({ shots: 4 });
         }
     }
 
-    componentWillMount() {
-
+    async componentWillUnMount() {
+        await AsyncStorage.setItem('shots', this.state.shots);
     }
 
     getInfoUsuari = async () => {
@@ -89,7 +91,7 @@ export default class MainScreen extends Component {
                         source={require('../assets/Logo.png')}
                     />
                 </TouchableOpacity>
-                <Text style={{ width: '100%', color: 'white', textAlign: 'center', fontSize: 20 }}>{text}</Text>
+                <Text style={{ width: '90%', color: 'white', textAlign: 'center', fontSize: 20, marginLeft:'5%' }}>{text}</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Tutorial")}
                     style={{ height: '12%', width: '100%' }}
