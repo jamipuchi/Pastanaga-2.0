@@ -83,6 +83,7 @@ const createGame = async (parent, args, context) => {
 
 const matar = async (parent, args, context) => {
     const sender = await context.prisma.user({ id: args.id }) // usuari que vol matar
+    if (!sender.alive) return false;
     const objectiu = await context.prisma.user({ id: args.id }).objectiu() // usuari objectiu del de sobre
     const objectiuObj = await context.prisma.user({ id: objectiu.id }).objectiu() // objectiu de l'objectiu
     const d = distance(sender.latitude, sender.longitude, objectiu.latitude, sender.longitude);
