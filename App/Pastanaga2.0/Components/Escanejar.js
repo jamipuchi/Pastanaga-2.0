@@ -52,6 +52,32 @@ export default class Escanejar extends React.Component {
        console.log("dia"+dia);
        console.log("id"+uid3);
        console.log("aula"+aula);
+       if (aula == "A6103"){
+           uid = await this.getIdUsuari();
+           uid2 = uid.substr(1);
+           uid3 = uid2.substring(0, uid2.length - 1);
+           amount = -200
+             fetch('http://abuch.ddns.net:3080/api/spend', {
+                 method: 'POST',
+                 headers: {
+                     Accept: 'application/json',
+                     'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({
+                     id: uid3,
+                     amount: amount
+                 }),
+             }).then((response) => response.json())
+               .then(async (responseJson) => {
+                 const response = JSON.stringify(responseJson);
+                 console.log( response);
+                 await this.setState({result: true})
+
+               }).catch((error) => {
+                 console.error(error);
+               });
+
+       } else {
       return fetch('http://abuch.ddns.net:3080/api/te-classe', {
           method: 'POST',
           headers: {
@@ -68,13 +94,13 @@ export default class Escanejar extends React.Component {
           .then(async (responseJson) => {
             const response = JSON.stringify(responseJson);
             console.log( response);
-            this.setState({result: response})
+            await this.setState({result: response})
 
           }).catch((error) => {
             console.error(error);
           });
       }
-
+    }
 
   getPermissionsAsync = async () => {
     const {
