@@ -11,7 +11,7 @@ export default class MainScreen extends Component {
             objectiu: '',
             id: '',
             monedes: '0',
-            shots: 0
+            shots: 4
         };
         this.getInfoUsuari()
         this.getShots()
@@ -29,17 +29,15 @@ export default class MainScreen extends Component {
     }
 
     getShots = async () => {
-        const numShots = await AsyncStorage.getItem('shots');
+        let numShots = await AsyncStorage.getItem('shots');
         console.log("number of shots: "+ numShots)
-        if (shots != null) {
-            this.setState({ shots: numShots })
+        if (numShots != null) {
+            await this.setState({ shots: numShots })
         } else {
-            this.setState({ shots: 4 });
+            await this.setState({ shots: 4 });
         }
-    }
-
-    async componentWillUnMount() {
-        await AsyncStorage.setItem('shots', this.state.shots);
+        numShots = parseInt(numShots);
+        await AsyncStorage.setItem('shots', this.state.shots.toString());
     }
 
     getInfoUsuari = async () => {
@@ -131,9 +129,10 @@ export default class MainScreen extends Component {
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={{ height: '100%', width: '70%' }}
-                        onPress={() => {
+                        onPress={async () => {
                             if (this.state.shots > 0) {
-                                this.setState({shots: this.state.shots-1});
+                                await this.setState({shots: this.state.shots - 1});
+                                await AsyncStorage.setItem('shots', this.state.shots.toString());
                                 this.props.navigation.navigate("Disparar");
                             }
 
