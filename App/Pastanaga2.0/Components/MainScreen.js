@@ -89,7 +89,7 @@ export default class MainScreen extends Component {
                         source={require('../assets/Logo.png')}
                     />
                 </TouchableOpacity>
-                <Text style={{ width: '90%', color: 'white', textAlign: 'center', fontSize: 20, marginLeft:'5%' }}>{text}</Text>
+                <Text style={{ width: '95%', color: 'white', textAlign: 'center', fontSize: 15, marginLeft:'2.5%' }}>{text}</Text>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("Tutorial")}
                     style={{ height: '12%', width: '100%' }}
@@ -249,7 +249,7 @@ export default class MainScreen extends Component {
                     </View>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        style={{ height: '50%', width: '15%', marginLeft: '2%' }}
+                        style={{ height: '35%', width: '15%', marginLeft: '2%' }}
                         onPress={() => this.logout()}>
 
                         <Image
