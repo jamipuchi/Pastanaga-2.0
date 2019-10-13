@@ -5,9 +5,9 @@ export default class Distancia extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          rang:
+          rang:''
         };
-        this.getDistancia()
+        this.canviRang()
     }
     getIdUsuari = async () => {
       const currentUser = await AsyncStorage.getItem('id_user')
@@ -40,6 +40,7 @@ export default class Distancia extends Component {
         .then(async (responseJson) => {
           console.log("response json: " + responseJson);
           const nouRang = await JSON.stringify(responseJson.rang);
+          console.log(nouRang)
           await this.setState({rang: nouRang})
         }).catch((error) => {
           console.error(error);
@@ -60,7 +61,7 @@ export default class Distancia extends Component {
                     ></Image>
                 </TouchableOpacity>
 
-                <Text style={{ color: 'white', fontSize: 20, padding:'5%', textAlign:'center' }}> Ara el teu Rang és de {this.state.distance}!! ÀNIMS! </Text>
+                <Text style={{ color: 'white', fontSize: 20, padding:'5%', textAlign:'center' }}> Ara el teu Rang és de {this.state.rang}!! ÀNIMS! </Text>
             </View>
         );
     }

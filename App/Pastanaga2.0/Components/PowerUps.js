@@ -33,6 +33,7 @@ export default class PowerUps extends Component {
                     price: 100,
                     description: 'Augmenta el teu rang d\'ús del botó disparar durant 24 hores.',
                     link: require("../assets/powerUps/3.png"),
+                    pantalla: "Rang"
                 },
                 {
                     id: 4,
@@ -86,32 +87,6 @@ export default class PowerUps extends Component {
 
         }
 
-    }
-    async canviRang() {
-      uid = await this.getIdUsuari();
-      uid2 = uid.substr(1);
-      uid3 = uid2.substring(0, uid2.length - 1);
-
-      amount = 5
-
-      return fetch('http://abuch.ddns.net:3080/api/change-range', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: uid3,
-          amount: amount,
-        }),
-      }).then((response) => response.json())
-        .then(async (responseJson) => {
-          console.log("response json: " + responseJson);
-          const nouRang = JSON.stringify(responseJson.rang);
-          Alert("Felicitats! Ara el teu rang arriba a "+rang+"m!!")
-        }).catch((error) => {
-          console.error(error);
-        });
     }
 
     getIdUsuari = async () => {
