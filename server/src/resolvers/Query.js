@@ -1,4 +1,5 @@
 const { distance } = require('../utils/distance');
+const { estaFIB } = require('../utils/estaFIB')
 
 const users = (parent, args, context) => context.prisma.users();
 
@@ -84,6 +85,12 @@ const status = async (parent, args, context) => {
     } else return 'Idle'
 }
 
+const objectiveInside = async (parent, args, context) => {
+    const objectiu = await context.prisma.user({ id: args.id }).objectiu()
+    const sender = await context.prisma.user({ id: args.id })
+    return estaFIB(objectiu.latitude, sender.longitude);
+}
+
 module.exports = {
     users,
     user,
@@ -91,5 +98,6 @@ module.exports = {
     angle,
     isThereMatch,
     distanceObjective,
-    status
+    status,
+    objectiveInside
 }

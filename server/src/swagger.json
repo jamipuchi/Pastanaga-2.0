@@ -207,6 +207,33 @@
         }
       }
     },
+    "/api/objective-inside": {
+      "get": {
+        "operationId": "objectiveInsideQuery",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/create-user": {
       "post": {
         "operationId": "createUserMutation",
@@ -525,7 +552,8 @@
           "locationInRange",
           "angle",
           "isThereMatch",
-          "status"
+          "status",
+          "objectiveInside"
         ],
         "properties": {
           "users": {
@@ -555,6 +583,9 @@
           },
           "status": {
             "type": "string"
+          },
+          "objectiveInside": {
+            "type": "boolean"
           }
         }
       },

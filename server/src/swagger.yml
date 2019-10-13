@@ -130,6 +130,23 @@ paths:
                         application/json:
                             schema:
                                 type: string
+    /api/objective-inside:
+        get:
+            operationId: objectiveInsideQuery
+            parameters:
+                -
+                    in: query
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -329,6 +346,7 @@ components:
                 - angle
                 - isThereMatch
                 - status
+                - objectiveInside
             properties:
                 users:
                     type: array
@@ -349,6 +367,8 @@ components:
                     format: float
                 status:
                     type: string
+                objectiveInside:
+                    type: boolean
         User:
             type: object
             required:
