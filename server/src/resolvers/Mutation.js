@@ -45,7 +45,6 @@ const updateLastKnown = async (parent, args, context) => {
 
 const createGame = async (parent, args, context) => {
     let users = await context.prisma.users();
-    const size = users.length;
     /**
      * Shuffles array in place.
      * @param {Array} a items An array containing the items.
@@ -60,10 +59,13 @@ const createGame = async (parent, args, context) => {
         }
         return a;
     }
+    users = users.filter((value) => value.latitude != null && value.longitude != null)
+    const size = users.length;
     users = shuffle(users);
     for (let i = 0; i < size; ++i) {
         const pos = (i == size - 1) ? 0 : (i + 1);
         console.log(i, ' -> ', pos)
+        console.log(users[i])
         const updatedUser = await context.prisma.updateUser({
             data: {
                 objectiu: {

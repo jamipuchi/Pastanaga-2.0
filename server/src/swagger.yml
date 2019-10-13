@@ -83,8 +83,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: number
-                                format: float
+                                type: string
     /api/is-there-match:
         get:
             operationId: isThereMatchQuery
@@ -342,8 +341,7 @@ components:
                 objectiu:
                     $ref: '#/components/schemas/User'
                 angle:
-                    type: number
-                    format: float
+                    type: string
                 isThereMatch:
                     type: boolean
                 distanceObjective:
