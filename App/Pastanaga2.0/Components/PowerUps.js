@@ -87,6 +87,33 @@ export default class PowerUps extends Component {
         }
 
     }
+    async canviRang() {
+      uid = await this.getIdUsuari();
+      uid2 = uid.substr(1);
+      uid3 = uid2.substring(0, uid2.length - 1);
+
+      amount = 5
+
+      return fetch('http://abuch.ddns.net:3080/api/change-range', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: uid3,
+          amount: amount,
+        }),
+      }).then((response) => response.json())
+        .then(async (responseJson) => {
+          console.log("response json: " + responseJson);
+          const nouRang = JSON.stringify(responseJson.rang);
+          Alert("Felicitats! Ara el teu rang arriba a "+rang+"m!!")
+        }).catch((error) => {
+          console.error(error);
+        });
+    }
+
     getIdUsuari = async () => {
       const currentUser = await AsyncStorage.getItem('id_user')
       console.log("USUARI CORENT  " + currentUser)
@@ -102,9 +129,6 @@ export default class PowerUps extends Component {
       uid = await this.getIdUsuari();
       uid2 = uid.substr(1);
       uid3 = uid2.substring(0, uid2.length - 1);
-      console.log("ASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSHO");
-      console.log("ENTRANT");
-        console.log("IDIDIDIDIDIDII   "+uid3)
       fetch(`http://abuch.ddns.net:3080/api/user/${encodeURIComponent(uid3)}`, {
         method: "GET",
         headers: {

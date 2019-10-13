@@ -44,10 +44,9 @@ export default class MainScreen extends Component {
             },
           }).then((response) => response.json())
             .then(async (responseJson) => {
+              let nameobjectiu = ""
               if(responseJson.objectiu != null){
                 const nameobjectiu = JSON.stringify(responseJson.objectiu.name);
-              }else{
-                nameobjectiu = ""
               }
 
               const diners = JSON.stringify(responseJson.monedes);
