@@ -129,7 +129,7 @@ export default class Disparar extends Component {
           <Text style={styles.paragraph}> Oooh! Has fallat! </Text>
           <LottieView source={require('../assets/fallat.json')} autoPlay loop={false} />
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("MainScreen")}
+            onPress={() => this.props.navigation.navigate("MainLoader")}
             activeOpacity={0.5}
             style={{ position: 'absolute', bottom: 40, height: '12%', width: '100%' }}>
             <Image

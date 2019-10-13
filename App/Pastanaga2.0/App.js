@@ -150,11 +150,11 @@ class MainLoader extends React.Component {
             this.props.navigation.navigate("Perdut");
             break;
           case '"Idle"':
-            this.props.navigation.navigate("Perdut");
-            break;
+              this.props.navigation.navigate("AppStack");
+              break;
           default:
-            Alert.alert("aixo no puto hauria de passar")
-            break;
+              this.props.navigation.navigate("AppStack");
+              break;
         }
       }).catch(async (error) => {
         console.error(error)

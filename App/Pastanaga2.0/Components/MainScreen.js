@@ -80,8 +80,8 @@ export default class MainScreen extends Component {
                 <View style={{ height: '7.5%' }}></View>
                 <TouchableOpacity
                     style={{ width: '100%', height: '25%', marginBottom: '5%' }}
-                    onPress={() => this.getInfoUsuari()
-                    }
+                    onPress={() => this.props.navigation.navigate("MainLoader")}
+
                 >
                     <Image
                         style={{ width: '100%', height: '100%' }}
