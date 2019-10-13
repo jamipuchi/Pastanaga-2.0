@@ -40,12 +40,6 @@ export default class MainScreen extends Component {
         await AsyncStorage.setItem('shots', this.state.shots.toString());
     }
 
-    async clickA(){
-        await this.getInfoUsuari() 
-        this.props.navigation.navigate("MainLoader")
-    }
-
-
     getInfoUsuari = async () => {
         uid = await this.getIdUsuari();
         uid2 = uid.substr(1);
@@ -60,20 +54,15 @@ export default class MainScreen extends Component {
             },
         }).then((response) => response.json())
             .then(async (responseJson) => {
-                const nameobjectiu = ""
-                if(responseJson.objectiu != null ){
                 const nameobjectiu = JSON.stringify(responseJson.objectiu.name);
-                }
                 const diners = JSON.stringify(responseJson.monedes);
 
                 console.log("OBJECTIU:" + nameobjectiu);
                 //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
                 await this.setState({ objectiu: nameobjectiu })
                 await this.setState({ monedes: diners })
-                console.log("DINERSSSSSSSSSSSSSS"+diners)
             }).catch(async (error) => {
                 await this.setState({ objectiu: "" })
-                console.error(error)
             });
 
     }
@@ -91,7 +80,7 @@ export default class MainScreen extends Component {
                 <View style={{ height: '7.5%' }}></View>
                 <TouchableOpacity
                     style={{ width: '100%', height: '25%', marginBottom: '5%' }}
-                    onPress={() => this.clickA()}
+                    onPress={() => this.props.navigation.navigate("MainLoader")}
 
                 >
                     <Image
