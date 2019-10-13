@@ -6,10 +6,9 @@ export default class Brujola extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            angle: 0
+            angle: ''
         };
         this.getAngle();
-
     }
 
     getIdUsuari = async () => {
@@ -20,9 +19,6 @@ export default class Brujola extends Component {
         } else {
             return '';
         }
-    }
-
-    componentDidMount() {
     }
 
     getAngle = async () => {
@@ -39,16 +35,13 @@ export default class Brujola extends Component {
         }).then((response) => response.json())
             .then(async (responseJson) => {
                 console.log('angle ', responseJson);
-                const jsonresp = JSON.stringify(responseJson);
-                console.log('angle ', jsonresp);
                 //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
-                await this.setState({ angle: jsonresp })
+                await this.setState({ angle: responseJson })
             }).catch((error) => {
                 console.log("HOLAAA NO TENS A NINGU A LA DISTÀNCIA");
             });
 
     }
-
 
     render() {
         return (
@@ -64,7 +57,7 @@ export default class Brujola extends Component {
                 </TouchableOpacity>
 
 
-                <Text style={{ color: 'white', fontSize: 20, padding: '5%', textAlign: 'center' }}> Direcció: NORD </Text>
+                <Text style={{ color: 'white', fontSize: 20, padding: '5%', textAlign: 'center' }}> Direcció: {this.state.angle} </Text>
             </View>
         );
     }
