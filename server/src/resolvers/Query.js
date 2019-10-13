@@ -38,6 +38,16 @@ const distanceObjective = async (parent, args, context) => {
 
 const status = async (parent, args, context) => {
     const sender = await context.prisma.user({ id: args.id })
+    if (sender.winner) {
+        await context.prisma.updateUser({
+            data: {
+                objectiu: { disconnect: true },
+                alive: false
+            },
+            where: { id: args.id }
+        })
+        return 'Winner'
+    }
     if (sender.alive) return 'Alive'
     else if (sender.objectiu != null) {
         await context.prisma.updateUser({
