@@ -36,11 +36,26 @@ const distanceObjective = async (parent, args, context) => {
     return distance(sender.latitude, sender.longitude, objectiu.latitude, sender.longitude);
 }
 
+const status = async (parent, args, context) => {
+    const sender = await context.prisma.user({ id: args.id })
+    if (sender.alive) return 'Alive'
+    else if (sender.objectiu != null) {
+        await context.prisma.updateUser({
+            data: {
+                objectiu: { disconnect: true }
+            },
+            where: { id: args.id }
+        })
+        return 'Dead'
+    } else return 'Idle'
+}
+
 module.exports = {
     users,
     user,
     locationInRange,
     angle,
     isThereMatch,
-    distanceObjective
+    distanceObjective,
+    status
 }

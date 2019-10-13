@@ -181,6 +181,33 @@
         }
       }
     },
+    "/api/status": {
+      "get": {
+        "operationId": "statusQuery",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/create-user": {
       "post": {
         "operationId": "createUserMutation",
@@ -442,7 +469,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "boolean"
                 }
               }
             }
@@ -498,7 +525,8 @@
           "users",
           "locationInRange",
           "angle",
-          "isThereMatch"
+          "isThereMatch",
+          "status"
         ],
         "properties": {
           "users": {
@@ -526,6 +554,9 @@
           "distanceObjective": {
             "type": "number",
             "format": "float"
+          },
+          "status": {
+            "type": "string"
           }
         }
       },
@@ -635,7 +666,7 @@
             "type": "boolean"
           },
           "spend": {
-            "$ref": "#/components/schemas/User"
+            "type": "boolean"
           },
           "changeRange": {
             "$ref": "#/components/schemas/User"

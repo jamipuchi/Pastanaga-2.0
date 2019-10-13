@@ -95,14 +95,14 @@ const matar = async (parent, args, context) => {
         await context.prisma.updateUser({
             data: {
                 alive: false,
-                objectiu: { disconnect: true }
+                // objectiu: { disconnect: true }
             },
             where: { id: objectiu.id }
         })
         if (sender.id == objectiuObj.id) { // ha guanyat!!
             await context.prisma.updateUser({
                 data: {
-                    objectiu: { disconnect: true },
+                    // objectiu: { disconnect: true },
                     winner: true
                 },
                 where: { id: sender.id }

@@ -11,6 +11,7 @@ type Query {
     angle(id: ID!): Float!
     isThereMatch: Boolean!
     distanceObjective(id: ID!): Float
+    status(id: ID!): String!
 }
 
 type Mutation {
