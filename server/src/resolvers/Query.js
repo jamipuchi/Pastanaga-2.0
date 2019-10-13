@@ -91,6 +91,18 @@ const objectiveInside = async (parent, args, context) => {
     return estaFIB(objectiu.latitude, objectiu.longitude);
 }
 
+const killer = async (parent, args, context) => {
+    const sender = await context.prisma.user({ id: args.id })
+    if (!sender.alive) return ""
+    else {
+        const users = await context.prisma.users();
+        for (let i = 0; i < users.length; ++i) {
+            if (users[i].alive && users[i].objectiu().id == sender.id) return users[i].name;
+        }
+    }
+    return ""
+}
+
 module.exports = {
     users,
     user,
@@ -99,5 +111,6 @@ module.exports = {
     isThereMatch,
     distanceObjective,
     status,
-    objectiveInside
+    objectiveInside,
+    killer
 }

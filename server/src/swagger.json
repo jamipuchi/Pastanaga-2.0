@@ -234,6 +234,33 @@
         }
       }
     },
+    "/api/killer": {
+      "get": {
+        "operationId": "killerQuery",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/create-user": {
       "post": {
         "operationId": "createUserMutation",
@@ -553,7 +580,8 @@
           "angle",
           "isThereMatch",
           "status",
-          "objectiveInside"
+          "objectiveInside",
+          "killer"
         ],
         "properties": {
           "users": {
@@ -586,6 +614,9 @@
           },
           "objectiveInside": {
             "type": "boolean"
+          },
+          "killer": {
+            "type": "string"
           }
         }
       },
