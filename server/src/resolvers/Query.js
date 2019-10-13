@@ -88,7 +88,7 @@ const status = async (parent, args, context) => {
 const objectiveInside = async (parent, args, context) => {
     const objectiu = await context.prisma.user({ id: args.id }).objectiu()
     const sender = await context.prisma.user({ id: args.id })
-    return estaFIB(objectiu.latitude, sender.longitude);
+    return estaFIB(objectiu.latitude, objectiu.longitude);
 }
 
 module.exports = {
