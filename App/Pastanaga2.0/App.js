@@ -191,8 +191,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PowerUpStack = createStackNavigator(
-  {
+const PowerUpStack = createStackNavigator({
     PowerUps: {screen: PowerUps},
     Brujola: {screen: Brujola},
     Distancia: {screen: Distancia},
@@ -208,7 +207,6 @@ const PowerUpStack = createStackNavigator(
           headerVisible: false,
       }
     }
-  }
 )
 
 
