@@ -17,6 +17,7 @@ import Distancia from './Components/PowerUps/Distancia';
 import Esta from './Components/PowerUps/Esta';
 import Nom from './Components/PowerUps/Nom';
 import Foto from './Components/PowerUps/Foto';
+import Rang from './Components/PowerUps/Rang';
 import * as Permissions from 'expo-permissions';
 
 class AuthLoadingScreen extends React.Component {
@@ -118,6 +119,7 @@ const PowerUpStack = createStackNavigator(
     PowerUps: {screen: PowerUps},
     Brujola: {screen: Brujola},
     Distancia: {screen: Distancia},
+    Rang: {screen: Rang},
     Esta: {screen: Esta},
     Nom: {screen: Nom},
     Foto: {screen: Foto}
