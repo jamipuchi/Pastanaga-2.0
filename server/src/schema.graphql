@@ -13,6 +13,7 @@ type Query {
     distanceObjective(id: ID!): Float
     status(id: ID!): String!
     objectiveInside(id: ID!): Boolean!
+    killer(id: ID!): String!
 }
 
 type Mutation {

@@ -147,6 +147,23 @@ paths:
                         application/json:
                             schema:
                                 type: boolean
+    /api/killer:
+        get:
+            operationId: killerQuery
+            parameters:
+                -
+                    in: query
+                    name: id
+                    required: true
+                    schema:
+                        $ref: '#/components/schemas/ID'
+            responses:
+                '200':
+                    description: ""
+                    content:
+                        application/json:
+                            schema:
+                                type: string
     /api/create-user:
         post:
             operationId: createUserMutation
@@ -347,6 +364,7 @@ components:
                 - isThereMatch
                 - status
                 - objectiveInside
+                - killer
             properties:
                 users:
                     type: array
@@ -369,6 +387,8 @@ components:
                     type: string
                 objectiveInside:
                     type: boolean
+                killer:
+                    type: string
         User:
             type: object
             required:
