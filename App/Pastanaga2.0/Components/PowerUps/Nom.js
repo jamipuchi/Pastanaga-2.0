@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 
 export default class Nom extends Component {
     constructor(props) {
@@ -7,6 +7,38 @@ export default class Nom extends Component {
         this.state = {
             name: "Pau Mateu"
         };
+        this.getKiller()
+    }
+    getIdUsuari = async () => {
+        const currentUser = await AsyncStorage.getItem('id_user')
+        console.log("USUARI CORENT  " + currentUser)
+        if (currentUser != null) {
+            return (currentUser);
+        } else {
+            return '';
+        }
+    }
+
+    getKiller = async () => {
+        uid = await this.getIdUsuari();
+        uid2 = uid.substr(1);
+        uid3 = uid2.substring(0, uid2.length - 1);
+        fetch(`http://abuch.ddns.net:3080/api/killer?id=${encodeURIComponent(uid3)}`, {
+            method: "GET",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => response.json())
+            .then(async (responseJson) => {
+                // const jsonresp = JSON.stringify(responseJson);
+                console.log(responseJson);
+                //AQUI FALTA IMPLEMENTAR EL CANVI D'ESTAT SEGONS LA RESPOSTA
+                await this.setState({ name: responseJson })
+            }).catch((error) => {
+                console.log("HOLAAA NO TENS A NINGU A LA DISTÀNCIA");
+            });
+
     }
 
     render() {
