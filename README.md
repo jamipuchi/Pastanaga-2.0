@@ -2,6 +2,7 @@
  [Devpost](https://devpost.com/software/pastanaga-2-0)
  [Website](jamipuchi.github.io)
  
+![](./pastanaga1.gif) ![](./pastanaga2.gif)
  
 ## Inspiration
 
